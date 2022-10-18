@@ -40,7 +40,7 @@ app.get('/getAllUsers', async (req, res) => {
     console.log('Connected!!');
 
     connection.query(
-      `SELECT * FROM Users WHERE username='test';`,
+      `SELECT * FROM Users;`,
       async (err, result) => {
         if (err) {
           console.log(err);
