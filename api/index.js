@@ -84,7 +84,7 @@ app.get('/createUser', async (req, res) => {
   console.log('-----createUser-----');
 
   const username = 'test';
-  const password = 'test';
+  const password = 'pwd123';
 
   db.getConnection((err, connection) => {
     if (err) {
