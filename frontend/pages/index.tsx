@@ -16,8 +16,10 @@ const Home: NextPage = () => {
 			<main className={styles.main}>
 				<h1 className={styles.title}>Welcome to WSAI!</h1>
 
-				<Link href="/login"> Login </Link>
-				<Link href="/register"> Register </Link>
+				<Link href="/login">Login</Link>
+				<Link href="/register">Register</Link>
+
+				<Link href="/product">Product POC</Link>
 			</main>
 		</div>
 	);

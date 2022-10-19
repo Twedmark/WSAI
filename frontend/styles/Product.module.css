@@ -1,0 +1,45 @@
+.main {
+  display: flex;
+  flex-direction: column;
+}
+
+.imageContainer {
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+
+  overflow-x: scroll;
+  scroll-snap-type: x mandatory;
+}
+
+.imageContainer img {
+  width: 100%;
+  scroll-snap-align: center;
+}
+
+
+@media (min-width: 450px) {
+  .main {
+    flex-direction: row;
+  
+    position: relative;
+  }
+  
+  .imageContainer {
+    width: 50%;
+
+    flex-direction: column;
+    overflow-x: hidden;
+    scroll-snap-type: none;
+  }
+  
+  .infoScrollContainer {
+    flex: 1 1;
+  }
+  
+  .infoContainer {
+    padding: 20px;
+    position: sticky;
+    top: 0;
+  }
+}
