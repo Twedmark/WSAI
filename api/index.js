@@ -1,29 +1,17 @@
 const express = require('express');
-const mysql = require("mysql");
-const bcrypt = require('bcrypt');
 const cors = require('cors');
-
-require('dotenv').config();
+const db = require('./database');
+const bcrypt = require('bcrypt');
+const bodyParser = require('body-parser');
 
 const app = express();
 
+app.use(cors());
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
+app.use(bodyParser.json());
+
 const port = process.env.PORT;
-
-const DB_HOST = process.env.DB_HOST;
-const DB_USER = process.env.DB_USER;
-const DB_PASSWORD = process.env.DB_PASSWORD;
-const DB_DATABASE = process.env.DB_DATABASE;
-const DB_PORT = process.env.DB_PORT;
-
-const db = mysql.createPool({
-  connectionLimit: 100,
-  host: DB_HOST,
-  user: DB_USER,
-  password: DB_PASSWORD,
-  database: DB_DATABASE,
-  port: DB_PORT,
-  insecureAuth: true,
-});
 
 app.get('/', (req, res) => {
   res.send("Try /getAllUsers or /createUser");
@@ -31,26 +19,14 @@ app.get('/', (req, res) => {
 
 app.get('/getAllUsers', async (req, res) => {
   console.log('-----getAllUsers-----');
-  
-  db.getConnection((err, connection) => {
-    if (err) {
-      console.log(err);
-      res.send(err);
-    }
-    console.log('Connected!!');
 
-    connection.query(
-      `SELECT * FROM Users;`,
-      async (err, result) => {
-        if (err) {
-          console.log(err);
-          res.send(err);
-        }
-        console.log(result);
-        res.send(result);
-      }
-    );
+  const result = await db.getAllUsers()
+  .catch((err) => {
+    console.log(err);
+    res.send("Error");
   });
+
+  res.send(result);
 });
 
 app.get('/getUserByUsername/:username', async (req, res) => {
@@ -58,61 +34,32 @@ app.get('/getUserByUsername/:username', async (req, res) => {
 
   let username = req.params.username;
 
-  db.getConnection((err, connection) => {
-    if (err) {
-      console.log(err);
-      res.send(err);
-    }
-    console.log('Connected!!');
-
-    connection.query(
-      `SELECT * FROM Users WHERE username='${username}';`,
-      async (err, result) => {
-        if (err) {
-          console.log(err);
-          res.send(err);
-        }
-        console.log(result);
-        res.send(result);
-      }
-    );
+  const result = await db.getUserByUsername(username)
+  .catch((err) => {
+    console.log(err);
+    res.send("Error");
   });
+
+  res.send(result);
 });
 
-
-app.get('/createUser', async (req, res) => {
+app.post('/createUser', async (req, res) => {
   console.log('-----createUser-----');
 
-  const username = 'test';
-  const password = 'pwd123';
+  console.log(req.body);
 
-  db.getConnection((err, connection) => {
-    if (err) {
-      console.log(err);
-      res.send(err);
-    }
-    console.log('Connected!!');
+  let username = req.body.username;
+  let password = req.body.password;
 
-    bcrypt.hash(password, 10, (err, hash) => {
-      if (err) {
-        console.log(err);
-        res.send(err);
-      }
-      console.log('Hashed password');
+  hash = await bcrypt.hash(password, 10);
 
-      connection.query(
-        `INSERT INTO Users (userId, username, password) VALUES (null, '${username}', '${hash}')`,
-        async (err, result) => {
-          if (err) {
-            console.log(err);
-            res.send(err);
-          }
-          console.log(result);
-          res.send(result);
-        }
-      );
-    });
+  const result = await db.createUser(username, hash)
+  .catch((err) => {
+    console.log(err);
+    res.send("Error");
   });
+
+  res.send("User created");
 });
 
 app.get('/deleteUser/:username', async (req, res) => {
@@ -120,25 +67,13 @@ app.get('/deleteUser/:username', async (req, res) => {
 
   let username = req.params.username;
 
-  db.getConnection((err, connection) => {
-    if (err) {
-      console.log(err);
-      res.send(err);
-    }
-    console.log('Connected!!');
-
-    connection.query(
-      `DELETE FROM Users WHERE username='${username}';`,
-      async (err, result) => {
-        if (err) {
-          console.log(err);
-          res.send(err);
-        }
-        console.log(result);
-        res.send(result);
-      }
-    );
+  const result = await db.deleteUser(username)
+  .catch((err) => {
+    console.log(err);
+    res.send("Error");
   });
+
+  res.send("User deleted");
 });
 
 app.listen(port, (err) => {
