@@ -20,9 +20,10 @@ const db = mysql.createConnection({
 
 db.connect(async (err, connection) => {
   console.log('RUNNING CREATE TABLE SCRIPT');
+
   let createUsersTable = `CREATE TABLE Users (
     userId int NOT NULL AUTO_INCREMENT, 
-    username varchar(45) NOT NULL, 
+    email varchar(45) NOT NULL, 
     password varchar(100) NOT NULL, 
     PRIMARY KEY (userId)) 
     ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci
@@ -34,7 +35,7 @@ db.connect(async (err, connection) => {
   ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
     `;
 
-  let createUsersWithRoleTable = `CREATE TABLE UsersWithRoles (
+  let createUsersWithRolesTable = `CREATE TABLE UsersWithRoles (
     userId int NOT NULL,
     roleId int NOT NULL,
     CONSTRAINT FK_Role FOREIGN KEY (roleId) REFERENCES Roles(roleId),
@@ -44,19 +45,22 @@ db.connect(async (err, connection) => {
 
   db.query(createUsersTable, async (err) => {
     if (err) {
+      console.log('ERROR CREATING USERS TABLE', err);
       process.exit(1);
     }
-    console.log('TABLE CREATED!');
+    console.log('USERS TABLE CREATED!');
     db.query(createRolesTable, async (err) => {
       if (err) {
+        console.log('ERROR CREATING ROLES TABLE', err);
         process.exit(1);
       }
-      console.log('TABLE CREATED!');
-      db.query(createUsersWithRoleTable, async (err) => {
+      console.log('ROLES TABLE CREATED!');
+      db.query(createUsersWithRolesTable, async (err) => {
         if (err) {
+          console.log('ERROR CREATING USERS WITH ROLES TABLE', err);
           process.exit(1);
         }
-        console.log('TABLE CREATED!');
+        console.log('USERSWITHROLE TABLE CREATED!');
         process.exit(0);
       });
     });

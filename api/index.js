@@ -2,14 +2,12 @@ const express = require('express');
 const cors = require('cors');
 const db = require('./database');
 const bcrypt = require('bcrypt');
-const bodyParser = require('body-parser');
 
 const app = express();
 
 app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
-app.use(bodyParser.json());
 
 const port = process.env.PORT;
 
@@ -29,12 +27,12 @@ app.get('/getAllUsers', async (req, res) => {
   res.send(result);
 });
 
-app.get('/getUserByUsername/', async (req, res) => {
-  console.log('-----getUserByUsername-----');
+app.get('/getUserByemail/', async (req, res) => {
+  console.log('-----getUserByemail-----');
 
-  let username = req.body.username;
+  let email = req.body.email;
 
-  const result = await db.getUserByUsername(username)
+  const result = await db.getUserByemail(email)
   .catch((err) => {
     console.log(err);
     res.send("Error");
@@ -48,15 +46,32 @@ app.post('/createUser', async (req, res) => {
 
   console.log(req.body);
 
-  let username = req.body.username;
+  let email = req.body.email;
   let password = req.body.password;
   let hash = await bcrypt.hash(password, 10);
 
-  const result = await db.createUser(username, hash)
+  if(!email || !password) {
+    res.send("No email or password");
+    return;
+  }
+
+  const userExists = await db.getUserByemail(email)
   .catch((err) => {
     console.log(err);
     res.send("Error");
   });
+  if(userExists.length > 0){
+    res.send("User already exists");
+    return;
+  }
+
+  const result = await db.createUser(email, hash)
+  .catch((err) => {
+    console.log(err);
+    res.send("Error");
+  });
+
+  db.assignRole(result, 1000);
 
   res.send("User created");
 });
@@ -64,9 +79,9 @@ app.post('/createUser', async (req, res) => {
 app.get('/deleteUser/', async (req, res) => {
   console.log('-----deleteUser-----');
 
-  let username = req.body.username;
+  let email = req.body.email;
 
-  const result = await db.deleteUser(username)
+  const result = await db.deleteUser(email)
   .catch((err) => {
     console.log(err);
     res.send("Error");

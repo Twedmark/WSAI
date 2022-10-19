@@ -6,8 +6,13 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "nodemon index.js",
+
     "createDB": "node ./sql/createDb.js",
-    "createTables": "node ./sql/createTables.js"
+    "createTables": "node ./sql/createTables.js",
+    "createMockData": "node ./sql/createMockData.js",
+    "createAll": "npm run createDB && npm run createTables && npm run createMockData",
+    "dropTables": "node ./sql/dropTables.js",
+    "dropAndCreateAll": "npm run dropTables && npm run createAll"
   },
   "keywords": [],
   "author": "",

@@ -16,7 +16,6 @@ const db = mysql.createPool({
   password: DB_PASSWORD,
   database: DB_DATABASE,
   port: DB_PORT,
-  insecureAuth: true,
   multipleStatements: false
 });
 
@@ -32,28 +31,41 @@ const getAllUsers = async () => {
   });
 };
 
-const getUserByUsername = (username) => {
+const getUserByemail = (email) => {
   return new Promise((resolve, reject)=>{
-    // username = username.replace(/[^a-zA-Z0-9]/g, '');
-    let sql = "SELECT * FROM Users WHERE username=?;";
-    let query = mysql.format(sql, [username]);
+    // email = email.replace(/[^a-zA-Z0-9]/g, '');
+    let sql = "SELECT * FROM Users WHERE email=?;";
+    let query = mysql.format(sql, [email]);
     db.query(query, (err, result) => {
       if (err) {
         console.log("err", err);
         reject(err);
       } else {
-        console.log("result", result);
         resolve(result);
       }
     });
   });
 };
 
-const createUser = (username, password) => {
+const createUser = (email, password) => {
   return new Promise((resolve, reject)=>{
-    // username = username.replace(/[^a-zA-Z0-9]/g, '');
-    let sql = "INSERT INTO Users (username, password) VALUES (?, ?);";
-    let query = mysql.format(sql, [username, password]);
+    // email = email.replace(/[^a-zA-Z0-9]/g, '');
+    let sql = "INSERT INTO Users (userId, email, password) VALUES (null, ?, ?);";
+    let query = mysql.format(sql, [email, password]);
+    db.query(query, (err, result) => {
+      if (err) {
+        reject(err);
+      }else {
+        resolve(result.insertId);
+      }
+    });
+  });
+};
+
+const assignRole = (email, role) => {
+  return new Promise((resolve, reject)=>{
+    let sql = "INSERT INTO UsersWithRoles (userId, roleId) VALUES (?, ?);";
+    let query = mysql.format(sql, [email, role]);
     db.query(query, (err, result) => {
       if (err) {
         reject(err);
@@ -64,11 +76,11 @@ const createUser = (username, password) => {
   });
 };
 
-const deleteUser = (username) => {
+const deleteUser = (email) => {
   return new Promise((resolve, reject)=>{
-    // username = username.replace(/[^a-zA-Z0-9]/g, '');
-    let sql = "DELETE FROM Users WHERE username=?;";
-    let query = mysql.format(sql, [username]);
+    // email = email.replace(/[^a-zA-Z0-9]/g, '');
+    let sql = "DELETE FROM Users WHERE email=?;";
+    let query = mysql.format(sql, [email]);
     db.query(query, (err, result) => {
       if (err) {
         reject(err);
@@ -79,4 +91,4 @@ const deleteUser = (username) => {
   });
 };
 
-module.exports = { getAllUsers, getUserByUsername, createUser, deleteUser };
+module.exports = { getAllUsers, getUserByemail, createUser, deleteUser, assignRole };
