@@ -29,10 +29,10 @@ app.get('/getAllUsers', async (req, res) => {
   res.send(result);
 });
 
-app.get('/getUserByUsername/:username', async (req, res) => {
+app.get('/getUserByUsername/', async (req, res) => {
   console.log('-----getUserByUsername-----');
 
-  let username = req.params.username;
+  let username = req.body.username;
 
   const result = await db.getUserByUsername(username)
   .catch((err) => {
@@ -50,8 +50,7 @@ app.post('/createUser', async (req, res) => {
 
   let username = req.body.username;
   let password = req.body.password;
-
-  hash = await bcrypt.hash(password, 10);
+  let hash = await bcrypt.hash(password, 10);
 
   const result = await db.createUser(username, hash)
   .catch((err) => {
@@ -62,10 +61,10 @@ app.post('/createUser', async (req, res) => {
   res.send("User created");
 });
 
-app.get('/deleteUser/:username', async (req, res) => {
+app.get('/deleteUser/', async (req, res) => {
   console.log('-----deleteUser-----');
 
-  let username = req.params.username;
+  let username = req.body.username;
 
   const result = await db.deleteUser(username)
   .catch((err) => {
