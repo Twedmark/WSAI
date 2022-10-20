@@ -10,7 +10,7 @@
     "createDB": "node ./sql/createDb.js",
     "createTables": "node ./sql/createTables.js",
     "createMockData": "node ./sql/createMockData.js",
-    "createAll": "npm run createDB && npm run createTables && npm run createMockData",
+    "createAll": "npm run createDB && npm run createTables && npm run createMockData"
   },
   "keywords": [],
   "author": "",
