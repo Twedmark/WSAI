@@ -3,12 +3,17 @@ const cors = require('cors');
 const db = require('./database');
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
+const cookieParser = require('cookie-parser');
+
+const { authorization, adminAuthorization, superAdminAuthorization } = require('./middleware/authorization');
 
 const app = express();
 
 app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
+app.use(cookieParser());
+app.use(cors({credentials: true, origin: 'http://localhost:3000'}));
 
 const port = process.env.PORT;
 
@@ -16,7 +21,7 @@ app.get('/', (req, res) => {
   res.send("Try /getAllUsers :)");
 });
 
-app.get('/getAllUsers', async (req, res) => {
+app.get('/getAllUsers', superAdminAuthorization, async (req, res) => {
   console.log('-----getAllUsers-----');
 
   const result = await db.getAllUsers()
@@ -25,10 +30,12 @@ app.get('/getAllUsers', async (req, res) => {
     res.send("Error");
   });
 
-  res.send(result);
+  res.status(200).json(result);
 });
 
-app.post('/getUserByemail/', async (req, res) => {
+//TODO: add get self by token
+
+app.post('/getUserByemail/', superAdminAuthorization, async (req, res) => {
   console.log('-----getUserByemail-----');
 
   let email = req.body.email;
@@ -44,8 +51,6 @@ app.post('/getUserByemail/', async (req, res) => {
 
 app.post('/createUser', async (req, res) => {
   console.log('-----createUser-----');
-
-  console.log(req.body);
 
   let email = req.body.email;
   let password = req.body.password;
@@ -77,7 +82,7 @@ app.post('/createUser', async (req, res) => {
   res.status(200).json({ email: email });
 });
 
-app.get('/deleteUser/', async (req, res) => {
+app.get('/deleteUser/', superAdminAuthorization, async (req, res) => {
   console.log('-----deleteUser-----');
 
   let email = req.body.email;
@@ -117,7 +122,6 @@ app.post('/login', async (req, res) => {
   let userRoles = roles.map(role => { 
     return role.rolename;
   });
-  console.log(roles);
 
   const accessToken = jwt.sign(
     { userId: result[0].userId, email: result.email, roles: userRoles },
@@ -128,7 +132,7 @@ app.post('/login', async (req, res) => {
   res.
   status(200).
   cookie('token', accessToken, { httpOnly: true }).
-  json({ email: result[0].email,  accessToken: accessToken });
+  json({ email: result[0].email, roles: userRoles, accessToken: accessToken });
 });
 
 
