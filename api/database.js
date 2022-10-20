@@ -36,6 +36,7 @@ const getUserByemail = (email) => {
     // email = email.replace(/[^a-zA-Z0-9]/g, '');
     let sql = "SELECT * FROM Users WHERE email=?;";
     let query = mysql.format(sql, [email]);
+    console.log(query);
     db.query(query, (err, result) => {
       if (err) {
         console.log("Could not get user: SQL ERROR ", err);
@@ -93,7 +94,7 @@ const deleteUser = (email) => {
 
 const getRolesForUser = (userId) => {
   return new Promise((resolve, reject)=>{
-    let sql = "SELECT * FROM UsersWithRoles WHERE userId=?;";
+    let sql = "SELECT * FROM UsersWithRoles INNER JOIN Roles ON Roles.roleId=UsersWithRoles.roleId WHERE userId=?;";
     let query = mysql.format(sql, [userId]);
     db.query(query, (err, result) => {
       if (err) {

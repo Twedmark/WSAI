@@ -25,19 +25,22 @@ const db = mysql.createConnection({
 
 db.connect(async (err, connection) => {
   console.log('RUNNING CREATE TABLE SCRIPT');
-  let userAccount = `INSERT INTO Users (userId, email, password) VALUES (null, "User ", "${pwd123Hashed}");`;
-  let adminAccount = `INSERT INTO Users (userId, email, password) VALUES (null, "Admin ", "${pwd123Hashed}");`;
-  let superAdminAccount = `INSERT INTO Users (userId, email, password) VALUES (null, "SuperAdmin ", "${pwd123Hashed}");`;
+  let userAccount = `INSERT INTO Users (userId, email, password) VALUES (null, "User", "${pwd123Hashed}");`;
+  let adminAccount = `INSERT INTO Users (userId, email, password) VALUES (null, "Admin", "${pwd123Hashed}");`;
+  let superAdminAccount = `INSERT INTO Users (userId, email, password) VALUES (null, "SuperAdmin", "${pwd123Hashed}");`;
 
   let userRole = `INSERT INTO Roles (roleId, rolename) VALUES (1000, "User");`;
   let adminRole = `INSERT INTO Roles (roleId, rolename) VALUES (2000, "Admin");`;
   let superAdminRole = `INSERT INTO Roles (roleId, rolename) VALUES (3000, "SuperAdmin");`;
 
   let userWithUserRole = `INSERT INTO UsersWithRoles (userId, roleId) VALUES (1, 1000);`;
+  let adminWithUserRole = `INSERT INTO UsersWithRoles (userId, roleId) VALUES (2, 1000);`;
   let adminWithAdminRole = `INSERT INTO UsersWithRoles (userId, roleId) VALUES (2, 2000);`;
+  let superAdminWithUserRole = `INSERT INTO UsersWithRoles (userId, roleId) VALUES (3, 1000);`;
+  let superAdminWithAdminRole = `INSERT INTO UsersWithRoles (userId, roleId) VALUES (3, 2000);`;
   let superAdminWithSuperAdminRole = `INSERT INTO UsersWithRoles (userId, roleId) VALUES (3, 3000);`;
 
-  let query = userAccount + adminAccount + superAdminAccount + userRole + adminRole + superAdminRole + userWithUserRole + adminWithAdminRole + superAdminWithSuperAdminRole;
+  let query = userAccount + adminAccount + superAdminAccount + userRole + adminRole + superAdminRole + userWithUserRole + adminWithUserRole + adminWithAdminRole + superAdminWithUserRole + superAdminWithAdminRole + superAdminWithSuperAdminRole;
   db.query(query, async (err) => {
     if (err) {
       console.log('ERROR CREATING TABLES', err);

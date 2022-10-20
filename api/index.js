@@ -28,7 +28,7 @@ app.get('/getAllUsers', async (req, res) => {
   res.send(result);
 });
 
-app.get('/getUserByemail/', async (req, res) => {
+app.post('/getUserByemail/', async (req, res) => {
   console.log('-----getUserByemail-----');
 
   let email = req.body.email;
@@ -93,42 +93,42 @@ app.get('/deleteUser/', async (req, res) => {
 
 app.post('/login', async (req, res) => {
   console.log('-----login-----');
-  let acccount = req.body;
-  console.log(acccount.email);
+  let account = req.body;
 
-  let result = await db.getUserByemail(acccount.email)
+  let result = await db.getUserByemail(account.email)
   .catch((err) => {
     console.log(err);
     res.send("Error");
   });
 
-  console.log(result)
   if(result.length == 0){
     res.status(500).json({message: "User not found"});
     return;
   }
 
-  const compatePassword = await bcrypt.compare(result.password, account.password);
-  if(!compatePassword){
+  const comparedPassword = await bcrypt.compare(account.password, result[0].password);
+  if(!comparedPassword){
     res.status(500).json({message: "Wrong password"});
     return;
   }
 
-
   // här ska till att man hämtar alla roller och lägger dom i token
-  const roles = db.getRolesForUser(result.userId);
+  const roles = await db.getRolesForUser(result[0].userId);
   let userRoles = roles.map(role => { 
     return role.rolename;
   });
-
+  console.log(roles);
 
   const accessToken = jwt.sign(
-    { userId: result.userId, email: result.email, roles: userRoles },
+    { userId: result[0].userId, email: result.email, roles: userRoles },
     process.env.ACCESS_TOKEN_SECRET,
     { expiresIn: '8h' }
   );
 
-  res.status(200).json({ email: result.email,  accessToken: accessToken });
+  res.
+  status(200).
+  cookie('token', accessToken, { httpOnly: true }).
+  json({ email: result[0].email,  accessToken: accessToken });
 });
 
 
