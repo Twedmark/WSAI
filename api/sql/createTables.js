@@ -17,7 +17,7 @@ const db = mysql.createConnection({
   multipleStatements: true
 });
 
-// CREATE TABLES
+// DROP AND CREATE TABLES
 
 db.connect(async (err, connection) => {
   console.log('RUNNING CREATE TABLE SCRIPT');

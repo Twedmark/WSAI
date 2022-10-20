@@ -8,6 +8,7 @@
   flex-direction: row;
   width: 100%;
 
+  overflow-y: hidden;
   overflow-x: scroll;
   scroll-snap-type: x mandatory;
 }
@@ -29,6 +30,7 @@
     width: 50%;
 
     flex-direction: column;
+    overflow-y: unset;
     overflow-x: hidden;
     scroll-snap-type: none;
   }

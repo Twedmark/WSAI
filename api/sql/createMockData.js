@@ -1,5 +1,9 @@
 const mysql = require('mysql');
 
+const bcrypt = require('bcrypt');
+
+const pwd123Hashed = bcrypt.hashSync("pwd123", 10);
+
 require('dotenv').config();
 
 const DB_HOST = process.env.DB_HOST;
@@ -17,13 +21,13 @@ const db = mysql.createConnection({
   multipleStatements: true
 });
 
-// CREATE TABLES
+// CREATE MOCK DATA / USERS / ROLES
 
 db.connect(async (err, connection) => {
   console.log('RUNNING CREATE TABLE SCRIPT');
-  let userAccount = `INSERT INTO Users (userId, email, password) VALUES (null, "User ", "pwd123");`;
-  let adminAccount = `INSERT INTO Users (userId, email, password) VALUES (null, "Admin ", "pwd123");`;
-  let superAdminAccount = `INSERT INTO Users (userId, email, password) VALUES (null, "SuperAdmin ", "pwd123");`;
+  let userAccount = `INSERT INTO Users (userId, email, password) VALUES (null, "User ", "${pwd123Hashed}");`;
+  let adminAccount = `INSERT INTO Users (userId, email, password) VALUES (null, "Admin ", "${pwd123Hashed}");`;
+  let superAdminAccount = `INSERT INTO Users (userId, email, password) VALUES (null, "SuperAdmin ", "${pwd123Hashed}");`;
 
   let userRole = `INSERT INTO Roles (roleId, rolename) VALUES (1000, "User");`;
   let adminRole = `INSERT INTO Roles (roleId, rolename) VALUES (2000, "Admin");`;
