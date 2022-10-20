@@ -90,6 +90,47 @@ app.get('/deleteUser/', async (req, res) => {
   res.send("User deleted");
 });
 
+app.post('/login', async (req, res) => {
+  console.log('-----login-----');
+  let acccount = req.body;
+  console.log(acccount.email);
+
+  let result = await db.getUserByemail(acccount.email)
+  .catch((err) => {
+    console.log(err);
+    res.send("Error");
+  });
+
+  console.log(result)
+  if(result.length == 0){
+    res.status(500).json({message: "User not found"});
+    return;
+  }
+
+  const compatePassword = await bcrypt.compare(result.password, account.password);
+  if(!compatePassword){
+    res.status(500).json({message: "Wrong password"});
+    return;
+  }
+
+
+  // här ska till att man hämtar alla roller och lägger dom i token
+  const roles = db.getRolesForUser(result.userId);
+  let userRoles = roles.map(role => { 
+    return role.rolename;
+  });
+
+
+  const accessToken = jwt.sign(
+    { userId: result.userId, email: result.email, roles: userRoles },
+    process.env.ACCESS_TOKEN_SECRET,
+    { expiresIn: '8h' }
+  );
+
+  res.status(200).json({ email: result.email,  accessToken: accessToken });
+});
+
+
 app.listen(port, (err) => {
   if (err) {
     console.log("error listening on port 4000 ", err);

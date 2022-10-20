@@ -91,4 +91,19 @@ const deleteUser = (email) => {
   });
 };
 
-module.exports = { getAllUsers, getUserByemail, createUser, deleteUser, assignRole };
+const getRolesForUser = (userId) => {
+  return new Promise((resolve, reject)=>{
+    let sql = "SELECT * FROM UsersWithRoles WHERE userId=?;";
+    let query = mysql.format(sql, [userId]);
+    db.query(query, (err, result) => {
+      if (err) {
+        console.log("Could not get roles for user: SQL ERROR ", err);
+        reject(err);
+      } else {
+        resolve(result);
+      }
+    });
+  });
+};
+
+module.exports = { getAllUsers, getUserByemail, createUser, deleteUser, assignRole, getRolesForUser };
