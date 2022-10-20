@@ -1,6 +1,7 @@
 import type { NextPage } from "next";
 import Link from "next/link";
 import { useState } from "react";
+import Navbar from "../../components/navbar/navbar";
 import styles from "../../styles/Login.module.css";
 
 const Login: NextPage = () => {
@@ -33,6 +34,7 @@ const Login: NextPage = () => {
 				<h1>Du är redan inloggad!</h1>
 			) : (
 				<main className={styles.main}>
+					<Navbar />
 					<div className={styles.grid}>
 						<h1 className={styles.title}>Login</h1>
 						<label htmlFor="email">Email</label>

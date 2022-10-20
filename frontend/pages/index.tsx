@@ -2,6 +2,8 @@ import type { NextPage } from "next";
 import Head from "next/head";
 import Image from "next/image";
 import Link from "next/link";
+
+import Navbar from "../components/navbar/navbar";
 import styles from "../styles/Home.module.css";
 
 const Home: NextPage = () => {
@@ -14,6 +16,7 @@ const Home: NextPage = () => {
 			</Head>
 
 			<main className={styles.main}>
+				<Navbar />
 				<h1 className={styles.title}>Welcome to WSAI!</h1>
 
 				<Link href="/login">Login</Link>
