@@ -11,8 +11,6 @@
     "createTables": "node ./sql/createTables.js",
     "createMockData": "node ./sql/createMockData.js",
     "createAll": "npm run createDB && npm run createTables && npm run createMockData",
-    "dropTables": "node ./sql/dropTables.js",
-    "dropAndCreateAll": "npm run dropTables && npm run createAll"
   },
   "keywords": [],
   "author": "",
