@@ -2,6 +2,7 @@ const express = require('express');
 const cors = require('cors');
 const db = require('./database');
 const bcrypt = require('bcrypt');
+const jwt = require('jsonwebtoken');
 
 const app = express();
 
@@ -12,7 +13,7 @@ app.use(express.urlencoded({ extended: true }));
 const port = process.env.PORT;
 
 app.get('/', (req, res) => {
-  res.send("Try /getAllUsers or /createUser");
+  res.send("Try /getAllUsers :)");
 });
 
 app.get('/getAllUsers', async (req, res) => {
@@ -35,10 +36,10 @@ app.get('/getUserByemail/', async (req, res) => {
   const result = await db.getUserByemail(email)
   .catch((err) => {
     console.log(err);
-    res.send("Error");
+    res.status(500).json({ message: "Error getting user" });
   });
 
-  res.send(result);
+  res.status(200).send(result);
 });
 
 app.post('/createUser', async (req, res) => {
@@ -51,29 +52,29 @@ app.post('/createUser', async (req, res) => {
   let hash = await bcrypt.hash(password, 10);
 
   if(!email || !password) {
-    res.send("No email or password");
+    res.status(500).json({ message: "Email or password missing in request" });
     return;
   }
 
   const userExists = await db.getUserByemail(email)
   .catch((err) => {
     console.log(err);
-    res.send("Error");
+    res.status(500).json({ message: "Error getting user to check if already exists" });
   });
   if(userExists.length > 0){
-    res.send("User already exists");
+    res.status(500).json({ message: "User already exists" });
     return;
   }
 
-  const result = await db.createUser(email, hash)
+  const resultId = await db.createUser(email, hash)
   .catch((err) => {
     console.log(err);
-    res.send("Error");
+    res.status(500).json({ message: "Error creating user" });
   });
 
-  db.assignRole(result, 1000);
+  db.assignRole(resultId, 1000);
 
-  res.send("User created");
+  res.status(200).json({ email: email });
 });
 
 app.get('/deleteUser/', async (req, res) => {
@@ -84,10 +85,10 @@ app.get('/deleteUser/', async (req, res) => {
   const result = await db.deleteUser(email)
   .catch((err) => {
     console.log(err);
-    res.send("Error");
+    res.status(500).json({ message: "Error deleting user" });
   });
 
-  res.send("User deleted");
+  res.status(200).json("User deleted");
 });
 
 app.listen(port, (err) => {

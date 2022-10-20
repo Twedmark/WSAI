@@ -23,7 +23,7 @@ const getAllUsers = async () => {
   return new Promise((resolve, reject)=>{
     db.query("SELECT * FROM Users", (err, result) => {
       if (err) {
-        reject(err);
+        reject("Could not get all users: SQL ERROR ",err);
       }else {
         resolve(result);
       }
@@ -38,7 +38,7 @@ const getUserByemail = (email) => {
     let query = mysql.format(sql, [email]);
     db.query(query, (err, result) => {
       if (err) {
-        console.log("err", err);
+        console.log("Could not get user: SQL ERROR ", err);
         reject(err);
       } else {
         resolve(result);
@@ -54,7 +54,7 @@ const createUser = (email, password) => {
     let query = mysql.format(sql, [email, password]);
     db.query(query, (err, result) => {
       if (err) {
-        reject(err);
+        reject("Could not create user: SQL ERROR ",err);
       }else {
         resolve(result.insertId);
       }
@@ -68,7 +68,7 @@ const assignRole = (email, role) => {
     let query = mysql.format(sql, [email, role]);
     db.query(query, (err, result) => {
       if (err) {
-        reject(err);
+        reject("Could not assign role: SQL ERROR ",err);
       }else {
         resolve(result);
       }
@@ -83,7 +83,7 @@ const deleteUser = (email) => {
     let query = mysql.format(sql, [email]);
     db.query(query, (err, result) => {
       if (err) {
-        reject(err);
+        reject("Could not delete user: SQL ERROR ",err);
       }else {
         resolve(result);
       }

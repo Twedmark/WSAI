@@ -10,6 +10,10 @@ const Register: NextPage = () => {
 
 	async function register() {
 		console.log(email, password);
+		if (password != passwordRepeat) {
+			alert("The two passwords must be the same!");
+			return;
+		}
 		const response = await fetch("http://localhost:4000/createUser", {
 			method: "POST",
 			headers: {
