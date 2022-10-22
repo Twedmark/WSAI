@@ -25,7 +25,13 @@ const Login: NextPage = () => {
 
 		const data = await response.json();
 
-		setUser(data);
+		if(response.status === 200) {
+			console.log("loggedIn OK", data);
+			setUser(data);
+		} else {
+			alert(data.message);
+		}
+
 	}
 
 	return (
