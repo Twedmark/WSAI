@@ -1,7 +1,7 @@
 import type { NextPage } from "next";
 import Link from "next/link";
 import { useState } from "react";
-import styles from "../../styles/Login.module.css";
+import styles from "../login/Login.module.css";
 
 const Register: NextPage = () => {
 	const [email, setEmail] = useState("");

@@ -1,10 +1,46 @@
 .navbar{
-    position: absolute;
+    position: fixed;
     top: 0;
+    z-index: 2;
     display: flex;
-    justify-content: flex-end;
+    justify-content: space-between;
     align-items: center;
     width: 100vw;
-    height: 6%;
+    height: 60px;
     background-color: lightgray;
+    padding: 0 2em;
+}
+
+.navbarLeft, .navbarCenter, .navbarRight{
+    width: 100%;
+    height: 100%;
+    display: flex;
+}
+
+.navbarLeft {
+    /* justify-content: space-evenly; */
+    align-items: center;
+}
+
+.navbarCenter {
+    align-items: center;
+    justify-content: center;
+}
+
+.navbarRight {
+    flex-direction: row;
+    justify-content: flex-end;
+    align-items: center;
+
+    padding: 10px;
+}
+
+.navbarRight > * {
+    margin: 0 10px;
+}
+
+.active {
+    color: grey;
+    opacity: 0.8;
+    cursor: default;
 }

@@ -1,8 +1,7 @@
 import type { NextPage } from "next";
 import Link from "next/link";
 import { useState } from "react";
-import Navbar from "../../components/navbar/navbar";
-import styles from "../../styles/Login.module.css";
+import styles from "./Login.module.css";
 
 const Login: NextPage = () => {
 	const [email, setEmail] = useState("");
@@ -25,13 +24,12 @@ const Login: NextPage = () => {
 
 		const data = await response.json();
 
-		if(response.status === 200) {
+		if (response.status === 200) {
 			console.log("loggedIn OK", data);
 			setUser(data);
 		} else {
 			alert(data.message);
 		}
-
 	}
 
 	return (
@@ -40,7 +38,6 @@ const Login: NextPage = () => {
 				<h1>Du är redan inloggad!</h1>
 			) : (
 				<main className={styles.main}>
-					<Navbar />
 					<div className={styles.grid}>
 						<h1 className={styles.title}>Login</h1>
 						<label htmlFor="email">Email</label>
