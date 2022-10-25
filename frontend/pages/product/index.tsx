@@ -1,6 +1,10 @@
 import styles from "./Product.module.css";
 
 const Product = () => {
+	function addToCart() {
+		console.log("add to cart");
+	}
+
 	return (
 		<div>
 			<header className={styles.header}>
@@ -30,15 +34,18 @@ const Product = () => {
 					<div className={styles.infoContainer}>
 						<h1 className={styles.title}>Product Name</h1>
 						<p className={styles.description}>
-							Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed
-							tincidunt, nisl eget ultricies tincidunt, nisl nisl aliquam nisl,
-							et lacinia nisl nisl nec nunc. Nulla facilisi. Nulla facilisi.
-							Nulla facilisi. Nulla facilisi. Nulla facilisi. Nulla facilisi.
-							Nulla facilisi. Nulla facilisi. Nulla facilisi. Nulla facilisi.
-							Nulla
+							Posthorn, från Kalmar Werkstätten, är en minimalistisk pendellampa
+							med en charmigt öglad arm som håller två skärmar i siden. De
+							naturliga lampskärmarna bidrar till ett omgivande ljus i alla
+							riktningar. I 140 år har Kalmar ägnat sig åt anrikt hantverk och
+							progressiv design för att skapa dekorativ och funktionell
+							belysning. Det österrikiska hantverket är elegant i geometrin och
+							delikat i sina proportioner. Kombinationen av ärliga material,
+							många års erfarenhet inom hantverket och modern design, ingjuter
+							lamporna en rigorös minimalism med värme och mänsklighet.
 						</p>
 						<h2>12000 kr</h2>
-						<button>Add to cart</button>
+						<button onClick={addToCart}>Add to cart</button>
 					</div>
 				</div>
 			</main>
@@ -48,62 +55,16 @@ const Product = () => {
 					Some further technical information about the product
 				</p>
 				<p>
-					Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed
-					tincidunt, nisl eget ultricies tincidunt, nisl nisl aliquam nisl, et
-					lacinia nisl nisl nec nunc. Nulla facilisi. Nulla facilisi. Nulla
-					facilisi. Nulla facilisi. Nulla facilisi. Nulla facilisi. Nulla
-					facilisi. Nulla facilisi. Nulla facilisi. Nulla facilisi. Nulla
-					facilisi. Nulla orem ipsum dolor sit amet, consectetur adipiscing
-					elit. Sed tincidunt, nisl eget ultricies tincidunt, nisl nisl aliquam
-					nisl, et lacinia nisl nisl nec nunc. Nulla facilisi. Nulla facilisi.
-					Nulla facilisi. Nulla facilisi. Nulla facilisi. Nulla facilisi. Nulla
-					facilisi. Nulla facilisi. Nulla facilisi. Nulla facilisi. Nulla
-					facilisi. Nulla orem ipsum dolor sit amet, consectetur adipiscing
-					elit. Sed tincidunt, nisl eget ultricies tincidunt, nisl nisl aliquam
-					nisl, et lacinia nisl nisl nec nunc. Nulla facilisi. Nulla facilisi.
-					Nulla facilisi. Nulla facilisi. Nulla facilisi. Nulla facilisi. Nulla
-					facilisi. Nulla facilisi. Nulla facilisi. Nulla facilisi. Nulla
-					facilisi. Nulla orem ipsum dolor sit amet, consectetur adipiscing
-					elit. Sed tincidunt, nisl eget ultricies tincidunt, nisl nisl aliquam
-					nisl, et lacinia nisl nisl nec nunc. Nulla facilisi. Nulla facilisi.
-					Nulla facilisi. Nulla facilisi. Nulla facilisi. Nulla facilisi. Nulla
-					facilisi. Nulla facilisi. Nulla facilisi. Nulla facilisi. Nulla
-					facilisi. Nulla orem ipsum dolor sit amet, consectetur adipiscing
-					elit. Sed tincidunt, nisl eget ultricies tincidunt, nisl nisl aliquam
-					nisl, et lacinia nisl nisl nec nunc. Nulla facilisi. Nulla facilisi.
-					Nulla facilisi. Nulla facilisi. Nulla facilisi. Nulla facilisi. Nulla
-					facilisi. Nulla facilisi. Nulla facilisi. Nulla facilisi. Nulla
-					facilisi. Nulla orem ipsum dolor sit amet, consectetur adipiscing
-					elit. Sed tincidunt, nisl eget ultricies tincidunt, nisl nisl aliquam
-					nisl, et lacinia nisl nisl nec nunc. Nulla facilisi. Nulla facilisi.
-					Nulla facilisi. Nulla facilisi. Nulla facilisi. Nulla facilisi. Nulla
-					facilisi. Nulla facilisi. Nulla facilisi. Nulla facilisi. Nulla
-					facilisi. Nulla orem ipsum dolor sit amet, consectetur adipiscing
-					elit. Sed tincidunt, nisl eget ultricies tincidunt, nisl nisl aliquam
-					nisl, et lacinia nisl nisl nec nunc. Nulla facilisi. Nulla facilisi.
-					Nulla facilisi. Nulla facilisi. Nulla facilisi. Nulla facilisi. Nulla
-					facilisi. Nulla facilisi. Nulla facilisi. Nulla facilisi. Nulla
-					facilisi. Nulla orem ipsum dolor sit amet, consectetur adipiscing
-					elit. Sed tincidunt, nisl eget ultricies tincidunt, nisl nisl aliquam
-					nisl, et lacinia nisl nisl nec nunc. Nulla facilisi. Nulla facilisi.
-					Nulla facilisi. Nulla facilisi. Nulla facilisi. Nulla facilisi. Nulla
-					facilisi. Nulla facilisi. Nulla facilisi. Nulla facilisi. Nulla
-					facilisi. Nulla orem ipsum dolor sit amet, consectetur adipiscing
-					elit. Sed tincidunt, nisl eget ultricies tincidunt, nisl nisl aliquam
-					nisl, et lacinia nisl nisl nec nunc. Nulla facilisi. Nulla facilisi.
-					Nulla facilisi. Nulla facilisi. Nulla facilisi. Nulla facilisi. Nulla
-					facilisi. Nulla facilisi. Nulla facilisi. Nulla facilisi. Nulla
-					facilisi. Nulla orem ipsum dolor sit amet, consectetur adipiscing
-					elit. Sed tincidunt, nisl eget ultricies tincidunt, nisl nisl aliquam
-					nisl, et lacinia nisl nisl nec nunc. Nulla facilisi. Nulla facilisi.
-					Nulla facilisi. Nulla facilisi. Nulla facilisi. Nulla facilisi. Nulla
-					facilisi. Nulla facilisi. Nulla facilisi. Nulla facilisi. Nulla
-					facilisi. Nulla orem ipsum dolor sit amet, consectetur adipiscing
-					elit. Sed tincidunt, nisl eget ultricies tincidunt, nisl nisl aliquam
-					nisl, et lacinia nisl nisl nec nunc. Nulla facilisi. Nulla facilisi.
-					Nulla facilisi. Nulla facilisi. Nulla facilisi. Nulla facilisi. Nulla
-					facilisi. Nulla facilisi. Nulla facilisi. Nulla facilisi. Nulla
-					facilisi. Nulla
+					Material: Polerad nickel eller mässing, skärm i silke. Svart
+					textilsladd.
+				</p>
+				<p>
+					Mått: Bredd: 60 cm Djup: 18 cm Lamphöjd: 27,5 cm Total höjd: max. 180
+					cm
+				</p>
+				<p>
+					Specifikationer: Rekommenderad ljuskälla: 2 x E14, 40W Ljuskälla ingår
+					ej.
 				</p>
 			</article>
 		</div>

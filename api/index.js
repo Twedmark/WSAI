@@ -117,7 +117,6 @@ app.post('/login', async (req, res) => {
     return;
   }
 
-  // här ska till att man hämtar alla roller och lägger dom i token
   const roles = await db.getRolesForUser(result[0].userId);
   let userRoles = roles.map(role => { 
     return role.rolename;
@@ -129,9 +128,7 @@ app.post('/login', async (req, res) => {
     { expiresIn: '8h' }
   );
 
-  res.
-  status(200).
-  cookie('token', accessToken, { httpOnly: true }).
+  res.status(200).cookie('token', accessToken, { httpOnly: true }).
   json({ email: result[0].email, roles: userRoles, accessToken: accessToken });
 });
 

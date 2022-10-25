@@ -4,6 +4,9 @@
 }
 
 .cart {
+  border: 2px solid black;
+  border-radius: 10px;
+  background: white;
   position: fixed;
   top: 70px;
   right: 10px;
