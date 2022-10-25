@@ -7,10 +7,6 @@ const Product = () => {
 
 	return (
 		<div>
-			<header className={styles.header}>
-				<h1 className={styles.title}>Product</h1>
-				<h2>Welcome to WSAI</h2>
-			</header>
 			<main className={styles.main}>
 				<div className={styles.imageContainer}>
 					<img
@@ -32,7 +28,7 @@ const Product = () => {
 				</div>
 				<div className={styles.infoScrollContainer}>
 					<div className={styles.infoContainer}>
-						<h1 className={styles.title}>Product Name</h1>
+						<h1 className={styles.title}>Posthorn</h1>
 						<p className={styles.description}>
 							Posthorn, från Kalmar Werkstätten, är en minimalistisk pendellampa
 							med en charmigt öglad arm som håller två skärmar i siden. De
