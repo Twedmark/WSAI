@@ -8,14 +8,15 @@ const Navbar = () => {
 	const router = useRouter();
 
 	const determineActive = (path: string) => {
+		console.log(router);
 		return router.pathname === path ? styles.active : "";
 	};
 
 	return (
 		<div className={styles.navbar}>
 			<div className={styles.navbarLeft}>
-				<Link href="/product">
-					<a className={determineActive("/product")}>Product</a>
+				<Link href="/product/Posthorn">
+					<a>Product</a>
 				</Link>
 			</div>
 

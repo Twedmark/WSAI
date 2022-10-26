@@ -1,6 +1,10 @@
+import { useRouter } from "next/router";
 import styles from "./Product.module.css";
 
 const Product = () => {
+	const router = useRouter();
+	const { productId } = router.query;
+
 	function addToCart() {
 		console.log("add to cart");
 	}
@@ -68,3 +72,18 @@ const Product = () => {
 };
 
 export default Product;
+
+/* export const getServersideProps = async (context: any) => {
+	const productId = context.params.productId;
+	const product = await fetch(
+		`http://localhost:3001/getProductById/${productId}`
+	);
+
+	const data = await product.json();
+
+	return {
+		props: {
+			data,
+		},
+	};
+}; */
