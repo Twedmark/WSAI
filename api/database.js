@@ -9,7 +9,7 @@ const DB_PASSWORD = process.env.DB_PASSWORD;
 const DB_DATABASE = process.env.DB_DATABASE;
 const DB_PORT = process.env.DB_PORT;
 
-const db = mysql.createPool({
+const pool = mysql.createPool({
   connectionLimit: 100,
   host: DB_HOST,
   user: DB_USER,
@@ -19,9 +19,11 @@ const db = mysql.createPool({
   multipleStatements: false
 });
 
-const getAllUsers = async () => {
+let db = {}
+
+db.getAllUsers = async () => {
   return new Promise((resolve, reject)=>{
-    db.query("SELECT * FROM Users", (err, result) => {
+    pool.query("SELECT * FROM Users", (err, result) => {
       if (err) {
         reject("Could not get all users: SQL ERROR ",err);
       }else {
@@ -31,13 +33,13 @@ const getAllUsers = async () => {
   });
 };
 
-const getUserByemail = (email) => {
+db.getUserByemail = (email) => {
   return new Promise((resolve, reject)=>{
     // email = email.replace(/[^a-zA-Z0-9]/g, '');
     let sql = "SELECT * FROM Users WHERE email=?;";
     let query = mysql.format(sql, [email]);
     console.log(query);
-    db.query(query, (err, result) => {
+    pool.query(query, (err, result) => {
       if (err) {
         console.log("Could not get user: SQL ERROR ", err);
         reject(err);
@@ -48,12 +50,12 @@ const getUserByemail = (email) => {
   });
 };
 
-const createUser = (email, password) => {
+db.createUser = (email, password) => {
   return new Promise((resolve, reject)=>{
     // email = email.replace(/[^a-zA-Z0-9]/g, '');
     let sql = "INSERT INTO Users (userId, email, password) VALUES (null, ?, ?);";
     let query = mysql.format(sql, [email, password]);
-    db.query(query, (err, result) => {
+    pool.query(query, (err, result) => {
       if (err) {
         reject("Could not create user: SQL ERROR ",err);
       }else {
@@ -67,7 +69,7 @@ const assignRole = (email, role) => {
   return new Promise((resolve, reject)=>{
     let sql = "INSERT INTO UsersWithRoles (userId, roleId) VALUES (?, ?);";
     let query = mysql.format(sql, [email, role]);
-    db.query(query, (err, result) => {
+    pool.query(query, (err, result) => {
       if (err) {
         reject("Could not assign role: SQL ERROR ",err);
       }else {
@@ -77,12 +79,12 @@ const assignRole = (email, role) => {
   });
 };
 
-const deleteUser = (email) => {
+db.deleteUser = (email) => {
   return new Promise((resolve, reject)=>{
     // email = email.replace(/[^a-zA-Z0-9]/g, '');
     let sql = "DELETE FROM Users WHERE email=?;";
     let query = mysql.format(sql, [email]);
-    db.query(query, (err, result) => {
+    pool.query(query, (err, result) => {
       if (err) {
         reject("Could not delete user: SQL ERROR ",err);
       }else {
@@ -92,11 +94,11 @@ const deleteUser = (email) => {
   });
 };
 
-const getRolesForUser = (userId) => {
+db.getRolesForUser = (userId) => {
   return new Promise((resolve, reject)=>{
     let sql = "SELECT * FROM UsersWithRoles INNER JOIN Roles ON Roles.roleId=UsersWithRoles.roleId WHERE userId=?;";
     let query = mysql.format(sql, [userId]);
-    db.query(query, (err, result) => {
+    pool.query(query, (err, result) => {
       if (err) {
         console.log("Could not get roles for user: SQL ERROR ", err);
         reject(err);
@@ -107,4 +109,4 @@ const getRolesForUser = (userId) => {
   });
 };
 
-module.exports = { getAllUsers, getUserByemail, createUser, deleteUser, assignRole, getRolesForUser };
+module.exports = db;

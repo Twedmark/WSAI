@@ -133,6 +133,29 @@ app.post('/login', async (req, res) => {
 });
 
 
+app.get('/getAllProducts', async (req, res) => {
+  console.log('-----getAllProducts-----');
+  let result = await db.getAllProducts()
+  .catch((err) => {
+    console.log(err);
+    res.send("Error getting products");
+  });
+  res.status(200).json(result);
+});
+
+app.get('/getProductById/:id', async (req, res) => {
+  console.log('-----getProductById-----');
+  let id = req.params.id;
+  let result = await db.getProductById(id)
+  .catch((err) => {
+    console.log(err);
+    res.send("Error getting product");
+  });
+  res.status(200).json(result);
+});
+
+
+
 app.listen(port, (err) => {
   if (err) {
     console.log("error listening on port 4000 ", err);
