@@ -2,7 +2,6 @@ import { useRouter } from "next/router";
 import { FC } from "react";
 import styles from "./Product.module.css";
 import type { GetServerSideProps, GetServerSidePropsContext } from "next";
-import { arrayBuffer } from "stream/consumers";
 
 type ProductProps = {
 	name: string;
@@ -31,15 +30,14 @@ const Product: FC<ProductProps> = ({
 		console.log(imageArray);
 		console.log("add to cart");
 	}
-	const imageMap = imageArray?.map((image, index) => {
-		return <img src={image} alt="product" key={index} />;
-	});
 
 	return (
 		<div>
 			<main className={styles.main}>
 				<div className={styles.imageContainer}>
-					<imageMap />
+					{imageArray?.map((image, index) => {
+						return <img src={image} alt="product" key={index} />;
+					})}
 				</div>
 				<div className={styles.infoScrollContainer}>
 					<div className={styles.infoContainer}>
