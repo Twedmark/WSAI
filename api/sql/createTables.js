@@ -45,17 +45,18 @@ db.connect(async (err, connection) => {
     ) DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
     `;
 
-    let createProductTable = `CREATE TABLE Products (
-      productId int NOT NULL AUTO_INCREMENT,
-      name varchar(50) NOT NULL,
-      price varchar(25) NOT NULL,
-      description varchar(1000),
-      material varchar(100),
-      dimensions varchar(100),
-      specification varchar(100),
-      PRIMARY KEY (productId))
-      ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
-      `;
+  let createProductTable = `CREATE TABLE Products (
+    productId int NOT NULL AUTO_INCREMENT,
+    name varchar(50) NOT NULL,
+    price varchar(25) NOT NULL,
+    description varchar(1000),
+    material varchar(100),
+    dimensions varchar(100),
+    specification varchar(100),
+    images varchar(1000),
+    PRIMARY KEY (productId))
+    ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+    `;
 
   db.query(dropAllTables, async (err) => {
     if (err) {

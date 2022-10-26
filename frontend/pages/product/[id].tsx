@@ -2,6 +2,7 @@ import { useRouter } from "next/router";
 import { FC } from "react";
 import styles from "./Product.module.css";
 import type { GetServerSideProps, GetServerSidePropsContext } from "next";
+import { arrayBuffer } from "stream/consumers";
 
 type ProductProps = {
 	name: string;
@@ -24,32 +25,21 @@ const Product: FC<ProductProps> = ({
 }) => {
 	const router = useRouter();
 	// const { productId } = router.query;
+	const imageArray = images.split(",");
 
 	function addToCart() {
-		console.log("add to cart", images);
+		console.log(imageArray);
 		console.log("add to cart");
 	}
+	const imageMap = imageArray?.map((image, index) => {
+		return <img src={image} alt="product" key={index} />;
+	});
 
 	return (
 		<div>
 			<main className={styles.main}>
 				<div className={styles.imageContainer}>
-					<img
-						src="https://artilleriet.centracdn.net/client/dynamic/images/46930_8f4198bbc3-kalmar-posthorn-pendant-nickel-3-zoom.jpg?w=2000"
-						alt="Picture of the author"
-					/>
-					<img
-						src="https://artilleriet.centracdn.net/client/dynamic/images/46930_8f4198bbc3-kalmar-posthorn-pendant-nickel-3-zoom.jpg?w=2000"
-						alt="Picture of the author"
-					/>
-					<img
-						src="https://artilleriet.centracdn.net/client/dynamic/images/46930_8f4198bbc3-kalmar-posthorn-pendant-nickel-3-zoom.jpg?w=2000"
-						alt="Picture of the author"
-					/>
-					<img
-						src="https://artilleriet.centracdn.net/client/dynamic/images/46930_8f4198bbc3-kalmar-posthorn-pendant-nickel-3-zoom.jpg?w=2000"
-						alt="Picture of the author"
-					/>
+					<imageMap />
 				</div>
 				<div className={styles.infoScrollContainer}>
 					<div className={styles.infoContainer}>
