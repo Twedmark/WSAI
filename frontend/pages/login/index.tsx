@@ -9,10 +9,11 @@ const Login: NextPage = () => {
 
 	const [user, setUser] = useState(null);
 
-	async function login() {
-		console.log(email, password);
+	async function login(e: any) {
+		e.preventDefault();
 		const response = await fetch("http://localhost:4000/login", {
 			method: "POST",
+			credentials: "include",
 			headers: {
 				"Content-Type": "application/json",
 			},
@@ -35,10 +36,15 @@ const Login: NextPage = () => {
 	return (
 		<div>
 			{user ? (
-				<h1>Du är redan inloggad!</h1>
+				<>
+					<h1>Du är redan inloggad!</h1>
+					<Link href="/profile">
+						<a>Go to profile</a>
+					</Link>
+				</>
 			) : (
 				<main className={styles.main}>
-					<div className={styles.grid}>
+					<form className={styles.grid} onSubmit={login}>
 						<h1 className={styles.title}>Login</h1>
 						<label htmlFor="email">Email</label>
 						<input
@@ -46,6 +52,7 @@ const Login: NextPage = () => {
 							type="text"
 							value={email}
 							onChange={e => setEmail(e.target.value)}
+							required
 						/>
 						<label htmlFor="password">Password</label>
 						<input
@@ -53,10 +60,11 @@ const Login: NextPage = () => {
 							type="password"
 							value={password}
 							onChange={e => setPassword(e.target.value)}
+							required
 						/>
-						<button onClick={login}>Login</button>
+						<button type="submit">Login</button>
 						<Link href="/register">Don't have an account?</Link>
-					</div>
+					</form>
 				</main>
 			)}
 		</div>

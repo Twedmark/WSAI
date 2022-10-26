@@ -15,7 +15,7 @@ const Navbar = () => {
 	return (
 		<div className={styles.navbar}>
 			<div className={styles.navbarLeft}>
-				<Link href="/product/Posthorn">
+				<Link href="/product/1">
 					<a>Product</a>
 				</Link>
 			</div>

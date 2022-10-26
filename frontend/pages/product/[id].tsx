@@ -1,6 +1,7 @@
 import { useRouter } from "next/router";
 import { FC } from "react";
 import styles from "./Product.module.css";
+import type { GetServerSideProps, GetServerSidePropsContext } from "next";
 
 type ProductProps = {
 	name: string;
@@ -91,15 +92,25 @@ const Product: FC<ProductProps> = ({
 
 export default Product;
 
-export async function getServerSideProps(context) {
-	const productId = context.params.id;
+export const getServerSideProps: GetServerSideProps = async (
+	context: GetServerSidePropsContext
+) => {
+	const productId = context.params?.id;
 	const product = await fetch(
 		`http://localhost:4000/getProductById/${productId}`
 	);
-
 	const data = await product.json();
-	console.log("data", data[0]);
+
+	if (data.length === 0) {
+		return {
+			redirect: {
+				destination: "/product404",
+				permanent: false,
+			},
+		};
+	}
+
 	return {
 		props: data[0],
 	};
-}
+};

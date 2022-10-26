@@ -9,11 +9,10 @@ const { authorization, adminAuthorization, superAdminAuthorization } = require('
 
 const app = express();
 
-app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser());
-app.use(cors({credentials: true, origin: 'http://localhost:3000'}));
+app.use( cors({credentials: true, origin: ['http://localhost:3000'] }) );
 
 const port = process.env.PORT;
 
@@ -96,6 +95,8 @@ app.get('/deleteUser/', superAdminAuthorization, async (req, res) => {
   res.status(200).json("User deleted");
 });
 
+const addMinutes = (minutes, date = new Date()) => {   return new Date(date.setMinutes(date.getMinutes() + minutes)); };
+
 app.post('/login', async (req, res) => {
   console.log('-----login-----');
   let account = req.body;
@@ -125,10 +126,12 @@ app.post('/login', async (req, res) => {
   const accessToken = jwt.sign(
     { userId: result[0].userId, email: result.email, roles: userRoles },
     process.env.ACCESS_TOKEN_SECRET,
-    { expiresIn: '8h' }
+    { expiresIn: '10m' }
   );
 
-  res.status(200).cookie('token', accessToken, { httpOnly: true }).
+  return res.
+  cookie('token', accessToken, { httpOnly: true, secure: true, sameSite: "strict", expires: addMinutes(10) }).
+  status(200).
   json({ email: result[0].email, roles: userRoles, accessToken: accessToken });
 });
 
