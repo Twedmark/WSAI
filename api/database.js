@@ -1,5 +1,4 @@
 const mysql = require("mysql");
-
 require('dotenv').config();
 
 
@@ -107,6 +106,35 @@ db.getRolesForUser = (userId) => {
       }
     });
   });
+};
+
+db.getAllProducts = async () => {
+  return new Promise((resolve, reject)=>{
+    pool.query("SELECT * FROM Products", (err, result) => {
+      if (err) {
+        reject("Could not get all products: SQL ERROR ",err);
+      }else {
+        resolve(result);
+      }
+    });
+  }
+  );
+};
+
+db.getProductById = (productId) => {
+  return new Promise((resolve, reject)=>{
+    let sql = "SELECT * FROM Products WHERE productId=?;";
+    let query = mysql.format(sql, [productId]);
+    pool.query(query, (err, result) => {
+      if (err) {
+        console.log("Could not get product: SQL ERROR ", err);
+        reject(err);
+      } else {
+        resolve(result);
+      }
+    });
+  }
+  );
 };
 
 module.exports = db;
