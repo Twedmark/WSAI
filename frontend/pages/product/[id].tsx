@@ -2,7 +2,6 @@ import { useRouter } from "next/router";
 import { FC } from "react";
 import styles from "./Product.module.css";
 import type { GetServerSideProps, GetServerSidePropsContext } from "next";
-import { arrayBuffer } from "stream/consumers";
 
 type ProductProps = {
 	name: string;
@@ -36,7 +35,7 @@ const Product: FC<ProductProps> = ({
 		<div>
 			<main className={styles.main}>
 				<div className={styles.imageContainer}>
-					{imageArray.map((image, index) => {
+					{imageArray?.map((image, index) => {
 						return <img src={image} alt="product" key={index} />;
 					})}
 				</div>
