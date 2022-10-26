@@ -40,34 +40,42 @@ export const ProductCard: FC<Props> = ({
 	}
 
 	return (
-		<div>
-			<article
-				className={largeVersion ? styles.largeCard : styles.card}
-				onClick={() => {
-					router.push(`/product/${productId}`);
-				}}
-			>
-				<div className={styles.imageContainer}>
-					{imageArray?.map((image, index) => {
-						return <img src={image} alt="product" key={index} />;
+		<article
+			className={largeVersion ? styles.largeCard : styles.card}
+			onClick={() => {
+				router.push(`/product/${productId}`);
+			}}
+		>
+			<div className={styles.imageContainer}>
+				{imageArray
+					?.slice(0)
+					.reverse()
+					.map((image, index) => {
+						return (
+							<img
+								className={imageArray.length >= 2 ? styles.opacityHover : ""}
+								src={image}
+								alt="product"
+								key={index}
+							/>
+						);
 					})}
+			</div>
+			<div className={styles.infoContainer}>
+				<h1 className={styles.title}>{name}</h1>
+				<div>
+					<h2>{price}</h2>
+					<button
+						onClick={e => {
+							e.stopPropagation();
+							addToCart();
+						}}
+					>
+						<Image src="/shoppingBag.png" width={25} height={25} />
+					</button>
 				</div>
-				<div className={styles.infoContainer}>
-					<h1 className={styles.title}>{name}</h1>
-					<div>
-						<h2>{price}</h2>
-						<button
-							onClick={e => {
-								e.stopPropagation();
-								addToCart();
-							}}
-						>
-							<Image src="/shoppingBag.png" width={25} height={25} />
-						</button>
-					</div>
-				</div>
-			</article>
-		</div>
+			</div>
+		</article>
 	);
 };
 

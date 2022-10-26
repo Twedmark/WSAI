@@ -15,9 +15,9 @@ const Navbar = () => {
 	return (
 		<div className={styles.navbar}>
 			<div className={styles.navbarLeft}>
-				<Link href="/product/1">
+				{/* <Link href="/product/1">
 					<a>Product</a>
-				</Link>
+				</Link> */}
 			</div>
 
 			<div className={styles.navbarCenter}>

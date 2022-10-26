@@ -1,3 +1,4 @@
+import Image from "next/image";
 import { FC, useState } from "react";
 import styles from "./Cart.module.css";
 
@@ -12,7 +13,9 @@ const Cart: FC = () => {
 	}
 	return (
 		<div className={styles.cartContainer}>
-			<p onClick={toggleCart}>Cart</p>
+			<p onClick={toggleCart} style={{ cursor: "pointer" }}>
+				<Image src="/shoppingBag.png" width={25} height={25} />{" "}
+			</p>
 			<div
 				className={
 					cartOpen

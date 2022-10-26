@@ -6,10 +6,6 @@ body {
     Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
 }
 
-body {
-  margin-top: 60px;
-}
-
 a {
   color: inherit;
   text-decoration: none;
@@ -17,6 +13,14 @@ a {
 
 * {
   box-sizing: border-box;
+}
+
+:root {
+  --navbarHeight: 40px;
+}
+
+body {
+  margin-top: var(--navbarHeight);
 }
 
 /* @media (prefers-color-scheme: dark) {

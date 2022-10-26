@@ -43,6 +43,6 @@
   .infoContainer {
     padding: 20px;
     position: sticky;
-    top: 60px;
+    top: var(--navbarHeight);
   }
 }
