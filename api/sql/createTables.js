@@ -21,7 +21,7 @@ const db = mysql.createConnection({
 
 db.connect(async (err, connection) => {
   console.log('RUNNING CREATE TABLE SCRIPT');
-  let dropAllTables = `DROP TABLE IF EXISTS UsersWithRoles; DROP TABLE IF EXISTS Roles; DROP TABLE IF EXISTS Users;`;
+  let dropAllTables = `DROP TABLE IF EXISTS UsersWithRoles; DROP TABLE IF EXISTS Roles; DROP TABLE IF EXISTS Users; DROP TABLE IF EXISTS Products;`;
 
   let createUsersTable = `CREATE TABLE Users (
     userId int NOT NULL AUTO_INCREMENT, 
@@ -50,9 +50,9 @@ db.connect(async (err, connection) => {
       name varchar(50) NOT NULL,
       price int NOT NULL,
       description varchar(100),
-      material varchar(50),
+      material varchar(100),
       dimensions varchar(100),
-      specification varchar(50),
+      specification varchar(100),
       PRIMARY KEY (productId))
       ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
       `;

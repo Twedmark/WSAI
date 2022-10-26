@@ -23,6 +23,15 @@ const db = mysql.createConnection({
 
 // CREATE MOCK DATA / USERS / ROLES
 
+let mockProduct = {
+  name: "Posthorn Pendant",
+  price: "18 180Kr",
+  description: "Posthorn, från Kalmar Werkstätten, är en minimalistisk pendellampa med en charmigt öglad arm som håller två skärmar i siden. De naturliga lampskärmarna bidrar till ett omgivande ljus i alla riktningar. I 140 år har Kalmar ägnat sig åt anrikt hantverk och progressiv design för att skapa dekorativ och funktionell belysning. Det österrikiska hantverket är elegant i geometrin och delikat i sina proportioner. Kombinationen av ärliga material, många års erfarenhet inom hantverket och modern design, ingjuter lamporna en rigorös minimalism med värme och mänsklighet.",
+  material: "Polerad nickel eller mässing, skärm i silke. Svart textilsladd.",
+  dimensions: "Bredd: 60 cm, Djup: 18 cm, Lamphöjd: 27,5 cm, Total höjd: max. 180 cm",
+  specification: "Rekommenderad ljuskälla: 2 x E14, 40W. Ljuskälla ingår ej."
+}
+
 db.connect(async (err, connection) => {
   console.log('RUNNING CREATE TABLE SCRIPT');
   let userAccount = `INSERT INTO Users (userId, email, password) VALUES (null, "User", "${pwd123Hashed}");`;
@@ -39,8 +48,10 @@ db.connect(async (err, connection) => {
   let superAdminWithUserRole = `INSERT INTO UsersWithRoles (userId, roleId) VALUES (3, 1000);`;
   let superAdminWithAdminRole = `INSERT INTO UsersWithRoles (userId, roleId) VALUES (3, 2000);`;
   let superAdminWithSuperAdminRole = `INSERT INTO UsersWithRoles (userId, roleId) VALUES (3, 3000);`;
+  
+  let products = `INSERT INTO Products (productId, name, price, description, material, dimensions, specification) VALUES (null, "${mockProduct.name}", "${mockProduct.price}", "${mockProduct.description}", "${mockProduct.material}", "${mockProduct.dimensions}", "${mockProduct.specification}");`;
 
-  let query = userAccount + adminAccount + superAdminAccount + userRole + adminRole + superAdminRole + userWithUserRole + adminWithUserRole + adminWithAdminRole + superAdminWithUserRole + superAdminWithAdminRole + superAdminWithSuperAdminRole;
+  let query = userAccount + adminAccount + superAdminAccount + userRole + adminRole + superAdminRole + userWithUserRole + adminWithUserRole + adminWithAdminRole + superAdminWithUserRole + superAdminWithAdminRole + superAdminWithSuperAdminRole + products;
   db.query(query, async (err) => {
     if (err) {
       console.log('ERROR CREATING TABLES', err);
