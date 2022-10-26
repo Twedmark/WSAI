@@ -31,15 +31,14 @@ const Product: FC<ProductProps> = ({
 		console.log(imageArray);
 		console.log("add to cart");
 	}
-	const imageMap = imageArray?.map((image, index) => {
-		return <img src={image} alt="product" key={index} />;
-	});
 
 	return (
 		<div>
 			<main className={styles.main}>
 				<div className={styles.imageContainer}>
-					<imageMap />
+					{imageArray.map((image, index) => {
+						return <img src={image} alt="product" key={index} />;
+					})}
 				</div>
 				<div className={styles.infoScrollContainer}>
 					<div className={styles.infoContainer}>
@@ -51,8 +50,9 @@ const Product: FC<ProductProps> = ({
 				</div>
 			</main>
 			<article className={styles.article}>
-				<h1 className={styles.title}>{name}</h1>
-				<p className={styles.description}>{description}</p>
+				<p className={styles.description}>{material}</p>
+				<p className={styles.description}>{dimensions}</p>
+				<p className={styles.description}>{specification}</p>
 			</article>
 		</div>
 	);
