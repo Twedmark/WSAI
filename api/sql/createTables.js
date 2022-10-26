@@ -45,6 +45,18 @@ db.connect(async (err, connection) => {
     ) DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
     `;
 
+    let createProductTable = `CREATE TABLE Products (
+      productId int NOT NULL AUTO_INCREMENT,
+      name varchar(50) NOT NULL,
+      price int NOT NULL,
+      description varchar(100),
+      material varchar(50),
+      dimensions varchar(100),
+      specification varchar(50),
+      PRIMARY KEY (productId))
+      ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+      `;
+
   db.query(dropAllTables, async (err) => {
     if (err) {
       console.log('ERROR DROPPING TABLES', err);
@@ -69,6 +81,13 @@ db.connect(async (err, connection) => {
             process.exit(1);
           }
           console.log('USERSWITHROLE TABLE CREATED!');
+          db.query(createProductTable, async (err) =>{
+            if (err) {
+              console.log('ERROR CREATING PRODUCTS TABLE', err);
+              process.exit(1);
+            }
+          })
+          console.log('PRODUCTS TABLE CREATED!');
           process.exit(0);
         });
       });
