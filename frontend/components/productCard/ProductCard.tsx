@@ -1,6 +1,7 @@
 import { useRouter } from "next/router";
 import { FC } from "react";
 import styles from "./ProductCard.module.css";
+import Image from "next/image";
 
 type Props = {
 	product: {
@@ -40,7 +41,12 @@ export const ProductCard: FC<Props> = ({
 
 	return (
 		<div>
-			<article className={largeVersion ? styles.largeCard : styles.card}>
+			<article
+				className={largeVersion ? styles.largeCard : styles.card}
+				onClick={() => {
+					router.push(`/product/${productId}`);
+				}}
+			>
 				<div className={styles.imageContainer}>
 					{imageArray?.map((image, index) => {
 						return <img src={image} alt="product" key={index} />;
@@ -48,8 +54,17 @@ export const ProductCard: FC<Props> = ({
 				</div>
 				<div className={styles.infoContainer}>
 					<h1 className={styles.title}>{name}</h1>
-					<h2>{price}</h2>
-					<button onClick={addToCart}>Add to cart</button>
+					<div>
+						<h2>{price}</h2>
+						<button
+							onClick={e => {
+								e.stopPropagation();
+								addToCart();
+							}}
+						>
+							<Image src="/shoppingBag.png" width={25} height={25} />
+						</button>
+					</div>
 				</div>
 			</article>
 		</div>

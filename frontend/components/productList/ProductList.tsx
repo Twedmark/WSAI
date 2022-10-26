@@ -5,13 +5,13 @@ import ProductCard from "../productCard/ProductCard";
 const ProductList = ({ largeVersion = false }) => {
 	const [products, setProducts] = useState([]);
 	const [loading, setLoading] = useState(false);
-	const [error, setError] = useState(true);
+	const [error, setError] = useState(false);
 
 	useEffect(() => {
 		const fetchProducts = async () => {
 			setLoading(true);
 			try {
-				const response = await fetch("http://localhost:4000/getProducts");
+				const response = await fetch("http://localhost:4000/getAllProducts");
 				const data = await response.json();
 				setProducts(data);
 			} catch (err) {
