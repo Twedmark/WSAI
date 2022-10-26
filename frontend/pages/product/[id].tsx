@@ -1,11 +1,29 @@
 import { useRouter } from "next/router";
+import { FC } from "react";
 import styles from "./Product.module.css";
 
-const Product = () => {
+type ProductProps = {
+	name: string;
+	price: number;
+	description: string;
+	material: string;
+	dimensions: string;
+	specification: string;
+};
+
+const Product: FC<ProductProps> = ({
+	name,
+	price,
+	description,
+	material,
+	dimensions,
+	specification,
+}) => {
 	const router = useRouter();
-	const { productId } = router.query;
+	// const { productId } = router.query;
 
 	function addToCart() {
+		console.log("add to cart", name);
 		console.log("add to cart");
 	}
 
@@ -73,17 +91,15 @@ const Product = () => {
 
 export default Product;
 
-/* export const getServersideProps = async (context: any) => {
-	const productId = context.params.productId;
+export async function getServerSideProps(context) {
+	const productId = context.params.id;
 	const product = await fetch(
-		`http://localhost:3001/getProductById/${productId}`
+		`http://localhost:4000/getProductById/${productId}`
 	);
 
 	const data = await product.json();
-
+	console.log("data", data[0]);
 	return {
-		props: {
-			data,
-		},
+		props: data[0],
 	};
-}; */
+}

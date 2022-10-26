@@ -8,7 +8,7 @@ const Navbar = () => {
 	const router = useRouter();
 
 	const determineActive = (path: string) => {
-		console.log(router);
+		//console.log(router);
 		return router.pathname === path ? styles.active : "";
 	};
 
