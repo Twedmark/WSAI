@@ -48,8 +48,8 @@ db.connect(async (err, connection) => {
     let createProductTable = `CREATE TABLE Products (
       productId int NOT NULL AUTO_INCREMENT,
       name varchar(50) NOT NULL,
-      price int NOT NULL,
-      description varchar(100),
+      price varChar(25),
+      description varchar(1000),
       material varchar(100),
       dimensions varchar(100),
       specification varchar(100),
@@ -86,9 +86,10 @@ db.connect(async (err, connection) => {
               console.log('ERROR CREATING PRODUCTS TABLE', err);
               process.exit(1);
             }
-          })
+          
           console.log('PRODUCTS TABLE CREATED!');
           process.exit(0);
+        });
         });
       });
     });
