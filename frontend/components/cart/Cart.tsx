@@ -17,6 +17,17 @@ const Cart: FC = () => {
 			<p onClick={toggleCart} style={{ cursor: "pointer" }}>
 				<Image src="/shoppingBag.png" width={25} height={25} />{" "}
 			</p>
+			{cartOpen ? (
+				<div
+					className={`${styles.cartBackground} ${styles.cartBackgroundOpen}`}
+					onClick={toggleCart}
+					onMouseOver={toggleCart}
+				></div>
+			) : (
+				<div
+					className={`${styles.cartBackground} ${styles.cartBackgroundClose}`}
+				></div>
+			)}
 			<div
 				className={
 					cartOpen
