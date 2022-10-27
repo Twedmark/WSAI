@@ -13,6 +13,7 @@ const Home: NextPage = () => {
 
 			<main>
 				<ProductList largeVersion />
+				<ProductList />
 			</main>
 		</div>
 	);

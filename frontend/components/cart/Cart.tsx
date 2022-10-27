@@ -11,6 +11,7 @@ const Cart: FC = () => {
 		setCartOpen(!cartOpen);
 		setOpenedEver(true);
 	}
+
 	return (
 		<div className={styles.cartContainer}>
 			<p onClick={toggleCart} style={{ cursor: "pointer" }}>
