@@ -7,14 +7,46 @@
 
   scroll-snap-align: start;
   flex-shrink: 0;
+
+  transition: all 0.3s ease-in-out;
 }
 
 .card {
-  width: calc(100% / 5);
+  width: 100%;
+}
+
+@media (min-width: 400px) {
+  .card {
+    width: calc(100% / 2);
+  }
+}
+
+@media (min-width: 700px) {
+  .card {
+    width: calc(100% / 4);
+  }
+}
+
+@media (min-width: 1000px) {
+  .card {
+    width: calc(100% / 5);
+  }
 }
 
 .largeCard {
-  width: calc(100% / 3);
+  width: 100%;
+}
+
+@media (min-width: 600px) {
+  .largeCard {
+    width: calc(100% / 2);
+  }
+}
+
+@media (min-width: 1000px) {
+  .largeCard {
+    width: calc(100% / 3);
+  }
 }
 
 .card .imageContainer {

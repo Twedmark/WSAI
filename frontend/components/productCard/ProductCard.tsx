@@ -17,8 +17,6 @@ type Props = {
 	largeVersion?: boolean;
 };
 
-type Product = {};
-
 export const ProductCard: FC<Props> = ({
 	product: {
 		productId,

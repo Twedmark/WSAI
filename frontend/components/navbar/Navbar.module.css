@@ -9,6 +9,7 @@
     height: var(--navbarHeight);
     background-color: white;
     padding: 0 2em;
+    border-bottom: 1px solid lightgrey;
 }
 
 .navbarLeft, .navbarCenter, .navbarRight{
