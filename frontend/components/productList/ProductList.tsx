@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
-import styles from "./ProductList.module.css";
 import ProductCard from "../productCard/ProductCard";
+import styles from "./ProductList.module.css";
 
 const ProductList = ({ largeVersion = false }) => {
 	const [products, setProducts] = useState([]);
@@ -26,11 +26,15 @@ const ProductList = ({ largeVersion = false }) => {
 	}, []);
 
 	if (loading) {
-		return <div>Loading...</div>;
+		return (
+			<div className={styles.loading}>
+				<h1>Loading...</h1>
+			</div>
+		);
 	}
 
 	if (error) {
-		return <div>There was an error: {error}</div>;
+		return <div className={styles.error}>There was an error: {error}</div>;
 	}
 
 	type Product = {

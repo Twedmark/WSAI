@@ -98,7 +98,7 @@
     display: block;
   }
   100% {
-    display: none !important;
+    visibility: hidden;
     opacity: 0;
   }
 }
