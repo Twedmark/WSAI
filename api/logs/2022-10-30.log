@@ -1,0 +1,9 @@
+2022-10-30T16:02:06.713Z [Winston] debug: listening on port 4000
+2022-10-30T16:05:22.899Z [Winston] debug: listening on port 4000
+2022-10-30T16:05:26.185Z [Winston] debug: -----getRandomProducts-----
+2022-10-30T16:05:26.235Z [Winston] debug: -----getRandomProducts-----
+2022-10-30T16:05:26.249Z [Winston] debug: -----getRandomProducts-----
+2022-10-30T16:05:26.263Z [Winston] debug: -----getRandomProducts-----
+2022-10-30T16:33:59.391Z [Winston] debug: -----login-----
+2022-10-30T16:33:59.393Z [Winston] debug: SELECT * FROM Users WHERE email='superadmin';
+2022-10-30T16:34:01.036Z [Winston] debug: -----getAllUsers-----
