@@ -9,11 +9,11 @@
 }
 
 .cartBackgroundOpen{
-  animation: fadeIn 0.2s ease-in forwards;
+  animation: fadeIn 0.3s ease-in forwards;
 }
 
 .cartBackgroundClose{
-  animation: fadeOut 0.2s ease-in forwards;
+  animation: fadeOut 0.3s ease-in forwards;
 }
 
 .cartContainer {
@@ -23,7 +23,9 @@
 
 .cart {
   border: 2px solid black;
-  border-radius: 10px;
+  border-top: 0;
+  border-right: 0;
+  border-bottom-left-radius: 10px;
   background: white;
   position: fixed;
   top: var(--navbarHeight);
@@ -44,11 +46,11 @@
 }
 
 .cartOpened {
-  animation: expand 0.2s ease-in-out forwards;
+  animation: expand 0.3s ease-in-out forwards;
 }
 
 .cartClosed {
-  animation: collapse 0.2s ease-in-out forwards;
+  animation: collapse 0.3s ease-in-out forwards;
 }
 
 @keyframes expand {
@@ -85,20 +87,20 @@
   }
   100% {
     display: block;
-    opacity: 0.5;
+    opacity: 0.3;
   }
 }
 
 @keyframes fadeOut {
   0% {
     display: block;
-    opacity: 0.5;
+    opacity: 0.3;
   }
   1% {
     display: block;
   }
   100% {
-    display: none !important;
+    visibility: hidden;
     opacity: 0;
   }
 }

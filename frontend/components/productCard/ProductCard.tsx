@@ -36,7 +36,11 @@ export const ProductCard: FC<Props> = ({
 	const imageArray = images.split(",");
 
 	function addToCart() {
-		console.log("add to cart");
+		let localArray = JSON.parse(localStorage.getItem("cart") || "[]");
+		localStorage.setItem(
+			"cart",
+			JSON.stringify([...localArray, String(productId)])
+		);
 	}
 
 	return (
