@@ -43,6 +43,12 @@ export const ProductCard: FC<Props> = ({
 			onClick={() => {
 				router.push(`/product/${productId}`);
 			}}
+			onKeyDown={e => {
+				if (e.key === "Enter" || e.key === " ") {
+					router.push(`/product/${productId}`);
+				}
+			}}
+			tabIndex={0}
 		>
 			<div className={styles.imageContainer}>
 				{imageArray
@@ -67,6 +73,11 @@ export const ProductCard: FC<Props> = ({
 						onClick={e => {
 							e.stopPropagation();
 							addToCart();
+						}}
+						onKeyDown={e => {
+							//stop it from triggering the parent onClick
+							e.stopPropagation();
+							//dont do add to cart explicitly, since this apparently triggers the onClick, thus still adding to cart
 						}}
 					>
 						<Image src="/shoppingBag.png" width={25} height={25} />

@@ -141,7 +141,18 @@ app.get('/getAllProducts', async (req, res) => {
   let result = await db.getAllProducts()
   .catch((err) => {
     console.log(err);
-    res.send("Error getting products");
+    res.status(400).send("Error getting products");
+  });
+  res.status(200).json(result);
+});
+
+app.get('/getRandomProducts/:amount', async (req, res) => {
+  console.log('-----getRandomProducts-----');
+  let amount = Number(req.params.amount);
+  let result = await db.getRandomProducts(amount)
+  .catch((err) => {
+    console.log(err);
+    res.status(400).send("Error getting products");
   });
   res.status(200).json(result);
 });

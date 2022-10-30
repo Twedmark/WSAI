@@ -3,6 +3,8 @@ import { FC } from "react";
 import styles from "./Product.module.css";
 import type { GetServerSideProps, GetServerSidePropsContext } from "next";
 
+import parse from "html-react-parser";
+
 type ProductProps = {
 	name: string;
 	price: number;
@@ -42,7 +44,7 @@ const Product: FC<ProductProps> = ({
 				<div className={styles.infoScrollContainer}>
 					<div className={styles.infoContainer}>
 						<h1 className={styles.title}>{name}</h1>
-						<p className={styles.description}>{description}</p>
+						<div className={styles.description}>{parse(description)}</div>
 						<h2>{price}</h2>
 						<button onClick={addToCart}>Add to cart</button>
 					</div>

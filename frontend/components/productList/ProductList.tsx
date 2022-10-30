@@ -11,7 +11,9 @@ const ProductList = ({ largeVersion = false }) => {
 		const fetchProducts = async () => {
 			setLoading(true);
 			try {
-				const response = await fetch("http://localhost:4000/getAllProducts");
+				const response = await fetch(
+					"http://localhost:4000/getRandomProducts/10"
+				);
 				const data = await response.json();
 				setProducts(data);
 			} catch (err) {

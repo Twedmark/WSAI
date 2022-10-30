@@ -121,6 +121,21 @@ db.getAllProducts = async () => {
   );
 };
 
+db.getRandomProducts = (amount) => {
+  return new Promise((resolve, reject)=>{
+    let sql = "SELECT * FROM Products ORDER BY RAND() LIMIT ?;";
+    let query = mysql.format(sql, [amount]);
+    console.log(query);
+    pool.query(query, (err, result) => {
+      if (err) {
+        reject("Could not get random products: SQL ERROR ",err);
+      }else {
+        resolve(result);
+      }
+    });
+  });
+};
+
 db.getProductById = (productId) => {
   return new Promise((resolve, reject)=>{
     let sql = "SELECT * FROM Products WHERE productId=?;";
