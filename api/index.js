@@ -5,6 +5,8 @@ const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 const cookieParser = require('cookie-parser');
 
+const logger = require("./logger");
+
 const { authorization, adminAuthorization, superAdminAuthorization } = require('./middleware/authorization');
 
 const app = express();
@@ -21,11 +23,11 @@ app.get('/', (req, res) => {
 });
 
 app.get('/getAllUsers', superAdminAuthorization, async (req, res) => {
-  console.log('-----getAllUsers-----');
+  logger.debug('-----getAllUsers-----');
 
   const result = await db.getAllUsers()
   .catch((err) => {
-    console.log(err);
+    logger.error(err);
     res.send("Error");
   });
 
@@ -35,13 +37,13 @@ app.get('/getAllUsers', superAdminAuthorization, async (req, res) => {
 //TODO: add get self by token
 
 app.post('/getUserByemail/', superAdminAuthorization, async (req, res) => {
-  console.log('-----getUserByemail-----');
+  logger.debug('-----getUserByemail-----');
 
   let email = req.body.email;
 
   const result = await db.getUserByemail(email)
   .catch((err) => {
-    console.log(err);
+    logger.err(err);
     res.status(500).json({ message: "Error getting user" });
   });
 
@@ -49,7 +51,7 @@ app.post('/getUserByemail/', superAdminAuthorization, async (req, res) => {
 });
 
 app.post('/createUser', async (req, res) => {
-  console.log('-----createUser-----');
+  logger.debug('-----createUser-----');
 
   let email = req.body.email;
   let password = req.body.password;
@@ -62,7 +64,7 @@ app.post('/createUser', async (req, res) => {
 
   const userExists = await db.getUserByemail(email)
   .catch((err) => {
-    console.log(err);
+    logger.error(err);
     res.status(500).json({ message: "Error getting user to check if already exists" });
   });
   if(userExists.length > 0){
@@ -72,7 +74,7 @@ app.post('/createUser', async (req, res) => {
 
   const resultId = await db.createUser(email, hash)
   .catch((err) => {
-    console.log(err);
+    logger.error(err);
     res.status(500).json({ message: "Error creating user" });
   });
 
@@ -82,13 +84,13 @@ app.post('/createUser', async (req, res) => {
 });
 
 app.get('/deleteUser/', superAdminAuthorization, async (req, res) => {
-  console.log('-----deleteUser-----');
+  logger.debug('-----deleteUser-----');
 
   let email = req.body.email;
 
   const result = await db.deleteUser(email)
   .catch((err) => {
-    console.log(err);
+    logger.error(err);
     res.status(500).json({ message: "Error deleting user" });
   });
 
@@ -98,12 +100,12 @@ app.get('/deleteUser/', superAdminAuthorization, async (req, res) => {
 const addMinutes = (minutes, date = new Date()) => {   return new Date(date.setMinutes(date.getMinutes() + minutes)); };
 
 app.post('/login', async (req, res) => {
-  console.log('-----login-----');
+  logger.debug('-----login-----');
   let account = req.body;
 
   let result = await db.getUserByemail(account.email)
   .catch((err) => {
-    console.log(err);
+    logger.error(err);
     res.send("Error");
   });
 
@@ -137,21 +139,32 @@ app.post('/login', async (req, res) => {
 
 
 app.get('/getAllProducts', async (req, res) => {
-  console.log('-----getAllProducts-----');
+  logger.debug('-----getAllProducts-----');
   let result = await db.getAllProducts()
   .catch((err) => {
-    console.log(err);
-    res.send("Error getting products");
+    logger.error(err);
+    res.status(400).send("Error getting products");
+  });
+  res.status(200).json(result);
+});
+
+app.get('/getRandomProducts/:amount', async (req, res) => {
+  logger.debug('-----getRandomProducts-----');
+  let amount = Number(req.params.amount);
+  let result = await db.getRandomProducts(amount)
+  .catch((err) => {
+    logger.error(err);
+    res.status(400).send("Error getting products");
   });
   res.status(200).json(result);
 });
 
 app.get('/getProductById/:id', async (req, res) => {
-  console.log('-----getProductById-----');
+  logger.debug('-----getProductById-----');
   let id = req.params.id;
   let result = await db.getProductById(id)
   .catch((err) => {
-    console.log(err);
+    logger.error(err);
     res.send("Error getting product");
   });
   res.status(200).json(result);
@@ -161,8 +174,8 @@ app.get('/getProductById/:id', async (req, res) => {
 
 app.listen(port, (err) => {
   if (err) {
-    console.log("error listening on port 4000 ", err);
+    logger.error("error listening on port 4000 ", err);
   }else {
-    console.log("listening on port 4000");
+    logger.debug("listening on port 4000");
   }
 })

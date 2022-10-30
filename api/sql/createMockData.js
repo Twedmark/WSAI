@@ -2,6 +2,8 @@ const mysql = require('mysql');
 
 const bcrypt = require('bcrypt');
 
+const mockProducts = require('./products.json');
+
 const pwd123Hashed = bcrypt.hashSync("pwd123", 10);
 
 require('dotenv').config();
@@ -52,7 +54,7 @@ let mockProduct3 = {
 }
 
 db.connect(async (err, connection) => {
-  console.log('RUNNING CREATE TABLE SCRIPT');
+  console.log('RUNNING CREATE MOCK DATA SCRIPT');
   let userAccount = `INSERT INTO Users (userId, email, password) VALUES (null, "User", "${pwd123Hashed}");`;
   let adminAccount = `INSERT INTO Users (userId, email, password) VALUES (null, "Admin", "${pwd123Hashed}");`;
   let superAdminAccount = `INSERT INTO Users (userId, email, password) VALUES (null, "SuperAdmin", "${pwd123Hashed}");`;
@@ -67,18 +69,29 @@ db.connect(async (err, connection) => {
   let superAdminWithUserRole = `INSERT INTO UsersWithRoles (userId, roleId) VALUES (3, 1000);`;
   let superAdminWithAdminRole = `INSERT INTO UsersWithRoles (userId, roleId) VALUES (3, 2000);`;
   let superAdminWithSuperAdminRole = `INSERT INTO UsersWithRoles (userId, roleId) VALUES (3, 3000);`;
-  
-  let products1 = `INSERT INTO Products (productId, name, price, description, material, dimensions, specification, images) VALUES (null, "${mockProduct1.name}", "${mockProduct1.price}", "${mockProduct1.description}", "${mockProduct1.material}", "${mockProduct1.dimensions}", "${mockProduct1.specification}", "${mockProduct1.images}");`;
-  let products2 = `INSERT INTO Products (productId, name, price, description, material, dimensions, specification, images) VALUES (null, "${mockProduct2.name}", "${mockProduct2.price}", "${mockProduct2.description}", "${mockProduct2.material}", "${mockProduct2.dimensions}", "${mockProduct2.specification}", "${mockProduct2.images}");`;
-  let products3 = `INSERT INTO Products (productId, name, price, description, material, dimensions, specification, images) VALUES (null, "${mockProduct3.name}", "${mockProduct3.price}", "${mockProduct3.description}", "${mockProduct3.material}", "${mockProduct3.dimensions}", "${mockProduct3.specification}", "${mockProduct3.images}");`;
 
-  let query = userAccount + adminAccount + superAdminAccount + userRole + adminRole + superAdminRole + userWithUserRole + adminWithUserRole + adminWithAdminRole + superAdminWithUserRole + superAdminWithAdminRole + superAdminWithSuperAdminRole + products1 + products2 + products3;
+  mockProducts.forEach(async (product, index) => {
+    let insertProduct = `INSERT INTO Products (productId, name, price, description, material, dimensions, specification, images) VALUES (null, "${product.name}", "${product.price}", "${product.description}", "${product.material}", "${product.dimensions}", "${product.specification}", "${product.images}");`;
+    await db.query(insertProduct , (err, result) => {
+      if (err) {
+        console.log('ERROR ADDING MOCK PRODUCTS', err);
+        process.exit(1);
+      }
+      console.log(`Product ${index} inserted`);
+    });
+  });
+  
+  // let products1 = `INSERT INTO Products (productId, name, price, description, material, dimensions, specification, images) VALUES (null, "${mockProduct1.name}", "${mockProduct1.price}", "${mockProduct1.description}", "${mockProduct1.material}", "${mockProduct1.dimensions}", "${mockProduct1.specification}", "${mockProduct1.images}");`;
+  // let products2 = `INSERT INTO Products (productId, name, price, description, material, dimensions, specification, images) VALUES (null, "${mockProduct2.name}", "${mockProduct2.price}", "${mockProduct2.description}", "${mockProduct2.material}", "${mockProduct2.dimensions}", "${mockProduct2.specification}", "${mockProduct2.images}");`;
+  // let products3 = `INSERT INTO Products (productId, name, price, description, material, dimensions, specification, images) VALUES (null, "${mockProduct3.name}", "${mockProduct3.price}", "${mockProduct3.description}", "${mockProduct3.material}", "${mockProduct3.dimensions}", "${mockProduct3.specification}", "${mockProduct3.images}");`;
+
+  let query = userAccount + adminAccount + superAdminAccount + userRole + adminRole + superAdminRole + userWithUserRole + adminWithUserRole + adminWithAdminRole + superAdminWithUserRole + superAdminWithAdminRole + superAdminWithSuperAdminRole;
   db.query(query, async (err) => {
     if (err) {
-      console.log('ERROR CREATING TABLES', err);
+      console.log('ERROR CREATING MOCK DATA', err);
       process.exit(1);
     }
-    console.log('USERS CREATED!');
+    console.log('USERS AND PRODUCTS CREATED!');
     process.exit(0);
   });
 

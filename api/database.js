@@ -1,6 +1,7 @@
 const mysql = require("mysql");
 require('dotenv').config();
 
+const logger = require("./logger");
 
 const DB_HOST = process.env.DB_HOST;
 const DB_USER = process.env.DB_USER;
@@ -37,10 +38,10 @@ db.getUserByemail = (email) => {
     // email = email.replace(/[^a-zA-Z0-9]/g, '');
     let sql = "SELECT * FROM Users WHERE email=?;";
     let query = mysql.format(sql, [email]);
-    console.log(query);
+    logger.debug(query);
     pool.query(query, (err, result) => {
       if (err) {
-        console.log("Could not get user: SQL ERROR ", err);
+        logger.debug("Could not get user: SQL ERROR ", err);
         reject(err);
       } else {
         resolve(result);
@@ -99,7 +100,7 @@ db.getRolesForUser = (userId) => {
     let query = mysql.format(sql, [userId]);
     pool.query(query, (err, result) => {
       if (err) {
-        console.log("Could not get roles for user: SQL ERROR ", err);
+        logger.debug("Could not get roles for user: SQL ERROR ", err);
         reject(err);
       } else {
         resolve(result);
@@ -121,13 +122,27 @@ db.getAllProducts = async () => {
   );
 };
 
+db.getRandomProducts = (amount) => {
+  return new Promise((resolve, reject)=>{
+    let sql = "SELECT * FROM Products ORDER BY RAND() LIMIT ?;";
+    let query = mysql.format(sql, [amount]);
+    pool.query(query, (err, result) => {
+      if (err) {
+        reject("Could not get random products: SQL ERROR ",err);
+      }else {
+        resolve(result);
+      }
+    });
+  });
+};
+
 db.getProductById = (productId) => {
   return new Promise((resolve, reject)=>{
     let sql = "SELECT * FROM Products WHERE productId=?;";
     let query = mysql.format(sql, [productId]);
     pool.query(query, (err, result) => {
       if (err) {
-        console.log("Could not get product: SQL ERROR ", err);
+        logger.debug("Could not get product: SQL ERROR ", err);
         reject(err);
       } else {
         resolve(result);

@@ -19,7 +19,6 @@
   flex-shrink: 0;
 }
 
-
 @media (min-width: 650px) {
   .main {
     flex-direction: row;
