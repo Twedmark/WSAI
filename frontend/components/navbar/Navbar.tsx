@@ -18,6 +18,9 @@ const Navbar = () => {
 				{/* <Link href="/product/1">
 					<a>Product</a>
 				</Link> */}
+				<Link href="/admin/users">
+					<a className={determineActive("/admin/users")}>Users</a>
+				</Link>
 			</div>
 
 			<div className={styles.navbarCenter}>

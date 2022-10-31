@@ -19,6 +19,22 @@ store.subscribe(() => {
 	localStorage.setItem("WSAICart", JSON.stringify(store.getState()));
 });
 
+useEffect(() => {
+	async function loginWithToken() {
+		const response = await fetch("http://localhost:4000/loginWithToken", {
+			method: "POST",
+			credentials: "include",
+			headers: {
+				"Content-Type": "application/json",
+			},
+		});
+		const data = await response.json();
+		console.log(data);
+	}
+
+	loginWithToken();
+}, []);
+
 function MyApp({ Component, pageProps }) {
 	return (
 		<>

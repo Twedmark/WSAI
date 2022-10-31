@@ -34,6 +34,18 @@ app.get('/getAllUsers', superAdminAuthorization, async (req, res) => {
   res.status(200).json(result);
 });
 
+app.get('/getAllUsersWithRoles', superAdminAuthorization, async (req, res) => {
+  logger.debug('-----getAllUsersWithRoles-----');
+
+  const result = await db.getAllUsersWithRoles()
+  .catch((err) => {
+    logger.error(err);
+    res.send("Error");
+  });
+
+  res.status(200).json(result);
+});
+
 //TODO: add get self by token
 
 app.post('/getUserByemail/', superAdminAuthorization, async (req, res) => {
@@ -126,17 +138,51 @@ app.post('/login', async (req, res) => {
   });
 
   const accessToken = jwt.sign(
-    { userId: result[0].userId, email: result.email, roles: userRoles },
+    { userId: result[0].userId, email: result[0].email, roles: userRoles },
     process.env.ACCESS_TOKEN_SECRET,
-    { expiresIn: '10m' }
+    { expiresIn: '1d' }
   );
 
   return res.
-  cookie('token', accessToken, { httpOnly: true, secure: true, sameSite: "strict", expires: addMinutes(10) }).
+  cookie('token', accessToken, { httpOnly: true, secure: true, sameSite: "strict", expires: addMinutes(1440) }).
   status(200).
   json({ email: result[0].email, roles: userRoles, accessToken: accessToken });
 });
 
+app.post('/loginWithToken', authorization, async (req, res) => {
+  logger.debug('-----loginWithToken-----');
+
+  const token = req.cookies.token;
+
+  const result = await db.getUserByToken(token)
+  .catch((err) => {
+    logger.error(err);
+    res.send("Error");
+  });
+
+  const roles = await db.getRolesForUser(result[0].userId);
+  let userRoles = roles.map(role => { 
+    return role.rolename;
+  });
+
+  if (!result) {
+    logger.debug("User not found");
+    res.status(403).json({ message: "User not found" });
+  }
+
+  const refreshToken = jwt.sign({userId: result[0].userId, email: result[0].email, roles: userRoles }, process.env.ACCESS_TOKEN_SECRET, { expiresIn: '1d' });
+
+  const user = {
+    userId: result[0].userId,
+    email: result[0].email,
+    roles: userRoles,
+    token: refreshToken
+  }
+
+  res.cookie('token', token, { httpOnly: true, expires: addMinutes(1440) });
+
+  res.status(200).json(user);
+});
 
 app.get('/getAllProducts', async (req, res) => {
   logger.debug('-----getAllProducts-----');

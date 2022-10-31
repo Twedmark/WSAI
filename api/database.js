@@ -1,4 +1,5 @@
 const mysql = require("mysql");
+const jwt = require('jsonwebtoken');
 require('dotenv').config();
 
 const logger = require("./logger");
@@ -33,12 +34,45 @@ db.getAllUsers = async () => {
   });
 };
 
+// Table Roles has roleId and rolename
+// Table Users has userId, email and password
+// Table UsersWithRoles has userId and roleId
+// get all users and their roles, each object has the user's email, userID, password and an array of roles
+
+db.getAllUsersWithRoles = async () => {
+  return new Promise((resolve, reject)=>{
+    pool.query("SELECT Users.userId, Users.email, Users.password, GROUP_CONCAT(Roles.roleName) AS roles FROM Users INNER JOIN UsersWithRoles ON Users.userId = UsersWithRoles.userId INNER JOIN Roles ON UsersWithRoles.roleId = Roles.roleId GROUP BY Users.userId", (err, result) => {
+      if (err) {
+        reject("Could not get all users: SQL ERROR ",err);
+      }else {
+        resolve(result);
+      }
+    });
+  });
+};
+
 db.getUserByemail = (email) => {
   return new Promise((resolve, reject)=>{
     // email = email.replace(/[^a-zA-Z0-9]/g, '');
     let sql = "SELECT * FROM Users WHERE email=?;";
     let query = mysql.format(sql, [email]);
     logger.debug(query);
+    pool.query(query, (err, result) => {
+      if (err) {
+        logger.debug("Could not get user: SQL ERROR ", err);
+        reject(err);
+      } else {
+        resolve(result);
+      }
+    });
+  });
+};
+
+db.getUserByToken = (token) => {
+  return new Promise((resolve, reject)=>{
+    const email = jwt.verify(token, process.env.ACCESS_TOKEN_SECRET).email;
+    let sql = "SELECT * FROM Users WHERE email=?;";
+    let query = mysql.format(sql, [email]);
     pool.query(query, (err, result) => {
       if (err) {
         logger.debug("Could not get user: SQL ERROR ", err);
@@ -96,7 +130,7 @@ db.deleteUser = (email) => {
 
 db.getRolesForUser = (userId) => {
   return new Promise((resolve, reject)=>{
-    let sql = "SELECT * FROM UsersWithRoles INNER JOIN Roles ON Roles.roleId=UsersWithRoles.roleId WHERE userId=?;";
+    let sql = "SELECT rolename FROM UsersWithRoles INNER JOIN Roles ON Roles.roleId=UsersWithRoles.roleId WHERE userId=?;";
     let query = mysql.format(sql, [userId]);
     pool.query(query, (err, result) => {
       if (err) {

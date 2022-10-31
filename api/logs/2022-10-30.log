@@ -7,3 +7,255 @@
 2022-10-30T16:33:59.391Z [Winston] debug: -----login-----
 2022-10-30T16:33:59.393Z [Winston] debug: SELECT * FROM Users WHERE email='superadmin';
 2022-10-30T16:34:01.036Z [Winston] debug: -----getAllUsers-----
+2022-10-30T16:41:06.705Z [Winston] debug: listening on port 4000
+2022-10-30T16:42:18.957Z [Winston] debug: listening on port 4000
+2022-10-30T16:42:25.634Z [Winston] debug: -----getRandomProducts-----
+2022-10-30T16:42:25.691Z [Winston] debug: -----getRandomProducts-----
+2022-10-30T16:42:25.704Z [Winston] debug: -----getRandomProducts-----
+2022-10-30T16:42:25.714Z [Winston] debug: -----getRandomProducts-----
+2022-10-30T16:42:35.446Z [Winston] debug: -----getRandomProducts-----
+2022-10-30T16:42:35.459Z [Winston] debug: -----getRandomProducts-----
+2022-10-30T16:42:35.471Z [Winston] debug: -----getRandomProducts-----
+2022-10-30T16:42:35.485Z [Winston] debug: -----getRandomProducts-----
+2022-10-30T16:45:15.967Z [Winston] debug: -----getRandomProducts-----
+2022-10-30T16:45:16.008Z [Winston] debug: -----getRandomProducts-----
+2022-10-30T16:45:16.025Z [Winston] debug: -----getRandomProducts-----
+2022-10-30T16:45:16.067Z [Winston] debug: -----getRandomProducts-----
+2022-10-30T16:45:25.199Z [Winston] debug: -----login-----
+2022-10-30T16:45:25.199Z [Winston] debug: SELECT * FROM Users WHERE email='superadmin';
+2022-10-30T16:46:17.600Z [Winston] debug: listening on port 4000
+2022-10-30T16:51:16.243Z [Winston] debug: listening on port 4000
+2022-10-30T16:51:20.078Z [Winston] debug: Unauthorized, no token
+2022-10-30T16:51:20.090Z [Winston] debug: Unauthorized, no token
+2022-10-30T16:51:35.728Z [Winston] debug: -----getRandomProducts-----
+2022-10-30T16:51:35.781Z [Winston] debug: -----getRandomProducts-----
+2022-10-30T16:51:35.791Z [Winston] debug: -----getRandomProducts-----
+2022-10-30T16:51:35.800Z [Winston] debug: -----getRandomProducts-----
+2022-10-30T16:53:00.473Z [Winston] debug: -----getRandomProducts-----
+2022-10-30T16:53:00.508Z [Winston] debug: -----getRandomProducts-----
+2022-10-30T16:53:00.520Z [Winston] debug: -----getRandomProducts-----
+2022-10-30T16:53:00.533Z [Winston] debug: -----getRandomProducts-----
+2022-10-30T16:54:24.074Z [Winston] debug: listening on port 4000
+2022-10-30T16:56:09.040Z [Winston] debug: listening on port 4000
+2022-10-30T16:56:36.457Z [Winston] debug: listening on port 4000
+2022-10-30T16:59:10.676Z [Winston] debug: listening on port 4000
+2022-10-30T16:59:13.510Z [Winston] debug: -----getRandomProducts-----
+2022-10-30T16:59:13.562Z [Winston] debug: -----getRandomProducts-----
+2022-10-30T16:59:13.572Z [Winston] debug: -----getRandomProducts-----
+2022-10-30T16:59:13.582Z [Winston] debug: -----getRandomProducts-----
+2022-10-30T16:59:21.566Z [Winston] debug: listening on port 4000
+2022-10-30T16:59:25.624Z [Winston] debug: listening on port 4000
+2022-10-30T16:59:28.769Z [Winston] debug: -----getRandomProducts-----
+2022-10-30T16:59:28.825Z [Winston] debug: -----getRandomProducts-----
+2022-10-30T16:59:28.837Z [Winston] debug: -----getRandomProducts-----
+2022-10-30T16:59:28.852Z [Winston] debug: -----getRandomProducts-----
+2022-10-30T16:59:50.450Z [Winston] debug: -----login-----
+2022-10-30T16:59:50.451Z [Winston] debug: SELECT * FROM Users WHERE email='superadmin';
+2022-10-30T16:59:54.193Z [Winston] debug: -----getRandomProducts-----
+2022-10-30T16:59:54.205Z [Winston] debug: -----getRandomProducts-----
+2022-10-30T16:59:54.214Z [Winston] debug: -----getRandomProducts-----
+2022-10-30T16:59:54.223Z [Winston] debug: -----getRandomProducts-----
+2022-10-30T16:59:56.136Z [Winston] debug: -----getRandomProducts-----
+2022-10-30T16:59:56.152Z [Winston] debug: -----getRandomProducts-----
+2022-10-30T16:59:56.170Z [Winston] debug: -----getRandomProducts-----
+2022-10-30T16:59:56.181Z [Winston] debug: -----getRandomProducts-----
+2022-10-30T17:00:52.692Z [Winston] debug: -----getRandomProducts-----
+2022-10-30T17:00:52.711Z [Winston] debug: -----getRandomProducts-----
+2022-10-30T17:00:52.722Z [Winston] debug: -----getRandomProducts-----
+2022-10-30T17:00:52.733Z [Winston] debug: -----getRandomProducts-----
+2022-10-30T17:01:19.944Z [Winston] debug: listening on port 4000
+2022-10-30T17:01:21.953Z [Winston] debug: -----getRandomProducts-----
+2022-10-30T17:01:22.007Z [Winston] debug: -----getRandomProducts-----
+2022-10-30T17:01:22.021Z [Winston] debug: -----getRandomProducts-----
+2022-10-30T17:01:22.034Z [Winston] debug: -----getRandomProducts-----
+2022-10-30T17:01:55.460Z [Winston] debug: listening on port 4000
+2022-10-30T17:01:58.858Z [Winston] debug: -----getRandomProducts-----
+2022-10-30T17:01:58.902Z [Winston] debug: -----getRandomProducts-----
+2022-10-30T17:01:58.914Z [Winston] debug: -----getRandomProducts-----
+2022-10-30T17:01:58.925Z [Winston] debug: -----getRandomProducts-----
+2022-10-30T17:02:28.966Z [Winston] debug: listening on port 4000
+2022-10-30T17:02:30.740Z [Winston] debug: -----getRandomProducts-----
+2022-10-30T17:02:30.802Z [Winston] debug: -----getRandomProducts-----
+2022-10-30T17:02:30.814Z [Winston] debug: -----getRandomProducts-----
+2022-10-30T17:02:30.831Z [Winston] debug: -----getRandomProducts-----
+2022-10-30T17:02:52.787Z [Winston] debug: listening on port 4000
+2022-10-30T17:02:54.221Z [Winston] debug: -----loginWithToken-----
+2022-10-30T17:02:54.229Z [Winston] debug: -----getRandomProducts-----
+2022-10-30T17:02:54.235Z [Winston] debug: -----loginWithToken-----
+2022-10-30T17:02:54.269Z [Winston] debug: -----getRandomProducts-----
+2022-10-30T17:02:54.299Z [Winston] debug: -----getRandomProducts-----
+2022-10-30T17:02:54.310Z [Winston] debug: -----getRandomProducts-----
+2022-10-30T17:04:51.225Z [Winston] debug: listening on port 4000
+2022-10-30T17:05:01.380Z [Winston] debug: -----login-----
+2022-10-30T17:05:01.380Z [Winston] debug: SELECT * FROM Users WHERE email='superadmin';
+2022-10-30T17:05:36.004Z [Winston] debug: listening on port 4000
+2022-10-30T17:05:37.101Z [Winston] debug: -----loginWithToken-----
+2022-10-30T17:05:37.108Z [Winston] debug: -----loginWithToken-----
+2022-10-30T17:05:41.765Z [Winston] debug: -----login-----
+2022-10-30T17:05:41.766Z [Winston] debug: SELECT * FROM Users WHERE email='superadmin';
+2022-10-30T17:05:50.391Z [Winston] debug: -----loginWithToken-----
+2022-10-30T17:05:50.397Z [Winston] debug: -----loginWithToken-----
+2022-10-30T17:06:25.931Z [Winston] debug: listening on port 4000
+2022-10-30T17:06:31.988Z [Winston] debug: listening on port 4000
+2022-10-30T17:06:39.731Z [Winston] debug: listening on port 4000
+2022-10-30T17:06:50.890Z [Winston] debug: -----loginWithToken-----
+2022-10-30T17:06:50.900Z [Winston] debug: -----loginWithToken-----
+2022-10-30T17:07:47.676Z [Winston] debug: listening on port 4000
+2022-10-30T17:07:50.894Z [Winston] debug: -----loginWithToken-----
+2022-10-30T17:07:50.909Z [Winston] debug: -----loginWithToken-----
+2022-10-30T17:08:20.912Z [Winston] debug: listening on port 4000
+2022-10-30T17:08:24.025Z [Winston] debug: -----loginWithToken-----
+2022-10-30T17:08:24.042Z [Winston] debug: -----loginWithToken-----
+2022-10-30T17:08:35.793Z [Winston] debug: listening on port 4000
+2022-10-30T17:08:46.028Z [Winston] debug: listening on port 4000
+2022-10-30T17:08:50.653Z [Winston] debug: listening on port 4000
+2022-10-30T17:08:53.511Z [Winston] debug: -----loginWithToken-----
+2022-10-30T17:08:53.520Z [Winston] debug: -----loginWithToken-----
+2022-10-30T17:09:55.245Z [Winston] debug: listening on port 4000
+2022-10-30T17:09:57.998Z [Winston] debug: -----loginWithToken-----
+2022-10-30T17:09:58.006Z [Winston] debug: -----loginWithToken-----
+2022-10-30T17:32:16.079Z [Winston] debug: listening on port 4000
+2022-10-30T17:32:25.453Z [Winston] debug: listening on port 4000
+2022-10-30T17:32:56.519Z [Winston] debug: listening on port 4000
+2022-10-30T17:32:59.860Z [Winston] debug: -----loginWithToken-----
+2022-10-30T17:32:59.869Z [Winston] debug: -----loginWithToken-----
+2022-10-30T17:33:23.659Z [Winston] debug: listening on port 4000
+2022-10-30T17:33:25.226Z [Winston] debug: -----loginWithToken-----
+2022-10-30T17:33:25.234Z [Winston] debug: -----loginWithToken-----
+2022-10-30T17:34:29.735Z [Winston] debug: listening on port 4000
+2022-10-30T17:34:32.562Z [Winston] debug: -----loginWithToken-----
+2022-10-30T17:34:32.572Z [Winston] debug: -----loginWithToken-----
+2022-10-30T17:34:49.595Z [Winston] debug: -----getRandomProducts-----
+2022-10-30T17:34:49.617Z [Winston] debug: -----getRandomProducts-----
+2022-10-30T17:34:49.627Z [Winston] debug: -----getRandomProducts-----
+2022-10-30T17:34:49.636Z [Winston] debug: -----getRandomProducts-----
+2022-10-30T17:35:33.665Z [Winston] debug: Unauthorized, no token
+2022-10-30T17:35:33.669Z [Winston] debug: Unauthorized, no token
+2022-10-30T17:35:48.046Z [Winston] debug: Unauthorized, no token
+2022-10-30T17:35:48.050Z [Winston] debug: Unauthorized, no token
+2022-10-30T17:35:48.054Z [Winston] debug: -----loginWithToken-----
+2022-10-30T17:35:48.057Z [Winston] debug: -----loginWithToken-----
+2022-10-30T17:38:00.526Z [Winston] debug: listening on port 4000
+2022-10-30T17:38:04.438Z [Winston] debug: listening on port 4000
+2022-10-30T17:39:05.814Z [Winston] debug: listening on port 4000
+2022-10-30T17:39:08.605Z [Winston] debug: Unauthorized, no token
+2022-10-30T17:39:08.612Z [Winston] debug: Unauthorized, no token
+2022-10-30T17:39:08.624Z [Winston] debug: -----loginWithToken-----
+2022-10-30T17:39:08.629Z [Winston] debug: -----loginWithToken-----
+2022-10-30T17:40:43.695Z [Winston] debug: listening on port 4000
+2022-10-30T17:40:44.757Z [Winston] debug: Unauthorized, no token
+2022-10-30T17:40:44.766Z [Winston] debug: Unauthorized, no token
+2022-10-30T17:40:44.778Z [Winston] debug: -----loginWithToken-----
+2022-10-30T17:40:44.785Z [Winston] debug: -----loginWithToken-----
+2022-10-30T17:41:13.924Z [Winston] debug: listening on port 4000
+2022-10-30T17:41:15.394Z [Winston] debug: Unauthorized, no token
+2022-10-30T17:41:15.404Z [Winston] debug: Unauthorized, no token
+2022-10-30T17:41:15.408Z [Winston] debug: -----loginWithToken-----
+2022-10-30T17:41:15.413Z [Winston] debug: -----loginWithToken-----
+2022-10-30T17:41:36.870Z [Winston] debug: -----getRandomProducts-----
+2022-10-30T17:41:36.875Z [Winston] debug: -----loginWithToken-----
+2022-10-30T17:41:36.889Z [Winston] debug: -----loginWithToken-----
+2022-10-30T17:41:36.909Z [Winston] debug: -----getRandomProducts-----
+2022-10-30T17:41:36.922Z [Winston] debug: -----getRandomProducts-----
+2022-10-30T17:41:36.939Z [Winston] debug: -----getRandomProducts-----
+2022-10-30T17:41:45.877Z [Winston] debug: -----login-----
+2022-10-30T17:41:45.878Z [Winston] debug: SELECT * FROM Users WHERE email='admin';
+2022-10-30T17:41:52.431Z [Winston] debug: Unauthorized, no token
+2022-10-30T17:41:52.434Z [Winston] debug: Unauthorized, no token
+2022-10-30T17:41:54.813Z [Winston] debug: Unauthorized, no token
+2022-10-30T17:41:54.816Z [Winston] debug: Unauthorized, no token
+2022-10-30T17:41:54.820Z [Winston] debug: -----loginWithToken-----
+2022-10-30T17:41:54.821Z [Winston] debug: -----loginWithToken-----
+2022-10-30T17:42:03.583Z [Winston] debug: -----loginWithToken-----
+2022-10-30T17:42:03.586Z [Winston] debug: -----getRandomProducts-----
+2022-10-30T17:42:03.587Z [Winston] debug: -----loginWithToken-----
+2022-10-30T17:42:03.612Z [Winston] debug: -----getRandomProducts-----
+2022-10-30T17:42:03.627Z [Winston] debug: -----getRandomProducts-----
+2022-10-30T17:42:03.637Z [Winston] debug: -----getRandomProducts-----
+2022-10-30T17:42:34.967Z [Winston] debug: listening on port 4000
+2022-10-30T17:42:50.519Z [Winston] debug: listening on port 4000
+2022-10-30T17:42:51.945Z [Winston] debug: -----loginWithToken-----
+2022-10-30T17:42:51.959Z [Winston] debug: -----loginWithToken-----
+2022-10-30T17:43:17.309Z [Winston] debug: -----getRandomProducts-----
+2022-10-30T17:43:17.339Z [Winston] debug: -----getRandomProducts-----
+2022-10-30T17:43:17.353Z [Winston] debug: -----getRandomProducts-----
+2022-10-30T17:43:17.361Z [Winston] debug: -----getRandomProducts-----
+2022-10-30T17:43:18.901Z [Winston] debug: Unauthorized, no token
+2022-10-30T17:43:18.904Z [Winston] debug: Unauthorized, no token
+2022-10-30T17:43:26.549Z [Winston] debug: Unauthorized, no token
+2022-10-30T17:43:26.554Z [Winston] debug: Unauthorized, no token
+2022-10-30T17:43:26.557Z [Winston] debug: -----loginWithToken-----
+2022-10-30T17:43:26.560Z [Winston] debug: -----loginWithToken-----
+2022-10-30T17:44:18.953Z [Winston] debug: listening on port 4000
+2022-10-30T17:44:28.979Z [Winston] debug: listening on port 4000
+2022-10-30T17:44:32.542Z [Winston] debug: Unauthorized, no token
+2022-10-30T17:44:32.563Z [Winston] debug: Unauthorized, no token
+2022-10-30T17:44:32.568Z [Winston] debug: -----loginWithToken-----
+2022-10-30T17:44:32.571Z [Winston] debug: -----loginWithToken-----
+2022-10-30T17:45:19.934Z [Winston] debug: Unauthorized, no token
+2022-10-30T17:45:19.940Z [Winston] debug: Unauthorized, no token
+2022-10-30T17:45:19.942Z [Winston] debug: -----loginWithToken-----
+2022-10-30T17:45:19.945Z [Winston] debug: -----loginWithToken-----
+2022-10-30T17:45:35.721Z [Winston] debug: Unauthorized, no token
+2022-10-30T17:45:44.599Z [Winston] debug: Unauthorized, not super admin
+2022-10-30T17:45:47.815Z [Winston] debug: Unauthorized, no token
+2022-10-30T17:45:47.818Z [Winston] debug: -----loginWithToken-----
+2022-10-30T17:45:47.820Z [Winston] debug: -----loginWithToken-----
+2022-10-30T17:45:47.823Z [Winston] debug: Unauthorized, no token
+2022-10-30T17:45:49.916Z [Winston] debug: -----loginWithToken-----
+2022-10-30T17:45:49.919Z [Winston] debug: -----getRandomProducts-----
+2022-10-30T17:45:49.921Z [Winston] debug: -----loginWithToken-----
+2022-10-30T17:45:49.935Z [Winston] debug: -----getRandomProducts-----
+2022-10-30T17:45:49.945Z [Winston] debug: -----getRandomProducts-----
+2022-10-30T17:45:49.959Z [Winston] debug: -----getRandomProducts-----
+2022-10-30T17:45:56.469Z [Winston] debug: -----login-----
+2022-10-30T17:45:56.470Z [Winston] debug: SELECT * FROM Users WHERE email='superadmin';
+2022-10-30T17:45:59.223Z [Winston] debug: -----getAllUsers-----
+2022-10-30T17:46:04.899Z [Winston] debug: -----getAllUsersWithRoles-----
+2022-10-30T17:46:39.218Z [Winston] debug: Unauthorized, no token
+2022-10-30T17:46:39.220Z [Winston] debug: Unauthorized, no token
+2022-10-30T17:48:00.209Z [Winston] debug: -----loginWithToken-----
+2022-10-30T17:48:00.211Z [Winston] debug: Unauthorized, no token
+2022-10-30T17:48:00.215Z [Winston] debug: Unauthorized, no token
+2022-10-30T17:48:00.218Z [Winston] debug: -----loginWithToken-----
+2022-10-30T17:48:46.841Z [Winston] debug: -----loginWithToken-----
+2022-10-30T17:48:46.844Z [Winston] debug: -----loginWithToken-----
+2022-10-30T17:51:02.403Z [Winston] debug: -----loginWithToken-----
+2022-10-30T17:51:02.407Z [Winston] debug: -----loginWithToken-----
+2022-10-30T17:51:08.758Z [Winston] debug: Unauthorized, no token
+2022-10-30T17:51:10.323Z [Winston] debug: Unauthorized, no token
+2022-10-30T17:51:10.326Z [Winston] debug: -----loginWithToken-----
+2022-10-30T17:51:10.327Z [Winston] debug: -----loginWithToken-----
+2022-10-30T17:51:10.329Z [Winston] debug: Unauthorized, no token
+2022-10-30T17:51:39.315Z [Winston] debug: -----getAllUsersWithRoles-----
+2022-10-30T17:51:40.906Z [Winston] debug: -----getAllUsersWithRoles-----
+2022-10-30T17:51:44.129Z [Winston] debug: -----getAllUsersWithRoles-----
+2022-10-30T17:52:45.420Z [Winston] debug: listening on port 4000
+2022-10-30T17:53:15.874Z [Winston] debug: listening on port 4000
+2022-10-30T17:53:17.127Z [Winston] debug: -----loginWithToken-----
+2022-10-30T17:53:17.138Z [Winston] debug: Unauthorized, no token
+2022-10-30T17:53:17.144Z [Winston] debug: -----loginWithToken-----
+2022-10-30T17:53:17.146Z [Winston] debug: Unauthorized, no token
+2022-10-30T17:53:29.827Z [Winston] debug: listening on port 4000
+2022-10-30T17:53:43.581Z [Winston] debug: listening on port 4000
+2022-10-30T17:54:13.830Z [Winston] debug: -----loginWithToken-----
+2022-10-30T17:54:15.835Z [Winston] debug: -----loginWithToken-----
+2022-10-30T17:54:15.839Z [Winston] debug: Unauthorized, no token
+2022-10-30T17:54:15.843Z [Winston] debug: -----loginWithToken-----
+2022-10-30T17:54:15.846Z [Winston] debug: Unauthorized, no token
+2022-10-30T17:55:36.251Z [Winston] debug: Unauthorized, no token
+2022-10-30T17:55:36.254Z [Winston] debug: Unauthorized, no token
+2022-10-30T17:55:36.259Z [Winston] debug: -----loginWithToken-----
+2022-10-30T17:55:36.260Z [Winston] debug: -----loginWithToken-----
+2022-10-30T17:56:08.836Z [Winston] debug: -----getAllUsersWithRoles-----
+2022-10-30T17:57:05.605Z [Winston] debug: -----getAllUsersWithRoles-----
+2022-10-30T17:57:20.781Z [Winston] debug: -----getAllUsersWithRoles-----
+2022-10-30T17:59:50.194Z [Winston] debug: -----getAllUsersWithRoles-----
+2022-10-30T17:59:50.232Z [Winston] debug: -----getAllUsersWithRoles-----
+2022-10-30T18:00:03.638Z [Winston] debug: -----getAllUsersWithRoles-----
+2022-10-30T18:00:04.989Z [Winston] debug: -----getAllUsersWithRoles-----
+2022-10-30T18:00:04.991Z [Winston] debug: -----loginWithToken-----
+2022-10-30T18:00:04.995Z [Winston] debug: -----loginWithToken-----
+2022-10-30T18:00:05.008Z [Winston] debug: -----getAllUsersWithRoles-----
+2022-10-30T18:00:11.980Z [Winston] debug: -----getAllUsersWithRoles-----
+2022-10-30T18:00:12.779Z [Winston] debug: -----getAllUsersWithRoles-----
