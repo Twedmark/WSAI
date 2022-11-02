@@ -2,7 +2,7 @@ import Image from "next/image";
 import { FC, useState } from "react";
 import styles from "./Cart.module.css";
 
-import { selectCartState, setCartState } from "../../store/cartSlice";
+import { selectCartState, addToCartState } from "../../store/cartSlice";
 import { useDispatch, useSelector } from "react-redux";
 
 const Cart: FC = () => {
