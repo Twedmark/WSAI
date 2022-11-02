@@ -3,13 +3,14 @@ import { FC, useState } from "react";
 import styles from "./Cart.module.css";
 
 import { selectCartState, addToCartState } from "../../store/cartSlice";
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
+
+import CartItem from "./CartItem";
 
 const Cart: FC = () => {
 	const [cartOpen, setCartOpen] = useState(false);
 	const [openedEver, setOpenedEver] = useState(false);
 
-	const dispatch = useDispatch();
 	const cartState = useSelector(selectCartState);
 
 	console.log(cartState);
@@ -46,8 +47,18 @@ const Cart: FC = () => {
 				}
 			>
 				<h1>Cart</h1>
-				<h2>asd</h2>
-				<h2>asd</h2>
+				{cartState.length === 0 ? (
+					<p>Your cart is empty :(</p>
+				) : (
+					<ul>
+						{cartState.map(item => (
+							<CartItem key={item.productId} item={item} />
+						))}
+					</ul>
+				)}
+				{cartState.length > 0 && (
+					<button className={styles.checkout}>Checkout</button>
+				)}
 			</div>
 		</div>
 	);
