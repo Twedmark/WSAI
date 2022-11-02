@@ -4,6 +4,7 @@ import styles from "./Cart.module.css";
 
 import { selectCartState, addToCartState } from "../../store/cartSlice";
 import { useSelector } from "react-redux";
+import { useRouter } from "next/router";
 
 import CartItem from "./CartItem";
 
@@ -12,11 +13,15 @@ const Cart: FC = () => {
 	const [openedEver, setOpenedEver] = useState(false);
 
 	const cartState = useSelector(selectCartState);
+	const router = useRouter();
 
 	function toggleCart() {
 		console.log("toggle cart");
 		setCartOpen(!cartOpen);
 		setOpenedEver(true);
+	}
+	function checkout() {
+		router.push("/checkout");
 	}
 
 	return (
@@ -55,7 +60,9 @@ const Cart: FC = () => {
 					</ul>
 				)}
 				{cartState.length > 0 && (
-					<button className={styles.checkout}>Checkout</button>
+					<button className={styles.checkout} onClick={checkout}>
+						Gå till kassan
+					</button>
 				)}
 			</div>
 		</div>
