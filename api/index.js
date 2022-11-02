@@ -217,7 +217,6 @@ app.get('/getProductById/:id', async (req, res) => {
 });
 
 
-
 app.listen(port, (err) => {
   if (err) {
     logger.error("error listening on port 4000 ", err);
