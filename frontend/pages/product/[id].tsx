@@ -4,22 +4,31 @@ import styles from "./Product.module.css";
 import type { GetServerSideProps, GetServerSidePropsContext } from "next";
 
 import parse from "html-react-parser";
+import { useDispatch } from "react-redux";
+import { addToCartState } from "../../store/cartSlice";
 
 type ProductProps = {
+	productId: number;
 	name: string;
 	price: number;
 	description: string;
 	images: string;
 };
 
-const Product: FC<ProductProps> = ({ name, price, description, images }) => {
+const Product: FC<ProductProps> = ({
+	productId,
+	name,
+	price,
+	description,
+	images,
+}) => {
 	const router = useRouter();
+	const dispatch = useDispatch();
 	// const { productId } = router.query;
 	const imageArray = images.split(",");
 
 	function addToCart() {
-		console.log(imageArray);
-		console.log("add to cart");
+		dispatch(addToCartState({ productId, name, price, image: imageArray[0] }));
 	}
 
 	return (
