@@ -1,9 +1,20 @@
+import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
+import { useSelector } from "react-redux";
+import { selectAuthState } from "../../store/authSlice";
 
 const Users = () => {
 	const [users, setUsers] = useState([]);
 	const [loading, setLoading] = useState(false);
 	const [error, setError] = useState(false);
+
+	const router = useRouter();
+
+	const user = useSelector(selectAuthState);
+	if (!user.roles.includes("Admin")) {
+		router.push("/login");
+		return <h1>Not authorized</h1>;
+	}
 
 	useEffect(() => {
 		const fetchProducts = async () => {
