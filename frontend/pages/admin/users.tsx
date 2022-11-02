@@ -55,31 +55,55 @@ const Users = () => {
 		}
 	}, [user.isLoading]);
 
+	function removeRole(userId: number, role: string) {
+		console.log("removeRole " + role + " from user " + userId);
+	}
+
+	function addRole(userId: number, role: string) {
+		console.log("addRole " + role + " to user " + userId);
+	}
+
+	const placeholderRoles = ["User", "Admin", "SuperAdmin"];
+
 	return (
 		<div>
 			<h1>Users</h1>
-			<ul>
+			<ul className={styles.userList}>
 				{users?.map((userInDb: userFromDB) => (
-					<li key={userInDb.userId}>
+					<li key={userInDb.userId} className={styles.user}>
 						<div>
-							<h3>Email: {userInDb.email}</h3>
-							<p>Id: {userInDb.userId}</p>
-							<p>Password as hash: {userInDb.password}</p>
-							<p>
-								Roles:{" "}
+							<p>{userInDb.userId}</p>
+							<h3>{userInDb.email}</h3>
+							<div className={styles.roleContainer}>
 								{userInDb.roles.split(",").map(role => {
 									return (
 										<span
 											className={styles.role + " " + styles[role]}
 											onClick={() => {
-												console.log(role);
+												removeRole(userInDb.userId, role);
 											}}
 										>
 											{role}
 										</span>
 									);
 								})}
-							</p>
+							</div>
+						</div>
+						<div className={styles.placeholderRolesContainer}>
+							{placeholderRoles
+								.filter(role => !userInDb.roles.split(",").includes(role))
+								.map(role => {
+									return (
+										<span
+											className={styles.placeholderRole + " " + styles[role]}
+											onClick={() => {
+												addRole(userInDb.userId, role);
+											}}
+										>
+											{role}
+										</span>
+									);
+								})}
 						</div>
 					</li>
 				))}

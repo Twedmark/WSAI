@@ -51,7 +51,9 @@ const Navbar = () => {
 						<Link href="/profile">
 							<a className={determineActive("/profile")}>{user.email}</a>
 						</Link>
-						<button onClick={logout}>Logout</button>
+						<button className={styles.logout} onClick={logout}>
+							Logout
+						</button>
 					</>
 				) : (
 					<>
