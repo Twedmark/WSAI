@@ -48,7 +48,7 @@ const Cart: FC = () => {
 			>
 				<h1>Cart</h1>
 				{cartState.length === 0 ? (
-					<p>Cart is empty</p>
+					<p>Your cart is empty :(</p>
 				) : (
 					<ul>
 						{cartState.map(item => (
@@ -56,8 +56,9 @@ const Cart: FC = () => {
 						))}
 					</ul>
 				)}
-
-				<button className={styles.checkout}>Checkout</button>
+				{cartState.length > 0 && (
+					<button className={styles.checkout}>Checkout</button>
+				)}
 			</div>
 		</div>
 	);
