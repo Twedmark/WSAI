@@ -3,6 +3,9 @@ import { FC } from "react";
 import styles from "./ProductCard.module.css";
 import Image from "next/image";
 
+import { addToCartState } from "../../store/cartSlice";
+import { useDispatch, useSelector } from "react-redux";
+
 type Props = {
 	product: {
 		productId: number;
@@ -31,14 +34,11 @@ export const ProductCard: FC<Props> = ({
 	largeVersion = false,
 }) => {
 	const router = useRouter();
+	const dispatch = useDispatch();
 	const imageArray = images.split(",");
 
 	function addToCart() {
-		let localArray = JSON.parse(localStorage.getItem("cart") || "[]");
-		localStorage.setItem(
-			"cart",
-			JSON.stringify([...localArray, String(productId)])
-		);
+		dispatch(addToCartState({ productId, name, price, image: imageArray[0] }));
 	}
 
 	return (
