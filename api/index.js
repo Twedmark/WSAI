@@ -184,6 +184,11 @@ app.post('/loginWithToken', authorization, async (req, res) => {
   res.status(200).json(user);
 });
 
+app.get('/logout', async (req, res) => {
+  logger.debug('-----logout-----');
+  res.clearCookie('token').status(200).json({ message: "Logged out" });
+});
+
 app.get('/getAllProducts', async (req, res) => {
   logger.debug('-----getAllProducts-----');
   let result = await db.getAllProducts()
