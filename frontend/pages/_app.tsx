@@ -5,7 +5,11 @@ import type { AppProps } from "next/app";
 import { wrapper } from "../store/store";
 import { useEffect } from "react";
 
+import { setAuthState } from "../store/authSlice";
+import { useDispatch } from "react-redux";
+
 function MyApp({ Component, pageProps }: AppProps) {
+	const dispatch = useDispatch();
 	useEffect(() => {
 		async function loginWithToken() {
 			const response = await fetch("http://localhost:4000/loginWithToken", {
@@ -15,8 +19,10 @@ function MyApp({ Component, pageProps }: AppProps) {
 					"Content-Type": "application/json",
 				},
 			});
-			const data = await response.json();
-			console.log(data);
+			if (response.status === 200) {
+				const data = await response.json();
+				dispatch(setAuthState(data));
+			}
 		}
 
 		loginWithToken();
