@@ -13,8 +13,6 @@ const Cart: FC = () => {
 
 	const cartState = useSelector(selectCartState);
 
-	console.log(cartState);
-
 	function toggleCart() {
 		console.log("toggle cart");
 		setCartOpen(!cartOpen);
