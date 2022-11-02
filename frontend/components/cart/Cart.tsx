@@ -1,5 +1,5 @@
 import Image from "next/image";
-import { FC, useState } from "react";
+import { FC, useEffect, useState } from "react";
 import styles from "./Cart.module.css";
 
 import { selectCartState, addToCartState } from "../../store/cartSlice";
@@ -11,9 +11,19 @@ import CartItem from "./CartItem";
 const Cart: FC = () => {
 	const [cartOpen, setCartOpen] = useState(false);
 	const [openedEver, setOpenedEver] = useState(false);
+	let totalPrice = 0,
+		thisPrice = "";
 
 	const cartState = useSelector(selectCartState);
 	const router = useRouter();
+
+	const listItems = cartState.map(
+		(item, index) => (
+			(thisPrice = item.price.replace(/\s/g, "")),
+			(totalPrice = totalPrice + parseInt(thisPrice) * item.quantity),
+			(<CartItem key={item.productId} item={item} />)
+		)
+	);
 
 	function toggleCart() {
 		console.log("toggle cart");
@@ -53,16 +63,15 @@ const Cart: FC = () => {
 				{cartState.length === 0 ? (
 					<p>Your cart is empty :(</p>
 				) : (
-					<ul>
-						{cartState.map(item => (
-							<CartItem key={item.productId} item={item} />
-						))}
-					</ul>
+					<ul>{listItems}</ul>
 				)}
 				{cartState.length > 0 && (
-					<button className={styles.checkout} onClick={checkout}>
-						Gå till kassan
-					</button>
+					<div>
+						<p>{totalPrice} SEK</p>
+						<button className={styles.checkout} onClick={checkout}>
+							Gå till kassan
+						</button>
+					</div>
 				)}
 			</div>
 		</div>
