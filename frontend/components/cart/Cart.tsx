@@ -2,9 +2,17 @@ import Image from "next/image";
 import { FC, useState } from "react";
 import styles from "./Cart.module.css";
 
+import { selectCartState, setCartState } from "../../store/cartSlice";
+import { useDispatch, useSelector } from "react-redux";
+
 const Cart: FC = () => {
 	const [cartOpen, setCartOpen] = useState(false);
 	const [openedEver, setOpenedEver] = useState(false);
+
+	const dispatch = useDispatch();
+	const cartState = useSelector(selectCartState);
+
+	console.log(cartState);
 
 	function toggleCart() {
 		console.log("toggle cart");
