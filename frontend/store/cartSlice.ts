@@ -4,12 +4,12 @@ import { HYDRATE } from "next-redux-wrapper";
 
 // Type for our state
 export interface CartState {
-	cartState: boolean;
+	cartState: Array<string>;
 }
 
 // Initial state
 const initialState: CartState = {
-	cartState: false,
+	cartState: [],
 };
 
 // Actual Slice
@@ -35,6 +35,6 @@ export const cartSlice = createSlice({
 
 export const { setCartState } = cartSlice.actions;
 
-export const selectCartState = (state: AppState) => state.cart.CartState;
+export const selectCartState = (state: AppState) => state.cart.cartState;
 
 export default cartSlice.reducer;
