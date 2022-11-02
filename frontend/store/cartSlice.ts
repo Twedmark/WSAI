@@ -53,7 +53,12 @@ export const cartSlice = createSlice({
 				cartItem => cartItem.productId === action.payload
 			);
 			if (itemIndex >= 0) {
-				state.cartState[itemIndex].quantity--;
+				let count = state.cartState[itemIndex].quantity;
+				if (count > 1) {
+					state.cartState[itemIndex].quantity = count - 1;
+				} else {
+					state.cartState.splice(itemIndex, 1);
+				}
 			}
 		},
 		// Action to reset the cart
@@ -72,7 +77,12 @@ export const cartSlice = createSlice({
 	},
 });
 
-export const { addToCartState } = cartSlice.actions;
+export const {
+	addToCartState,
+	removeFromCartState,
+	decreaseQuantity,
+	resetCartState,
+} = cartSlice.actions;
 
 export const selectCartState = (state: AppState) => state.cart.cartState;
 
