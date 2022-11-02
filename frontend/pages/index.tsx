@@ -1,4 +1,5 @@
 import type { NextPage } from "next";
+import styles from "./index.module.css";
 import Head from "next/head";
 import ProductList from "../components/productList/ProductList";
 
@@ -12,8 +13,24 @@ const Home: NextPage = () => {
 			</Head>
 
 			<main>
-				<ProductList largeVersion />
-				<ProductList />
+				<div className={styles.videoBlock}>
+					<div className={styles.videoContainer}>
+						<video
+							className={styles.video}
+							autoPlay
+							loop
+							muted
+							src="https://a.storyblok.com/f/118230/x/58568c8237/kitchen_studio_header_video_v3.mp4"
+						></video>
+					</div>
+				</div>
+				<div className={styles.textContainer}>
+					<h1 className={styles.title}>WSAI</h1>
+				</div>
+				<div className={styles.productListContainer}>
+					<ProductList largeVersion />
+					<ProductList />
+				</div>
 			</main>
 		</div>
 	);
