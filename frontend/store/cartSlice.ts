@@ -26,6 +26,9 @@ export const cartSlice = createSlice({
 	initialState,
 	reducers: {
 		// Action to set the cart status
+		setCartState(state, action) {
+			state.cartState = action.payload;
+		},
 		// if the item is already in the cart, increase the quantity
 		addToCartState(state, action) {
 			const item = { ...action.payload, quantity: 1 };
@@ -78,6 +81,7 @@ export const cartSlice = createSlice({
 });
 
 export const {
+	setCartState,
 	addToCartState,
 	removeFromCartState,
 	decreaseQuantity,

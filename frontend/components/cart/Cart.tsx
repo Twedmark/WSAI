@@ -16,7 +16,6 @@ const Cart: FC = () => {
 	const router = useRouter();
 
 	function toggleCart() {
-		console.log("toggle cart");
 		setCartOpen(!cartOpen);
 		setOpenedEver(true);
 	}

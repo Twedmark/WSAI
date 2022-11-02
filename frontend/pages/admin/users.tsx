@@ -3,6 +3,13 @@ import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { selectAuthState } from "../../store/authSlice";
 
+type userFromDB = {
+	userId: number;
+	email: string;
+	password: string;
+	roles: string;
+};
+
 const Users = () => {
 	const [users, setUsers] = useState([]);
 	const [loading, setLoading] = useState(false);
@@ -11,13 +18,9 @@ const Users = () => {
 	const router = useRouter();
 
 	const user = useSelector(selectAuthState);
-	if (!user.roles.includes("Admin")) {
-		router.push("/login");
-		return <h1>Not authorized</h1>;
-	}
 
 	useEffect(() => {
-		const fetchProducts = async () => {
+		const fetchUsers = async () => {
 			setLoading(true);
 			try {
 				const response = await fetch(
@@ -33,7 +36,6 @@ const Users = () => {
 				if (response.status === 200) {
 					const data = await response.json();
 					setUsers(data);
-					console.log(data);
 				}
 			} catch (err) {
 				alert(err);
@@ -43,19 +45,39 @@ const Users = () => {
 			}
 		};
 
-		fetchProducts();
+		fetchUsers();
 	}, []);
+
+	useEffect(() => {
+		if (user.isLoading === false && !user?.roles?.includes("Admin")) {
+			router.push("/login");
+		}
+	}, [user.isLoading]);
 
 	return (
 		<div>
 			<h1>Users</h1>
 			<ul>
-				{users?.map(user => (
-					<li key={user.id}>
+				{users?.map((userInDb: userFromDB) => (
+					<li key={userInDb.userId}>
 						<div>
-							<h3>Email: {user.email}</h3>
-							<p>Id: {user.userId}</p>
-							<p>Password as hash: {user.password}</p>
+							<h3>Email: {userInDb.email}</h3>
+							<p>Id: {userInDb.userId}</p>
+							<p>Password as hash: {userInDb.password}</p>
+							<p>
+								Roles:{" "}
+								{userInDb.roles.split(",").map(role => {
+									return (
+										<span
+											onClick={() => {
+												console.log(role);
+											}}
+										>
+											{role}{" "}
+										</span>
+									);
+								})}
+							</p>
 						</div>
 					</li>
 				))}
