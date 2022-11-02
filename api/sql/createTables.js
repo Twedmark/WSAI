@@ -50,9 +50,6 @@ db.connect(async (err, connection) => {
     name varchar(100) NOT NULL,
     price varchar(25) NOT NULL,
     description varchar(2000),
-    material varchar(100),
-    dimensions varchar(100),
-    specification varchar(100),
     images varchar(2000),
     PRIMARY KEY (productId))
     ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;

@@ -84,7 +84,7 @@ export const ProductCard: FC<Props> = ({
 							//dont do add to cart explicitly, since this apparently triggers the onClick, thus still adding to cart
 						}}
 					>
-						<Image src="/shoppingBag.png" width={25} height={25} />
+						<Image src="/shoppingBag.png" width={20} height={20} />
 					</button>
 				</div>
 			</div>

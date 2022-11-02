@@ -41,6 +41,11 @@
   transform-origin: top right;
 }
 
+
+.cart {
+
+}
+
 .notOpenedEver {
   opacity: 0;
 }

@@ -48,9 +48,6 @@ const Cart: FC = () => {
 				<h1>Cart</h1>
 				<h2>asd</h2>
 				<h2>asd</h2>
-				<h2>asd</h2>
-				<h2>asd</h2>
-				<h2>asd</h2>
 			</div>
 		</div>
 	);

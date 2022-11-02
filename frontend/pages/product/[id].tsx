@@ -9,21 +9,10 @@ type ProductProps = {
 	name: string;
 	price: number;
 	description: string;
-	material: string;
-	dimensions: string;
-	specification: string;
 	images: string;
 };
 
-const Product: FC<ProductProps> = ({
-	name,
-	price,
-	description,
-	material,
-	dimensions,
-	specification,
-	images,
-}) => {
+const Product: FC<ProductProps> = ({ name, price, description, images }) => {
 	const router = useRouter();
 	// const { productId } = router.query;
 	const imageArray = images.split(",");
@@ -50,11 +39,6 @@ const Product: FC<ProductProps> = ({
 					</div>
 				</div>
 			</main>
-			<article className={styles.article}>
-				<p className={styles.description}>{material}</p>
-				<p className={styles.description}>{dimensions}</p>
-				<p className={styles.description}>{specification}</p>
-			</article>
 		</div>
 	);
 };

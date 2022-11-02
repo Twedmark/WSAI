@@ -43,7 +43,7 @@ db.connect(async (err, connection) => {
   let superAdminWithSuperAdminRole = `INSERT INTO UsersWithRoles (userId, roleId) VALUES (3, 3000);`;
 
   mockProducts.forEach(async (product, index) => {
-    let insertProduct = `INSERT INTO Products (productId, name, price, description, material, dimensions, specification, images) VALUES (null, "${product.name}", "${product.price}", "${product.description}", "${product.material}", "${product.dimensions}", "${product.specification}", "${product.images}");`;
+    let insertProduct = `INSERT INTO Products (productId, name, price, description, images) VALUES (null, "${product.name}", "${product.price}", "${product.description}", "${product.images}");`;
     await db.query(insertProduct , (err, result) => {
       if (err) {
         console.log('ERROR ADDING MOCK PRODUCTS', err);
