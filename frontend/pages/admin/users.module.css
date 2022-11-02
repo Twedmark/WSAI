@@ -1,0 +1,19 @@
+.role {
+  padding: 0.2em 0.5em;
+  margin: 0.2em;
+  border-radius: 10px;
+
+  cursor: pointer;
+}
+
+.User {
+  background-color: rgb(221, 221, 221);
+}
+
+.Admin {
+  background-color: rgb(253, 106, 103);
+}
+
+.SuperAdmin {
+  background-color: rgb(106, 221, 253);
+}

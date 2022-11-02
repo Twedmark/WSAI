@@ -2,6 +2,7 @@ import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { selectAuthState } from "../../store/authSlice";
+import styles from "./users.module.css";
 
 type userFromDB = {
 	userId: number;
@@ -49,7 +50,7 @@ const Users = () => {
 	}, []);
 
 	useEffect(() => {
-		if (user.isLoading === false && !user?.roles?.includes("Admin")) {
+		if (user.isLoading === false && !user?.roles?.includes("SuperAdmin")) {
 			router.push("/login");
 		}
 	}, [user.isLoading]);
@@ -69,11 +70,12 @@ const Users = () => {
 								{userInDb.roles.split(",").map(role => {
 									return (
 										<span
+											className={styles.role + " " + styles[role]}
 											onClick={() => {
 												console.log(role);
 											}}
 										>
-											{role}{" "}
+											{role}
 										</span>
 									);
 								})}

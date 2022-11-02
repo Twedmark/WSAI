@@ -10,6 +10,7 @@ const Navbar = () => {
 	const router = useRouter();
 
 	const user = useSelector(selectAuthState);
+	console.log(user);
 	const dispatch = useDispatch();
 
 	const determineActive = (path: string) => {
@@ -45,7 +46,7 @@ const Navbar = () => {
 			</div>
 
 			<div className={styles.navbarRight}>
-				{user ? (
+				{user.email ? (
 					<>
 						<Link href="/profile">
 							<a className={determineActive("/profile")}>{user.email}</a>
