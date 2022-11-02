@@ -7,6 +7,7 @@ type user = {
 	email: string;
 	roles: string[];
 	token: string;
+	isLoading: boolean;
 };
 
 // Type for our state
@@ -28,6 +29,9 @@ export const authSlice = createSlice({
 		setAuthState(state, action) {
 			state.authState = action.payload;
 		},
+		setAuthLoading(state, action) {
+			state.authState.isLoading = action.payload;
+		},
 	},
 	// Special reducer for hydrating the state. Special case for next-redux-wrapper
 	extraReducers: {
@@ -40,7 +44,7 @@ export const authSlice = createSlice({
 	},
 });
 
-export const { setAuthState } = authSlice.actions;
+export const { setAuthState, setAuthLoading } = authSlice.actions;
 
 export const selectAuthState = (state: AppState) => state.auth.authState;
 

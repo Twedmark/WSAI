@@ -5,11 +5,19 @@ import type { AppProps } from "next/app";
 import { wrapper } from "../store/store";
 import { useEffect } from "react";
 
-import { setAuthState } from "../store/authSlice";
-import { useDispatch } from "react-redux";
+import {
+	selectAuthState,
+	setAuthLoading,
+	setAuthState,
+} from "../store/authSlice";
+import { useDispatch, useSelector } from "react-redux";
+import { selectCartState, setCartState } from "../store/cartSlice";
 
 function MyApp({ Component, pageProps }: AppProps) {
 	const dispatch = useDispatch();
+	const cart = useSelector(selectCartState);
+	const user = useSelector(selectAuthState);
+
 	useEffect(() => {
 		async function loginWithToken() {
 			const response = await fetch("http://localhost:4000/loginWithToken", {
@@ -22,11 +30,30 @@ function MyApp({ Component, pageProps }: AppProps) {
 			if (response.status === 200) {
 				const data = await response.json();
 				dispatch(setAuthState(data));
+				dispatch(setAuthLoading(false));
+			} else {
+				dispatch(setAuthLoading(false));
 			}
 		}
 
 		loginWithToken();
 	}, []);
+
+	useEffect(() => {
+		let localStorageCart = localStorage.getItem("cart")
+			? JSON.parse(localStorage.getItem("cart") as string)
+			: [];
+		console.log("getting", localStorageCart);
+
+		dispatch(setCartState(localStorageCart));
+	}, []);
+
+	useEffect(() => {
+		if (user.isLoading === false) {
+			console.log("setting", cart);
+			localStorage.setItem("cart", JSON.stringify(cart));
+		}
+	}, [cart]);
 
 	return (
 		<>

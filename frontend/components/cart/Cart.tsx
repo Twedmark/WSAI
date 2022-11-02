@@ -26,7 +26,6 @@ const Cart: FC = () => {
 	);
 
 	function toggleCart() {
-		console.log("toggle cart");
 		setCartOpen(!cartOpen);
 		setOpenedEver(true);
 	}
