@@ -26,7 +26,7 @@ const AddProduct = () => {
 		);
 
 		//convert price to a string,
-		// with one space beteen each 3 digits
+		// with one space between each 3 digits
 		// and " sek" at the end
 		let priceString = priceValue?.replace(/(\d)(?=(\d{3})+(?!\d))/g, "$1 ");
 
