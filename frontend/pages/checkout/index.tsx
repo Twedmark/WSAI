@@ -3,6 +3,7 @@ import { useSelector } from "react-redux";
 import { selectCartState } from "../../store/cartSlice";
 import CartItem from "../../components/cart/CartItem";
 import styles from "./checkout.module.css";
+import React from "react";
 
 const checkout: NextPage = () => {
 	const cartState = useSelector(selectCartState);

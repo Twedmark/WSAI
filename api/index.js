@@ -8,6 +8,7 @@ const cookieParser = require('cookie-parser');
 const logger = require("./logger");
 
 const { authorization, adminAuthorization, superAdminAuthorization } = require('./middleware/authorization');
+const { getUserByEmail } = require('./database');
 
 const app = express();
 
@@ -253,6 +254,23 @@ app.get('/getProductById/:id', async (req, res) => {
   .catch((err) => {
     logger.error(err);
     res.send("Error getting product");
+  });
+  res.status(200).json(result);
+});
+
+app.get('/getReceiptFromUser', authorization, async (req, res) => {
+  logger.debug('-----getReceiptFromUser-----');
+  let userEmail = req.email;
+  let user = await getUserByEmail(userEmail)
+  .catch((err) => {
+    logger.error(err);
+    res.send("Error getting email while getting receipt");
+  });
+  console.log(user);
+  let result = await db.getReceiptFromUser(user[0].userId)
+  .catch((err) => {
+    logger.error(err);
+    res.send("Error getting receipt");
   });
   res.status(200).json(result);
 });

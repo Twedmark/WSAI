@@ -2,6 +2,7 @@ import type { NextPage } from "next";
 import styles from "./index.module.css";
 import Head from "next/head";
 import ProductList from "../components/productList/ProductList";
+import React from "react";
 
 const Home: NextPage = () => {
 	return (

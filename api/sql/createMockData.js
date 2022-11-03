@@ -25,6 +25,13 @@ const db = mysql.createConnection({
 
 // CREATE MOCK DATA / USERS / ROLES
 
+// MOCK RECEIPT
+const MockReceipt = [{95:1},{124:2},{149:5}]
+const MockReceipt2 = [
+  {35: 4}, {114: 1}, {200: 3}
+]
+
+
 db.connect(async (err, connection) => {
   console.log('RUNNING CREATE MOCK DATA SCRIPT');
   let userAccount = `INSERT INTO Users (userId, email, password) VALUES (null, "User", "${pwd123Hashed}");`;
@@ -42,6 +49,9 @@ db.connect(async (err, connection) => {
   let superAdminWithAdminRole = `INSERT INTO UsersWithRoles (userId, roleId) VALUES (3, 2000);`;
   let superAdminWithSuperAdminRole = `INSERT INTO UsersWithRoles (userId, roleId) VALUES (3, 3000);`;
 
+  let userReceipt = `INSERT INTO Receipts (receiptId, products, userId, createdAt) VALUES (null, '${JSON.stringify(MockReceipt)}', 1, NOW());`;
+  let userReceipt2 = `INSERT INTO Receipts (receiptId, products, userId, createdAt) VALUES (null, '${JSON.stringify(MockReceipt2)}', 1, NOW());`;
+
   mockProducts.forEach(async (product, index) => {
     let insertProduct = `INSERT INTO Products (productId, name, price, description, images) VALUES (null, "${product.name}", "${product.price}", "${product.description}", "${product.images}");`;
     await db.query(insertProduct , (err, result) => {
@@ -53,7 +63,7 @@ db.connect(async (err, connection) => {
     });
   });
   
-  let query = userAccount + adminAccount + superAdminAccount + userRole + adminRole + superAdminRole + userWithUserRole + adminWithUserRole + adminWithAdminRole + superAdminWithUserRole + superAdminWithAdminRole + superAdminWithSuperAdminRole;
+  let query = userAccount + adminAccount + superAdminAccount + userRole + adminRole + superAdminRole + userWithUserRole + adminWithUserRole + adminWithAdminRole + superAdminWithUserRole + superAdminWithAdminRole + superAdminWithSuperAdminRole + userReceipt + userReceipt2;
   db.query(query, async (err) => {
     if (err) {
       console.log('ERROR CREATING MOCK DATA', err);

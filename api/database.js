@@ -3,6 +3,7 @@ const jwt = require('jsonwebtoken');
 require('dotenv').config();
 
 const logger = require("./logger");
+const { syncBuiltinESMExports } = require("module");
 
 const DB_HOST = process.env.DB_HOST;
 const DB_USER = process.env.DB_USER;
@@ -93,6 +94,22 @@ db.getUserByToken = (token) => {
     });
   });
 };
+
+db.getUserinfoWithRole = (roleId) => {
+  return new Promise((resolve, reject)=>{
+    let sql = "SELECT * FROM Users INNER JOIN UsersWithRoles ON Users.userId=UsersWithRoles.userId WHERE roleId=?;";
+    let query = mysql.format(sql, [roleId]);
+    pool.query(query, (err, result) => {
+      if (err) {
+        logger.debug("Could not get user info with role: SQL ERROR ", err);
+        reject(err);
+      } else {
+        resolve(result);
+      }
+    });
+  });
+} 
+
 
 db.createUser = (email, password) => {
   return new Promise((resolve, reject)=>{
@@ -225,6 +242,22 @@ db.getProductById = (productId) => {
     pool.query(query, (err, result) => {
       if (err) {
         logger.debug("Could not get product: SQL ERROR ", err);
+        reject(err);
+      } else {
+        resolve(result);
+      }
+    });
+  }
+  );
+};
+
+db.getReceiptFromUser = (userId) => {
+  return new Promise((resolve, reject)=>{
+    let sql = "SELECT * FROM Receipts WHERE userId=?;";
+    let query = mysql.format(sql, [userId]);
+    pool.query(query, (err, result) => {
+      if (err) {
+        logger.debug("Could not get receipt: SQL ERROR ", err);
         reject(err);
       } else {
         resolve(result);
