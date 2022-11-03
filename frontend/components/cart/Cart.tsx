@@ -1,5 +1,5 @@
 import Image from "next/image";
-import { FC, useEffect, useState } from "react";
+import { FC, useEffect, useRef, useState } from "react";
 import styles from "./Cart.module.css";
 
 import { selectCartState, addToCartState } from "../../store/cartSlice";
@@ -11,6 +11,7 @@ import CartItem from "./CartItem";
 const Cart: FC = () => {
 	const [cartOpen, setCartOpen] = useState(false);
 	const [openedEver, setOpenedEver] = useState(false);
+	const cartCountRef = useRef<HTMLDivElement>(null);
 	let totalPrice = 0,
 		thisPrice = "";
 
@@ -38,11 +39,27 @@ const Cart: FC = () => {
 		router.push("/checkout");
 	}
 
+	// store a number variable with all items in cartState quantity
+	const totalItems = cartState.reduce((acc, item) => acc + item.quantity, 0);
+
+	useEffect(() => {
+		cartCountRef.current?.classList.add(styles.cartCountAnimation);
+		setTimeout(() => {
+			cartCountRef.current?.classList.remove(styles.cartCountAnimation);
+		}, 500);
+	}, [totalItems]);
+
 	return (
 		<div className={styles.cartContainer}>
-			<p onClick={toggleCart} style={{ cursor: "pointer" }}>
+			<div
+				onClick={toggleCart}
+				style={{ cursor: "pointer", position: "relative" }}
+			>
 				<Image src="/shoppingBag.png" width={25} height={25} />{" "}
-			</p>
+				<span className={styles.cartCount} ref={cartCountRef}>
+					{totalItems}
+				</span>
+			</div>
 			{cartOpen ? (
 				<div
 					className={`${styles.cartBackground} ${styles.cartBackgroundOpen}`}

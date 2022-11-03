@@ -268,10 +268,9 @@ app.post('/addProduct', adminAuthorization, async (req, res) => {
     res.status(400).json("Error adding product");
     return;
   });
+  logger.debug(`${req.email} added product '${product.name}' with id '${result}'`);
 
-  logger.debug(`${req.email} added product '${product.name}'`);
-
-  res.status(200).json({message: "Product added"});
+  res.status(200).json({message: "Product added", id: result});
 });
 
 

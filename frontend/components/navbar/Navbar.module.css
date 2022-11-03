@@ -8,8 +8,20 @@
     width: 100vw;
     height: var(--navbarHeight);
     background-color: white;
-    padding: 0 2em;
+    padding: 0 0.5em;
     border-bottom: 1px solid lightgrey;
+}
+
+@media (min-width: 500px) {
+    .navbar {
+        padding: 0 1em;
+    }
+}
+
+@media (min-width: 800px) {
+    .navbar {
+        padding: 0 2em;
+    }
 }
 
 .navbarLeft, .navbarCenter, .navbarRight{
@@ -38,7 +50,13 @@
 }
 
 .navbarRight > * {
-    margin: 0 10px;
+    margin: 0 2px;
+}
+
+@media (min-width: 650px) {
+    .navbarRight > * {
+        margin: 0 10px;
+    }
 }
 
 .active {

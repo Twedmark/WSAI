@@ -19,6 +19,28 @@
   flex-shrink: 0;
 }
 
+.infoContainer {
+  word-break: break-word;
+}
+
+.addToCartBtn {
+  width: 100%;
+  padding: 1em 2em;
+  background-color: black;
+  color: white;
+  border: none;
+  border-radius: 10px;
+  font-size: 1.2em;
+  cursor: pointer;
+  scale: 1;
+  transition: 0.2s all ease;
+}
+
+.addToCartBtn:active {
+  background-color: #333;
+  scale: 0.9;
+}
+
 @media (min-width: 650px) {
   .main {
     flex-direction: row;

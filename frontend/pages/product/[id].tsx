@@ -4,8 +4,8 @@ import styles from "./Product.module.css";
 import type { GetServerSideProps, GetServerSidePropsContext } from "next";
 
 import parse from "html-react-parser";
-import { useDispatch } from "react-redux";
-import { addToCartState } from "../../store/cartSlice";
+import { useDispatch, useSelector } from "react-redux";
+import { addToCartState, selectCartState } from "../../store/cartSlice";
 
 type ProductProps = {
 	productId: number;
@@ -24,6 +24,7 @@ const Product: FC<ProductProps> = ({
 }) => {
 	const router = useRouter();
 	const dispatch = useDispatch();
+	const cart = useSelector(selectCartState);
 	// const { productId } = router.query;
 	const imageArray = images.split(",");
 
@@ -44,7 +45,11 @@ const Product: FC<ProductProps> = ({
 						<h1 className={styles.title}>{name}</h1>
 						<div className={styles.description}>{parse(description)}</div>
 						<h2>{price}</h2>
-						<button onClick={addToCart}>Add to cart</button>
+						<button onClick={addToCart} className={styles.addToCartBtn}>
+							{cart.find(item => item.productId === productId)
+								? "Added to cart"
+								: "Add to cart"}
+						</button>
 					</div>
 				</div>
 			</main>

@@ -1,7 +1,9 @@
+import { useRouter } from "next/router";
 import { FormEvent, useRef } from "react";
 import styles from "./addProduct.module.css";
 
 const AddProduct = () => {
+	const router = useRouter();
 	const name = useRef<HTMLInputElement>(null);
 	const price = useRef<HTMLInputElement>(null);
 	const description = useRef<HTMLTextAreaElement>(null);
@@ -50,7 +52,13 @@ const AddProduct = () => {
 			body: JSON.stringify(newProduct),
 		});
 		if (response.status === 200) {
+			const data = await response.json();
+			console.log(data);
+
 			alert("Product added!");
+			if (confirm("Go to the new products page?")) {
+				router.push(`/product/${data.id}`);
+			}
 			//clear form
 			name.current!.value = "";
 			price.current!.value = "";
@@ -59,9 +67,6 @@ const AddProduct = () => {
 		} else {
 			alert("Something went wrong");
 		}
-
-		const data = await response.json();
-		console.log(data);
 	}
 
 	return (

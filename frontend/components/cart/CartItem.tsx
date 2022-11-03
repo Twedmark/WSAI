@@ -46,10 +46,7 @@ const CartItem: FC<props> = ({
 			<div className={styles.imageContainer}>
 				<img onClick={routeToProduct} src={image} />
 			</div>
-			<div className={styles.infoContainer}>
-				<h4 onClick={routeToProduct}>{name}</h4>
-				<p>Price: {price}</p>
-
+			<div className={styles.quantityAndRemove}>
 				<div className={styles.quantityPill}>
 					<button
 						className={styles.quantityMinus}
@@ -63,9 +60,13 @@ const CartItem: FC<props> = ({
 					</button>
 				</div>
 
-				<button className={styles.button} onClick={removeFromCart}>
+				<button className={styles.remove} onClick={removeFromCart}>
 					X
 				</button>
+			</div>
+			<div className={styles.infoContainer}>
+				<h4 onClick={routeToProduct}>{name}</h4>
+				<p style={{ wordBreak: "keep-all" }}>{price}</p>
 			</div>
 		</li>
 	);

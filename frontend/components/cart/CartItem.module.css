@@ -1,6 +1,14 @@
 .cartItem {
-  display: flex;
-  flex-direction: row;
+  /* display: flex;
+  flex-direction: row; */
+
+  display: grid;
+    grid-template-areas:
+      "image quantityAndRemove"
+      "image body";
+    grid-template-columns: 25% 1fr;
+    grid-template-rows: -webkit-min-content 1fr;
+    grid-template-rows: min-content 1fr;
 
   position: relative;
   margin-top: 10px;
@@ -9,10 +17,10 @@
   border-bottom: 1px solid darkgray;
 }
 
-.imageContainer {
+/* .imageContainer {
   width: 30%;
   max-width: 150px;
-}
+} */
 
 .imageContainer img {
   cursor: pointer;
@@ -21,26 +29,36 @@
   aspect-ratio: 4/3;
 }
 
-.infoContainer {
-  padding-left: 10px;
-  padding-right: calc(1em + 20px);
+.imageContainer {
+  grid-area: image;
 }
 
-.infoContainer .button {
-  position: absolute;
-  top: 0;
-  right: 10px;
+.infoContainer {
+  padding-left: 10px;
+  word-break: break-all;
+  grid-area: body;
+  display: flex;
+  justify-content: space-between;
+}
 
+.quantityAndRemove {
+  grid-area: quantityAndRemove;
+  display: flex;
+  justify-content: space-between;
+  padding-left: 10px;
+}
+
+.quantityAndRemove .remove {
   margin: 0;
   padding: 0;
   border: none;
   background: none;
-  font-size: 1.5rem;
+  font-size: 1em;
   font-weight: bold;
   cursor: pointer;
 }
 
-.infoContainer p, .infoContainer h4 {
+.infoContainer p, .infoContainer h4, .quantityAndRemove p {
   margin: 0;
   padding: 0;
 }
@@ -53,14 +71,10 @@
 .quantityPill {
   display: flex;
   flex-direction: row;
-
-  position: absolute;
-  bottom: 10px;
-  right: 10px;
 }
 
 .quantityPill .quantityMinus, .quantityPill .quantityPlus {
-  padding: 0.2em 0.5em;
+  padding: 0.1em 0.3em;
   font-size: 1em;
   cursor: pointer;
 
@@ -79,8 +93,9 @@
 }
 
 .quantityPill p {
-  padding: 0.2em 0.5em;
+  padding: 0.1em 0.3em;
   font-size: 1em;
+  line-height: 1em;
   border-top: 1px solid darkgray;
   border-bottom: 1px solid darkgray;
 
