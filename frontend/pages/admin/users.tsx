@@ -84,7 +84,6 @@ const Users = () => {
 	}
 
 	async function addRole(userId: number, role: string) {
-		console.log("addRole " + role + " to user " + userId);
 		const response = await fetch("http://localhost:4000/addRole", {
 			method: "POST",
 			credentials: "include",
@@ -98,7 +97,6 @@ const Users = () => {
 		});
 		if (response.status === 200) {
 			const data = await response.json();
-			console.log(data);
 			setUsers(data);
 		} else {
 			alert("Something went wrong");

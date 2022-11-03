@@ -19,7 +19,7 @@ app.use( cors({credentials: true, origin: ['http://localhost:3000'] }) );
 const port = process.env.PORT;
 
 app.get('/', (req, res) => {
-  res.send("Try /getAllUsers :)");
+  res.send("Try /getAllProducts :)");
 });
 
 app.get('/getAllUsers', superAdminAuthorization, async (req, res) => {
@@ -46,22 +46,6 @@ app.get('/getAllUsersWithRoles', superAdminAuthorization, async (req, res) => {
   res.status(200).json(result);
 });
 
-//TODO: add get self by token
-
-app.post('/getUserByemail/', superAdminAuthorization, async (req, res) => {
-  logger.debug('-----getUserByemail-----');
-
-  let email = req.body.email;
-
-  const result = await db.getUserByemail(email)
-  .catch((err) => {
-    logger.err(err);
-    res.status(500).json({ message: "Error getting user" });
-  });
-
-  res.status(200).send(result);
-});
-
 app.post('/createUser', async (req, res) => {
   logger.debug('-----createUser-----');
 
@@ -74,7 +58,7 @@ app.post('/createUser', async (req, res) => {
     return;
   }
 
-  const userExists = await db.getUserByemail(email)
+  const userExists = await db.getUserByEmail(email)
   .catch((err) => {
     logger.error(err);
     res.status(500).json({ message: "Error getting user to check if already exists" });
@@ -106,6 +90,9 @@ app.post('/deleteUser', superAdminAuthorization, async (req, res) => {
     res.status(500).json({ message: "Error deleting user" });
   });
 
+  const infoOfUser = await db.getUserById(userId)
+  logger.debug(`${req.email} deleted user '${infoOfUser[0].email}' with id '${userId}'`);
+
   const newUsers = await db.getAllUsersWithRoles()
 
   res.status(200).json(newUsers);
@@ -126,8 +113,10 @@ app.post('/addRole', superAdminAuthorization, async (req, res) => {
     return;
   });
 
+  const infoOfUser = await db.getUserById(userId)
+  logger.debug(`${req.email} added role '${roleName}' to user '${infoOfUser[0].email}' with id '${userId}'`);
+
   const newUsers = await db.getAllUsersWithRoles()
-  console.log(newUsers);
 
   res.status(200).json(newUsers);
 });
@@ -140,7 +129,6 @@ app.post('/removeRole', superAdminAuthorization, async (req, res) => {
 
   // get roleID from role name
   const role = await db.getRoleByName(roleName)
-  console.log("role", role);
 
   const result = await db.removeRole(userId, role[0].roleId)
   .catch((err) => {
@@ -148,6 +136,9 @@ app.post('/removeRole', superAdminAuthorization, async (req, res) => {
     res.status(500).json({ message: "Error removing role" });
     return;
   });
+
+  const infoOfUser = await db.getUserById(userId)
+  logger.debug(`${req.email} removed role '${roleName}' from user '${infoOfUser[0].email}' with id '${userId}'`);
 
   const newUsers = await db.getAllUsersWithRoles()
 
@@ -160,7 +151,7 @@ app.post('/login', async (req, res) => {
   logger.debug('-----login-----');
   let account = req.body;
 
-  let result = await db.getUserByemail(account.email)
+  let result = await db.getUserByEmail(account.email)
   .catch((err) => {
     logger.error(err);
     res.send("Error");

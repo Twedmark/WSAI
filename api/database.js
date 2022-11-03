@@ -34,11 +34,6 @@ db.getAllUsers = async () => {
   });
 };
 
-// Table Roles has roleId and rolename
-// Table Users has userId, email and password
-// Table UsersWithRoles has userId and roleId
-// get all users and their roles, each object has the user's email, userID, password and an array of roles
-
 db.getAllUsersWithRoles = async () => {
   return new Promise((resolve, reject)=>{
     pool.query("SELECT Users.userId, Users.email, Users.password, GROUP_CONCAT(Roles.roleName) AS roles FROM Users INNER JOIN UsersWithRoles ON Users.userId = UsersWithRoles.userId INNER JOIN Roles ON UsersWithRoles.roleId = Roles.roleId GROUP BY Users.userId", (err, result) => {
@@ -51,12 +46,27 @@ db.getAllUsersWithRoles = async () => {
   });
 };
 
-db.getUserByemail = (email) => {
+db.getUserByEmail = (email) => {
   return new Promise((resolve, reject)=>{
     // email = email.replace(/[^a-zA-Z0-9]/g, '');
     let sql = "SELECT * FROM Users WHERE email=?;";
     let query = mysql.format(sql, [email]);
     logger.debug(query);
+    pool.query(query, (err, result) => {
+      if (err) {
+        logger.debug("Could not get user: SQL ERROR ", err);
+        reject(err);
+      } else {
+        resolve(result);
+      }
+    });
+  });
+};
+
+db.getUserById = (userId) => {
+  return new Promise((resolve, reject)=>{
+    let sql = "SELECT * FROM Users WHERE userId=?;";
+    let query = mysql.format(sql, [userId]);
     pool.query(query, (err, result) => {
       if (err) {
         logger.debug("Could not get user: SQL ERROR ", err);

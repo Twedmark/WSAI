@@ -13,7 +13,6 @@ const Navbar = () => {
 	const dispatch = useDispatch();
 
 	const determineActive = (path: string) => {
-		//console.log(router);
 		return router.pathname === path ? styles.active : "";
 	};
 
