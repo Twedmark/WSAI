@@ -21,7 +21,7 @@ const db = mysql.createConnection({
 
 db.connect(async (err, connection) => {
   console.log('RUNNING CREATE TABLE SCRIPT');
-  let dropAllTables = `DROP TABLE IF EXISTS UsersWithRoles; DROP TABLE IF EXISTS Roles; DROP TABLE IF EXISTS Users; DROP TABLE IF EXISTS Products;`;
+  let dropAllTables = `DROP TABLE IF EXISTS UsersWithRoles; DROP TABLE IF EXISTS Receipts; DROP TABLE IF EXISTS Roles; DROP TABLE IF EXISTS Users; DROP TABLE IF EXISTS Products;`;
 
   let createUsersTable = `CREATE TABLE Users (
     userId int NOT NULL AUTO_INCREMENT, 
@@ -51,8 +51,18 @@ db.connect(async (err, connection) => {
     price varchar(25) NOT NULL,
     description varchar(2000),
     images varchar(2000),
-    PRIMARY KEY (productId))
-    ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+    PRIMARY KEY (productId)
+    ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+    `;
+
+    let createReceiptTable = `CREATE TABLE Receipts (
+    receiptId int NOT NULL AUTO_INCREMENT,
+    products varchar(10000) NOT NULL,
+    userId int NOT NULL,
+    createdAt datetime NOT NULL,
+    PRIMARY KEY (receiptId),
+    CONSTRAINT FK_Receipt_User FOREIGN KEY (userId) REFERENCES Users(userId)
+    ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
     `;
 
   db.query(dropAllTables, async (err) => {
@@ -85,10 +95,17 @@ db.connect(async (err, connection) => {
               process.exit(1);
             }
             console.log('PRODUCTS TABLE CREATED!');
+            db.query(createReceiptTable, async (err) =>{
+              if (err) {
+                console.log('ERROR CREATING RECEIPT TABLE', err);
+                process.exit(1);
+              }
+            console.log('RECEIPT TABLE CREATED!');
             process.exit(0);
           });
         });
       });
     });
   });
+});
 });
