@@ -62,7 +62,15 @@ const Cart: FC = () => {
 				{cartState.length === 0 ? (
 					<p>Your cart is empty :(</p>
 				) : (
-					<ul>{listItems}</ul>
+					<ul>
+						{cartState.map(
+							item => (
+								(thisPrice = item.price.replace(/\s/g, "")),
+								(totalPrice = totalPrice + parseInt(thisPrice) * item.quantity),
+								(<CartItem key={item.productId} item={item} />)
+							)
+						)}
+					</ul>
 				)}
 				{cartState.length > 0 && (
 					<div>
