@@ -51,7 +51,7 @@ const Users = () => {
 
 	useEffect(() => {
 		if (user.isLoading === false && !user?.roles?.includes("SuperAdmin")) {
-			router.push("/login");
+			router.push("/");
 		}
 	}, [user.isLoading]);
 
@@ -78,6 +78,7 @@ const Users = () => {
 								{userInDb.roles.split(",").map(role => {
 									return (
 										<span
+											key={role}
 											className={styles.role + " " + styles[role]}
 											onClick={() => {
 												removeRole(userInDb.userId, role);
@@ -95,6 +96,7 @@ const Users = () => {
 								.map(role => {
 									return (
 										<span
+											key={role}
 											className={styles.placeholderRole + " " + styles[role]}
 											onClick={() => {
 												addRole(userInDb.userId, role);

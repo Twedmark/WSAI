@@ -10,7 +10,6 @@ const Navbar = () => {
 	const router = useRouter();
 
 	const user = useSelector(selectAuthState);
-	console.log(user);
 	const dispatch = useDispatch();
 
 	const determineActive = (path: string) => {

@@ -35,7 +35,6 @@ const Login: NextPage = () => {
 		const data = await response.json();
 
 		if (response.status === 200) {
-			console.log("loggedIn OK", data);
 			dispatch(setAuthState(data));
 			dispatch(setAuthLoading(false));
 			router.push("/");

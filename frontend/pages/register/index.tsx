@@ -9,7 +9,6 @@ const Register: NextPage = () => {
 	const [passwordRepeat, setPasswordRepeat] = useState("");
 
 	async function register() {
-		console.log(email, password);
 		if (password != passwordRepeat) {
 			alert("The two passwords must be the same!");
 			return;
@@ -26,8 +25,6 @@ const Register: NextPage = () => {
 		});
 
 		const data = await response.json();
-
-		console.log(data);
 	}
 
 	return (
