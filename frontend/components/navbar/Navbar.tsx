@@ -13,7 +13,6 @@ const Navbar = () => {
 	const dispatch = useDispatch();
 
 	const determineActive = (path: string) => {
-		//console.log(router);
 		return router.pathname === path ? styles.active : "";
 	};
 
@@ -45,12 +44,14 @@ const Navbar = () => {
 			</div>
 
 			<div className={styles.navbarRight}>
-				{user ? (
+				{user.email ? (
 					<>
 						<Link href="/profile">
 							<a className={determineActive("/profile")}>{user.email}</a>
 						</Link>
-						<button onClick={logout}>Logout</button>
+						<button className={styles.logout} onClick={logout}>
+							Logout
+						</button>
 					</>
 				) : (
 					<>

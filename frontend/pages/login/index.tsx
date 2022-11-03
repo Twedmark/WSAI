@@ -1,13 +1,22 @@
 import type { NextPage } from "next";
 import Link from "next/link";
+import { useRouter } from "next/router";
 import { useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import {
+	selectAuthState,
+	setAuthLoading,
+	setAuthState,
+} from "../../store/authSlice";
 import styles from "./Login.module.css";
 
 const Login: NextPage = () => {
 	const [email, setEmail] = useState("");
 	const [password, setPassword] = useState("");
+	const dispatch = useDispatch();
+	const router = useRouter();
 
-	const [user, setUser] = useState(null);
+	const user = useSelector(selectAuthState);
 
 	async function login(e: any) {
 		e.preventDefault();
@@ -26,16 +35,18 @@ const Login: NextPage = () => {
 		const data = await response.json();
 
 		if (response.status === 200) {
-			console.log("loggedIn OK", data);
-			setUser(data);
+			dispatch(setAuthState(data));
+			dispatch(setAuthLoading(false));
+			router.push("/");
 		} else {
 			alert(data.message);
+			dispatch(setAuthLoading(false));
 		}
 	}
 
 	return (
 		<div>
-			{user ? (
+			{user.email ? (
 				<>
 					<h1>Du är redan inloggad!</h1>
 					<Link href="/profile">

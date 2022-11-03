@@ -45,3 +45,18 @@
     opacity: 0.8;
     cursor: default;
 }
+
+.logout {
+    border: 1px solid black;
+    border-radius: 20px;
+    padding: 5px 10px;
+    cursor: pointer;
+    background-color: white;
+
+    transition: all 0.3s ease;
+}
+
+.logout:hover {
+    color: red;
+    box-shadow: 0px 0px 5px red;
+}

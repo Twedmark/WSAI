@@ -43,14 +43,12 @@ function MyApp({ Component, pageProps }: AppProps) {
 		let localStorageCart = localStorage.getItem("cart")
 			? JSON.parse(localStorage.getItem("cart") as string)
 			: [];
-		console.log("getting", localStorageCart);
 
 		dispatch(setCartState(localStorageCart));
 	}, []);
 
 	useEffect(() => {
 		if (user.isLoading === false) {
-			console.log("setting", cart);
 			localStorage.setItem("cart", JSON.stringify(cart));
 		}
 	}, [cart]);
