@@ -95,18 +95,63 @@ app.post('/createUser', async (req, res) => {
   res.status(200).json({ email: email });
 });
 
-app.get('/deleteUser/', superAdminAuthorization, async (req, res) => {
+app.post('/deleteUser', superAdminAuthorization, async (req, res) => {
   logger.debug('-----deleteUser-----');
 
-  let email = req.body.email;
+  let userId = req.body.userId;
 
-  const result = await db.deleteUser(email)
+  const result = await db.deleteUser(userId)
   .catch((err) => {
     logger.error(err);
     res.status(500).json({ message: "Error deleting user" });
   });
 
-  res.status(200).json("User deleted");
+  const newUsers = await db.getAllUsersWithRoles()
+
+  res.status(200).json(newUsers);
+});
+
+app.post('/addRole', superAdminAuthorization, async (req, res) => {
+  logger.debug('-----addRole-----');
+
+  let userId = req.body.userId;
+  let roleName = req.body.role;
+
+  const role = await db.getRoleByName(roleName)
+
+  const result = await db.assignRole(userId, role[0].roleId)
+  .catch((err) => {
+    logger.error(err);
+    res.status(500).json({ message: "Error adding role" });
+    return;
+  });
+
+  const newUsers = await db.getAllUsersWithRoles()
+  console.log(newUsers);
+
+  res.status(200).json(newUsers);
+});
+
+app.post('/removeRole', superAdminAuthorization, async (req, res) => {
+  logger.debug('-----removeRole-----');
+
+  let userId = req.body.userId;
+  let roleName = req.body.role;
+
+  // get roleID from role name
+  const role = await db.getRoleByName(roleName)
+  console.log("role", role);
+
+  const result = await db.removeRole(userId, role[0].roleId)
+  .catch((err) => {
+    logger.error(err);
+    res.status(500).json({ message: "Error removing role" });
+    return;
+  });
+
+  const newUsers = await db.getAllUsersWithRoles()
+
+  res.status(200).json(newUsers);
 });
 
 const addMinutes = (minutes, date = new Date()) => {   return new Date(date.setMinutes(date.getMinutes() + minutes)); };

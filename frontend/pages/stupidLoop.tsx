@@ -13,15 +13,15 @@ const StupidLoop = () => {
 				const response = await fetch(url);
 				data = await response.json();
 			} catch (error) {
-				console.log(error);
+				console.error(error);
 			}
 			if (data.errors) {
-				console.log("error");
+				console.error("error");
 			} else {
 				products.push(data.product);
 			}
 		}
-		console.log("ASDASD", products);
+		console.log("RESULT", products);
 	}
 
 	asd(); */
@@ -29,7 +29,7 @@ const StupidLoop = () => {
 		let newProducts = [];
 		products.forEach(async (product, index) => {
 			if (product.media.length <= 0) {
-				console.log("no media", product);
+				console.error("no media", product);
 				return;
 			}
 
@@ -45,7 +45,7 @@ const StupidLoop = () => {
 			};
 			newProducts.push(newProduct);
 		});
-		console.log("ASDASD", newProducts);
+		console.log("RESULT", newProducts);
 	}
 
 	asd(); */

@@ -55,12 +55,77 @@ const Users = () => {
 		}
 	}, [user.isLoading]);
 
-	function removeRole(userId: number, role: string) {
-		console.log("removeRole " + role + " from user " + userId);
+	async function removeRole(userId: number, role: string) {
+		if (role === "User") {
+			alert("Can't remove User role!");
+			return;
+		}
+		if (userId === user.userId) {
+			alert("Can't remove your own role!");
+			return;
+		}
+		const response = await fetch("http://localhost:4000/removeRole", {
+			method: "POST",
+			credentials: "include",
+			headers: {
+				"Content-Type": "application/json",
+			},
+			body: JSON.stringify({
+				userId,
+				role,
+			}),
+		});
+		if (response.status === 200) {
+			const data = await response.json();
+			setUsers(data);
+		} else {
+			alert("Something went wrong");
+		}
 	}
 
-	function addRole(userId: number, role: string) {
+	async function addRole(userId: number, role: string) {
 		console.log("addRole " + role + " to user " + userId);
+		const response = await fetch("http://localhost:4000/addRole", {
+			method: "POST",
+			credentials: "include",
+			headers: {
+				"Content-Type": "application/json",
+			},
+			body: JSON.stringify({
+				userId,
+				role,
+			}),
+		});
+		if (response.status === 200) {
+			const data = await response.json();
+			console.log(data);
+			setUsers(data);
+		} else {
+			alert("Something went wrong");
+		}
+	}
+
+	async function deleteUser(userId: number) {
+		if (userId === user.userId) {
+			alert("Can't delete your own account!");
+			return;
+		}
+		const response = await fetch("http://localhost:4000/deleteUser", {
+			method: "POST",
+			credentials: "include",
+			headers: {
+				"Content-Type": "application/json",
+			},
+			body: JSON.stringify({
+				userId,
+			}),
+		});
+		if (response.status === 200) {
+			const data = await response.json();
+			setUsers(data);
+		} else {
+			alert("Something went wrong");
+		}
 	}
 
 	const placeholderRoles = ["User", "Admin", "SuperAdmin"];
@@ -72,6 +137,13 @@ const Users = () => {
 				{users?.map((userInDb: userFromDB) => (
 					<li key={userInDb.userId} className={styles.user}>
 						<div>
+							<button
+								className={styles.deleteUser}
+								onClick={() => deleteUser(userInDb.userId)}
+							>
+								{" "}
+								🗑{" "}
+							</button>
 							<p>{userInDb.userId}</p>
 							<h3>{userInDb.email}</h3>
 							<div className={styles.roleContainer}>

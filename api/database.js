@@ -99,7 +99,7 @@ db.createUser = (email, password) => {
   });
 };
 
-const assignRole = (email, role) => {
+db.assignRole = (email, role) => {
   return new Promise((resolve, reject)=>{
     let sql = "INSERT INTO UsersWithRoles (userId, roleId) VALUES (?, ?);";
     let query = mysql.format(sql, [email, role]);
@@ -113,16 +113,39 @@ const assignRole = (email, role) => {
   });
 };
 
-db.deleteUser = (email) => {
+db.removeRole = (email, role) => {
   return new Promise((resolve, reject)=>{
-    // email = email.replace(/[^a-zA-Z0-9]/g, '');
-    let sql = "DELETE FROM Users WHERE email=?;";
-    let query = mysql.format(sql, [email]);
+    let sql = "DELETE FROM UsersWithRoles WHERE userId=? AND roleId=?;";
+    let query = mysql.format(sql, [email, role]);
     pool.query(query, (err, result) => {
+      if (err) {
+        reject("Could not remove role: SQL ERROR ",err);
+      }else {
+        resolve(result);
+      }
+    });
+  });
+};
+
+db.deleteUser = (userId) => {
+  return new Promise((resolve, reject)=>{
+    // remove all roles in usersWithRoles for this user
+    let sqlUsersWithRoles = "DELETE FROM UsersWithRoles WHERE userId=?;";
+    let queryUsersWithRoles = mysql.format(sqlUsersWithRoles, [userId]);
+    pool.query(queryUsersWithRoles, (err, result) => {
       if (err) {
         reject("Could not delete user: SQL ERROR ",err);
       }else {
-        resolve(result);
+        // remove user from Users table
+        let sqlUsers = "DELETE FROM Users WHERE userId=?;";
+        let queryUsers = mysql.format(sqlUsers, [userId]);
+        pool.query(queryUsers, (err, result) => {
+          if (err) {
+            reject("Could not delete user: SQL ERROR ",err);
+          }else {
+            resolve(result);
+          }
+        });
       }
     });
   });
@@ -135,6 +158,21 @@ db.getRolesForUser = (userId) => {
     pool.query(query, (err, result) => {
       if (err) {
         logger.debug("Could not get roles for user: SQL ERROR ", err);
+        reject(err);
+      } else {
+        resolve(result);
+      }
+    });
+  });
+};
+
+db.getRoleByName = (roleName) => {
+  return new Promise((resolve, reject)=>{
+    let sql = "SELECT * FROM Roles WHERE roleName=?;";
+    let query = mysql.format(sql, [roleName]);
+    pool.query(query, (err, result) => {
+      if (err) {
+        logger.debug("Could not get role by name: SQL ERROR ", err);
         reject(err);
       } else {
         resolve(result);
