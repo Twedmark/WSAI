@@ -35,6 +35,9 @@ const Navbar = () => {
 				<Link href="/admin/users">
 					<a className={determineActive("/admin/users")}>Users</a>
 				</Link>
+				<Link href="/admin/addProduct">
+					<a className={determineActive("/admin/addProduct")}>addProduct</a>
+				</Link>
 			</div>
 
 			<div className={styles.navbarCenter}>
