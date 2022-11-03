@@ -30,7 +30,7 @@ const AddProduct = () => {
 		// and " sek" at the end
 		let priceString = priceValue?.replace(/(\d)(?=(\d{3})+(?!\d))/g, "$1 ");
 
-		priceString = priceString + " sek";
+		priceString = priceString + " SEK";
 
 		console.log(
 			nameValue,

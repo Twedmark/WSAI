@@ -25,6 +25,11 @@ const Cart: FC = () => {
 		)
 	);
 
+	let priceString = String(totalPrice).replace(
+		/(\d)(?=(\d{3})+(?!\d))/g,
+		"$1 "
+	);
+
 	function toggleCart() {
 		setCartOpen(!cartOpen);
 		setOpenedEver(true);
@@ -74,7 +79,7 @@ const Cart: FC = () => {
 				)}
 				{cartState.length > 0 && (
 					<div>
-						<p>{totalPrice} SEK</p>
+						<p>{priceString} SEK</p>
 						<button className={styles.checkout} onClick={checkout}>
 							Gå till kassan
 						</button>

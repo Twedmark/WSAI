@@ -17,11 +17,17 @@ const checkout: NextPage = () => {
 		)
 	);
 
+	let priceString = String(totalPrice).replace(
+		/(\d)(?=(\d{3})+(?!\d))/g,
+		"$1 "
+	);
+
 	return (
 		<div>
 			<h2>Här är din varukorg</h2>
 			<section className={styles.receiptContainer}>
 				<ul>{listItems}</ul>
+				<p>Totalt: {priceString} SEK</p>
 			</section>
 		</div>
 	);

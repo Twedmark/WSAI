@@ -21,6 +21,7 @@
 .navbarLeft {
     /* justify-content: space-evenly; */
     align-items: center;
+    gap: 1em;
 }
 
 .navbarCenter {
