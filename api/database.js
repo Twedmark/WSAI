@@ -22,7 +22,7 @@ const pool = mysql.createPool({
 
 let db = {}
 
-db.getAllUsers = async () => {
+db.getAllUsers = () => {
   return new Promise((resolve, reject)=>{
     pool.query("SELECT * FROM Users", (err, result) => {
       if (err) {
@@ -34,7 +34,7 @@ db.getAllUsers = async () => {
   });
 };
 
-db.getAllUsersWithRoles = async () => {
+db.getAllUsersWithRoles = () => {
   return new Promise((resolve, reject)=>{
     pool.query("SELECT Users.userId, Users.email, Users.password, GROUP_CONCAT(Roles.roleName) AS roles FROM Users INNER JOIN UsersWithRoles ON Users.userId = UsersWithRoles.userId INNER JOIN Roles ON UsersWithRoles.roleId = Roles.roleId GROUP BY Users.userId", (err, result) => {
       if (err) {
@@ -191,7 +191,7 @@ db.getRoleByName = (roleName) => {
   });
 };
 
-db.getAllProducts = async () => {
+db.getAllProducts = () => {
   return new Promise((resolve, reject)=>{
     pool.query("SELECT * FROM Products", (err, result) => {
       if (err) {
@@ -232,6 +232,22 @@ db.getProductById = (productId) => {
     });
   }
   );
+};
+
+db.createProduct = (product) => {
+  return new Promise((resolve, reject)=>{
+    console.log(product.images);
+    let sql = "INSERT INTO Products (productId, name, price, description, images) VALUES (null, ?, ?, ?, ?);";
+    let query = mysql.format(sql, [product.name, product.price, product.description, product.images]);
+    pool.query(query, (err, result) => {
+      if (err) {
+        console.log(err);
+        reject("Could not create product: SQL ERROR ",err);
+      }else {
+        resolve(result.insertId);
+      }
+    });
+  });
 };
 
 module.exports = db;

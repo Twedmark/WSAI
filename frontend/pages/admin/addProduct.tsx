@@ -7,7 +7,7 @@ const AddProduct = () => {
 	const description = useRef<HTMLTextAreaElement>(null);
 	const images = useRef<HTMLInputElement>(null);
 
-	function submit(e: FormEvent<HTMLFormElement>) {
+	async function submit(e: FormEvent<HTMLFormElement>) {
 		e.preventDefault();
 
 		const nameValue = name.current?.value;
@@ -32,13 +32,36 @@ const AddProduct = () => {
 
 		priceString = priceString + " SEK";
 
-		console.log(
-			nameValue,
-			priceValue,
-			descriptionValue,
-			imagesArrayTrimmedFiltered,
-			priceString
-		);
+		let newProduct = {
+			name: nameValue,
+			price: priceString,
+			description: descriptionValue,
+			images: imagesArrayTrimmedFiltered?.join(","),
+		};
+
+		console.log(newProduct);
+
+		const response = await fetch("http://localhost:4000/addProduct", {
+			method: "POST",
+			credentials: "include",
+			headers: {
+				"Content-Type": "application/json",
+			},
+			body: JSON.stringify(newProduct),
+		});
+		if (response.status === 200) {
+			alert("Product added!");
+			//clear form
+			name.current!.value = "";
+			price.current!.value = "";
+			description.current!.value = "";
+			images.current!.value = "";
+		} else {
+			alert("Something went wrong");
+		}
+
+		const data = await response.json();
+		console.log(data);
 	}
 
 	return (
