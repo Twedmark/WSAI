@@ -48,7 +48,7 @@ db.connect(async (err, connection) => {
   let createProductTable = `CREATE TABLE Products (
     productId int NOT NULL AUTO_INCREMENT,
     name varchar(100) NOT NULL,
-    price varchar(25) NOT NULL,
+    price varchar(50) NOT NULL,
     description varchar(2000),
     images varchar(2000),
     PRIMARY KEY (productId)

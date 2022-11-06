@@ -17,16 +17,14 @@ const Home: NextPage = () => {
 				<div className={styles.videoBlock}>
 					<div className={styles.videoContainer}>
 						<video
-							className={styles.video}
+							className={styles.video + " zoom-to-fill"}
 							autoPlay
 							loop
 							muted
 							src="https://a.storyblok.com/f/118230/x/58568c8237/kitchen_studio_header_video_v3.mp4"
 						></video>
+						<p className={styles.downArrow}>🡳</p>
 					</div>
-				</div>
-				<div className={styles.textContainer}>
-					<h1 className={styles.title}>WSAI</h1>
 				</div>
 				<div className={styles.productListContainer}>
 					<ProductList largeVersion />

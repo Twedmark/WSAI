@@ -1,12 +1,12 @@
 import products from "./products.json";
 
 const StupidLoop = () => {
-	/* let baseUrl = "https://artilleriet.centra.com/api/checkout/products/";
+	let baseUrl = "https://artilleriet.centra.com/api/checkout/products/";
 
-	async function asd() {
+	/* async function asd() {
 		let products = [];
 		for (let i = 0; i < 1000; i++) {
-			let number = 75000 + i;
+			let number = 133000 + i;
 			const url = baseUrl + number;
 			let data;
 			try {
@@ -29,12 +29,11 @@ const StupidLoop = () => {
 		let newProducts = [];
 		products.forEach(async (product, index) => {
 			if (product.media.length <= 0) {
-				console.error("no media", product);
 				return;
 			}
 
 			let newProduct = {
-				productId: index,
+				productId: index + 244,
 				name: product.name,
 				price: product.price,
 				description: product.descriptionHtml,

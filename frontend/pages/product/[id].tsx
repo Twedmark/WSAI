@@ -8,6 +8,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { addToCartState, selectCartState } from "../../store/cartSlice";
 import React from "react";
 import { selectAuthState } from "../../store/authSlice";
+import ProductList from "../../components/productList/ProductList";
 
 type ProductProps = {
 	productId: number;
@@ -88,6 +89,9 @@ const Product: FC<ProductProps> = ({
 					</div>
 				</div>
 			</main>
+			<h2>Related products</h2>
+			<ProductList />
+			<ProductList />
 		</div>
 	);
 };
