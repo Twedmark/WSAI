@@ -1,5 +1,8 @@
 import { useRouter } from "next/router";
-import { FormEvent, useRef } from "react";
+import React from "react";
+import { FormEvent, useEffect, useRef } from "react";
+import { useSelector } from "react-redux";
+import { selectAuthState } from "../../store/authSlice";
 import styles from "./addProduct.module.css";
 
 const AddProduct = () => {
@@ -8,6 +11,14 @@ const AddProduct = () => {
 	const price = useRef<HTMLInputElement>(null);
 	const description = useRef<HTMLTextAreaElement>(null);
 	const images = useRef<HTMLInputElement>(null);
+
+	const user = useSelector(selectAuthState);
+
+	useEffect(() => {
+		if (user.isLoading === false && !user?.roles?.includes("Admin")) {
+			router.push("/");
+		}
+	}, [user.isLoading]);
 
 	async function submit(e: FormEvent<HTMLFormElement>) {
 		e.preventDefault();

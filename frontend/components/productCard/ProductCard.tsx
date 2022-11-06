@@ -5,6 +5,8 @@ import Image from "next/image";
 
 import { addToCartState } from "../../store/cartSlice";
 import { useDispatch, useSelector } from "react-redux";
+import { selectAuthState } from "../../store/authSlice";
+import React from "react";
 
 type Props = {
 	product: {
@@ -37,8 +39,28 @@ export const ProductCard: FC<Props> = ({
 	const dispatch = useDispatch();
 	const imageArray = images.split(",");
 
+	const user = useSelector(selectAuthState);
+
 	function addToCart() {
 		dispatch(addToCartState({ productId, name, price, image: imageArray[0] }));
+	}
+
+	async function deleteProduct() {
+		if (confirm("Are you sure you want to delete this product?")) {
+			let url = "http://localhost:4000/deleteProduct/" + productId;
+			const reponse = await fetch(url, {
+				method: "DELETE",
+				headers: {
+					"Content-Type": "application/json",
+				},
+				credentials: "include",
+			});
+
+			const data = await reponse.json();
+			alert(data.message);
+
+			router.reload();
+		}
 	}
 
 	return (
@@ -54,6 +76,17 @@ export const ProductCard: FC<Props> = ({
 			}}
 			tabIndex={0}
 		>
+			{user?.roles?.includes("Admin") && (
+				<button
+					className={styles.deleteArticle}
+					onClick={e => {
+						e.stopPropagation();
+						deleteProduct();
+					}}
+				>
+					X
+				</button>
+			)}
 			<div className={styles.imageContainer}>
 				{imageArray
 					?.slice(0)

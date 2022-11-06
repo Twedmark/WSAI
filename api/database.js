@@ -283,4 +283,32 @@ db.createProduct = (product) => {
   });
 };
 
+db.deleteProduct = (productId) => {
+  return new Promise((resolve, reject)=>{
+    let sql = "DELETE FROM Products WHERE productId=?;";
+    let query = mysql.format(sql, [productId]);
+    pool.query(query, (err, result) => {
+      if (err) {
+        reject("Could not delete product: SQL ERROR ",err);
+      }else {
+        resolve(result);
+      }
+    });
+  });
+};
+
+db.editProduct = (product) => {
+  return new Promise((resolve, reject)=>{
+    let sql = "UPDATE Products SET name=?, price=?, description=?, images=? WHERE productId=?;";
+    let query = mysql.format(sql, [product.name, product.price, product.description, product.images, product.productId]);
+    pool.query(query, (err, result) => {
+      if (err) {
+        reject("Could not edit product: SQL ERROR ",err);
+      }else {
+        resolve(result);
+      }
+    });
+  });
+};
+
 module.exports = db;

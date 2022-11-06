@@ -291,6 +291,40 @@ app.post('/addProduct', adminAuthorization, async (req, res) => {
   res.status(200).json({message: "Product added", id: result});
 });
 
+app.delete('/deleteProduct/:id', adminAuthorization, async (req, res) => {
+  logger.debug('-----deleteProduct-----');
+
+  let id = req.params.id;
+
+  let result = await db.deleteProduct(id)
+  .catch((err) => {
+    logger.error(err);
+    res.status(400).json("Error deleting product");
+    return;
+  });
+
+  logger.debug(`${req.email} deleted product with id '${id}'`);
+
+  res.status(200).json({message: "Product deleted"});
+});
+
+app.put('/editProduct/:id', adminAuthorization, async (req, res) => {
+  logger.debug('-----editProduct-----');
+
+  let id = req.params.id;
+  let product = req.body;
+
+  let result = await db.editProduct(product)
+  .catch((err) => {
+    logger.error(err);
+    res.status(400).json("Error editing product");
+    return;
+  });
+
+  logger.debug(`${req.email} edited product with id '${id}'`);
+
+  res.status(200).json({message: "Product edited"});
+});
 
 app.listen(port, (err) => {
   if (err) {

@@ -1,3 +1,4 @@
+import React from "react";
 import { useEffect, useState } from "react";
 import ProductCard from "../productCard/ProductCard";
 import styles from "./ProductList.module.css";

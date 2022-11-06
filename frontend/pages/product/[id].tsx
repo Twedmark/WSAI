@@ -6,6 +6,8 @@ import type { GetServerSideProps, GetServerSidePropsContext } from "next";
 import parse from "html-react-parser";
 import { useDispatch, useSelector } from "react-redux";
 import { addToCartState, selectCartState } from "../../store/cartSlice";
+import React from "react";
+import { selectAuthState } from "../../store/authSlice";
 
 type ProductProps = {
 	productId: number;
@@ -25,11 +27,34 @@ const Product: FC<ProductProps> = ({
 	const router = useRouter();
 	const dispatch = useDispatch();
 	const cart = useSelector(selectCartState);
+	const user = useSelector(selectAuthState);
 	// const { productId } = router.query;
 	const imageArray = images.split(",");
 
 	function addToCart() {
 		dispatch(addToCartState({ productId, name, price, image: imageArray[0] }));
+	}
+
+	async function editProduct() {
+		router.push("/admin/editProduct/" + productId);
+	}
+
+	async function deleteProduct() {
+		if (confirm("Are you sure you want to delete this product?")) {
+			let url = "http://localhost:4000/deleteProduct/" + productId;
+			const reponse = await fetch(url, {
+				method: "DELETE",
+				headers: {
+					"Content-Type": "application/json",
+				},
+				credentials: "include",
+			});
+
+			const data = await reponse.json();
+			alert(data.message);
+
+			router.push("/");
+		}
 	}
 
 	return (
@@ -50,6 +75,16 @@ const Product: FC<ProductProps> = ({
 								? "Added to cart"
 								: "Add to cart"}
 						</button>
+						{user?.roles?.includes("Admin") && (
+							<>
+								<button onClick={editProduct} className={styles.editBtn}>
+									Edit
+								</button>
+								<button onClick={deleteProduct} className={styles.deleteBtn}>
+									Delete
+								</button>
+							</>
+						)}
 					</div>
 				</div>
 			</main>
