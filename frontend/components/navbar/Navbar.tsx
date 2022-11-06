@@ -1,7 +1,8 @@
 import Link from "next/link";
 import { useRouter } from "next/router";
+import React from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { selectAuthState, setAuthState } from "../../store/authSlice";
+import { clearAuthState, selectAuthState } from "../../store/authSlice";
 import Cart from "../cart/Cart";
 
 import styles from "./Navbar.module.css";
@@ -22,7 +23,7 @@ const Navbar = () => {
 			credentials: "include",
 		});
 		if (response.status === 200) {
-			dispatch(setAuthState({}));
+			dispatch(clearAuthState());
 		}
 	}
 

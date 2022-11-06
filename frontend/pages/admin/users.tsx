@@ -1,4 +1,5 @@
 import { useRouter } from "next/router";
+import React from "react";
 import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { selectAuthState } from "../../store/authSlice";
@@ -131,6 +132,8 @@ const Users = () => {
 	return (
 		<div>
 			<h1>Users</h1>
+			{loading && <p>Loading...</p>}
+			{error && <p style={{ color: "red" }}>Error</p>}
 			<ul className={styles.userList}>
 				{users?.map((userInDb: userFromDB) => (
 					<li key={userInDb.userId} className={styles.user}>
@@ -139,8 +142,7 @@ const Users = () => {
 								className={styles.deleteUser}
 								onClick={() => deleteUser(userInDb.userId)}
 							>
-								{" "}
-								🗑{" "}
+								🗑
 							</button>
 							<p>{userInDb.userId}</p>
 							<h3>{userInDb.email}</h3>

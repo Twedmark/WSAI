@@ -32,6 +32,9 @@ export const authSlice = createSlice({
 		setAuthLoading(state, action) {
 			state.authState.isLoading = action.payload;
 		},
+		clearAuthState(state) {
+			state.authState = { isLoading: false } as user;
+		},
 	},
 	// Special reducer for hydrating the state. Special case for next-redux-wrapper
 	extraReducers: {
@@ -44,7 +47,8 @@ export const authSlice = createSlice({
 	},
 });
 
-export const { setAuthState, setAuthLoading } = authSlice.actions;
+export const { setAuthState, setAuthLoading, clearAuthState } =
+	authSlice.actions;
 
 export const selectAuthState = (state: AppState) => state.auth.authState;
 
