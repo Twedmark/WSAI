@@ -228,50 +228,59 @@ app.get('/logout', async (req, res) => {
 
 app.get('/getAllProducts', async (req, res) => {
   logger.debug('-----getAllProducts-----');
+
   let result = await db.getAllProducts()
   .catch((err) => {
     logger.error(err);
     res.status(400).send("Error getting products");
   });
+
   res.status(200).json(result);
 });
 
 app.get('/getRandomProducts/:amount', async (req, res) => {
   logger.debug('-----getRandomProducts-----');
+
   let amount = Number(req.params.amount);
   let result = await db.getRandomProducts(amount)
   .catch((err) => {
     logger.error(err);
     res.status(400).send("Error getting products");
   });
+
   res.status(200).json(result);
 });
 
 app.get('/getProductById/:id', async (req, res) => {
   logger.debug('-----getProductById-----');
+
   let id = req.params.id;
   let result = await db.getProductById(id)
   .catch((err) => {
     logger.error(err);
     res.send("Error getting product");
   });
+
   res.status(200).json(result);
 });
 
 app.get('/getReceiptFromUser', authorization, async (req, res) => {
   logger.debug('-----getReceiptFromUser-----');
+
   let userEmail = req.email;
   let user = await getUserByEmail(userEmail)
   .catch((err) => {
     logger.error(err);
     res.send("Error getting email while getting receipt");
   });
+
   console.log(user);
   let result = await db.getReceiptFromUser(user[0].userId)
   .catch((err) => {
     logger.error(err);
     res.send("Error getting receipt");
   });
+  
   res.status(200).json(result);
 });
 

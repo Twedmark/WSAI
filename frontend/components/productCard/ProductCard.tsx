@@ -3,7 +3,7 @@ import { FC } from "react";
 import styles from "./ProductCard.module.css";
 import Image from "next/image";
 
-import { addToCartState } from "../../store/cartSlice";
+import { addToCartState, selectCartState } from "../../store/cartSlice";
 import { useDispatch, useSelector } from "react-redux";
 import { selectAuthState } from "../../store/authSlice";
 import React from "react";
@@ -40,6 +40,7 @@ export const ProductCard: FC<Props> = ({
 	const imageArray = images.split(",");
 
 	const user = useSelector(selectAuthState);
+	const cart = useSelector(selectCartState);
 
 	function addToCart() {
 		dispatch(addToCartState({ productId, name, price, image: imageArray[0] }));
@@ -116,8 +117,29 @@ export const ProductCard: FC<Props> = ({
 							e.stopPropagation();
 							//dont do add to cart explicitly, since this apparently triggers the onClick, thus still adding to cart
 						}}
+						className={
+							cart.filter(cartItem => cartItem.productId === productId).length >
+							0
+								? `${styles.addToCart} ${styles.addedToCart}`
+								: styles.addToCart
+						}
 					>
-						<Image src="/shoppingBag.png" width={20} height={20} />
+						{cart.filter(cartItem => cartItem.productId === productId).length >
+						0 ? (
+							<p
+								style={{
+									height: "20px",
+									width: "20px",
+									margin: "0",
+									textAlign: "center",
+									lineHeight: "20px",
+								}}
+							>
+								+1
+							</p>
+						) : (
+							<Image src="/shoppingBag.png" width={20} height={20} />
+						)}
 					</button>
 				</div>
 			</div>

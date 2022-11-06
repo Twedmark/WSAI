@@ -2,11 +2,16 @@ import Image from "next/image";
 import { FC, useEffect, useRef, useState } from "react";
 import styles from "./Cart.module.css";
 
-import { selectCartState, addToCartState } from "../../store/cartSlice";
-import { useSelector } from "react-redux";
+import {
+	selectCartState,
+	addToCartState,
+	resetCartState,
+} from "../../store/cartSlice";
+import { useDispatch, useSelector } from "react-redux";
 import { useRouter } from "next/router";
 
 import CartItem from "./CartItem";
+import React from "react";
 
 const Cart: FC = () => {
 	const [cartOpen, setCartOpen] = useState(false);
@@ -17,6 +22,7 @@ const Cart: FC = () => {
 
 	const cartState = useSelector(selectCartState);
 	const router = useRouter();
+	const dispatch = useDispatch();
 
 	const listItems = cartState.map(
 		(item, index) => (
@@ -35,8 +41,17 @@ const Cart: FC = () => {
 		setCartOpen(!cartOpen);
 		setOpenedEver(true);
 	}
+
 	function checkout() {
 		router.push("/checkout");
+	}
+
+	function clearCart() {
+		if (confirm("Are you sure you want to clear your cart?")) {
+			localStorage.removeItem("cart");
+			dispatch(resetCartState());
+			toggleCart();
+		}
 	}
 
 	// store a number variable with all items in cartState quantity
@@ -80,6 +95,9 @@ const Cart: FC = () => {
 						  }`
 				}
 			>
+				<button className={styles.clearCart} onClick={clearCart}>
+					Clear cart
+				</button>
 				<h1>Cart</h1>
 				{cartState.length === 0 ? (
 					<p>Your cart is empty :(</p>
