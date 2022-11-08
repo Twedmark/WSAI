@@ -23,6 +23,8 @@ app.get('/', (req, res) => {
   res.send("Try /getAllProducts :)");
 });
 
+
+// ---------------- User routes ---------------- 
 app.get('/getAllUsers', superAdminAuthorization, async (req, res) => {
   logger.debug('-----getAllUsers-----');
 
@@ -226,6 +228,8 @@ app.get('/logout', async (req, res) => {
   res.clearCookie('token').status(200).json({ message: "Logged out" });
 });
 
+
+// ---------------- Product routes ---------------- 
 app.get('/getAllProducts', async (req, res) => {
   logger.debug('-----getAllProducts-----');
 
@@ -261,26 +265,6 @@ app.get('/getProductById/:id', async (req, res) => {
     res.send("Error getting product");
   });
 
-  res.status(200).json(result);
-});
-
-app.get('/getReceiptFromUser', authorization, async (req, res) => {
-  logger.debug('-----getReceiptFromUser-----');
-
-  let userEmail = req.email;
-  let user = await getUserByEmail(userEmail)
-  .catch((err) => {
-    logger.error(err);
-    res.send("Error getting email while getting receipt");
-  });
-
-  console.log(user);
-  let result = await db.getReceiptFromUser(user[0].userId)
-  .catch((err) => {
-    logger.error(err);
-    res.send("Error getting receipt");
-  });
-  
   res.status(200).json(result);
 });
 
@@ -334,6 +318,52 @@ app.put('/editProduct/:id', adminAuthorization, async (req, res) => {
 
   res.status(200).json({message: "Product edited"});
 });
+
+
+// ---------------- Receipt routes ---------------- 
+app.get('/getReceiptFromUser', authorization, async (req, res) => {
+  logger.debug('-----getReceiptFromUser-----');
+
+  let userEmail = req.email;
+  let user = await getUserByEmail(userEmail)
+  .catch((err) => {
+    logger.error(err);
+    res.send("Error getting email while getting receipt");
+  });
+
+  console.log(user);
+  let result = await db.getReceiptFromUser(user[0].userId)
+  .catch((err) => {
+    logger.error(err);
+    res.send("Error getting receipt");
+  });
+  
+  res.status(200).json(result);
+});
+
+app.post('/addReceipt', authorization, async (req, res) => {
+  logger.debug('-----addReceipt-----');
+  let receipt = req.body;
+  const token = req.cookies.token;
+
+  const userId = await db.getUserByToken(token)
+  .catch((err) => {
+    logger.error(err);
+    res.status(400).json("Error");
+  });
+  receipt.userId = userId[0].userId;
+  console.log(receipt)
+
+  let result = await db.createReceipt(receipt)
+  .catch((err) => {
+    logger.error(err);
+    res.status(400).json("Error adding receipt");
+    return;
+  });
+
+  res.status(200).json({message: "Receipt added", id: result});
+});
+
 
 app.listen(port, (err) => {
   if (err) {

@@ -59,6 +59,7 @@ db.connect(async (err, connection) => {
     receiptId int NOT NULL AUTO_INCREMENT,
     products varchar(10000) NOT NULL,
     userId int NOT NULL,
+    totalPrice varchar(75) NOT NULL,
     createdAt datetime NOT NULL,
     PRIMARY KEY (receiptId),
     CONSTRAINT FK_Receipt_User FOREIGN KEY (userId) REFERENCES Users(userId)

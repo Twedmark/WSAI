@@ -6,13 +6,20 @@ type UserReceipts = {
 	receiptId: number;
 	userId: number;
 	products: any;
-	createdAt: string;
+	totalPrice: number;
+	createdAt: Date;
 };
 
 const Profile: NextPage = () => {
 	const [Receipts, setReceipts] = useState([]);
 	const [loading, setLoading] = useState(false);
 	const [error, setError] = useState(false);
+	let options = {
+		weekday: "long",
+		year: "numeric",
+		month: "long",
+		day: "numeric",
+	};
 
 	useEffect(() => {
 		const fetchUsers = async () => {
@@ -61,32 +68,47 @@ const Profile: NextPage = () => {
 
 	return (
 		<div>
-			<h1>Profile</h1>
-			<ul>
+			<h1 className={styles.profileTitle}>Profile</h1>
+			<ul className={styles.receiptUl}>
 				{Receipts.map((receipt: UserReceipts) => (
 					<li key={receipt.receiptId}>
-						<div>
-							<p className={styles.receiptId}>
-								Order Nummer: {receipt.receiptId}
-							</p>
-							{receipt.products.map((product: any, index) => {
-								return (
-									<section
-										key={index}
-										className={styles.productAndQuantitySection}
-									>
-										<p className={styles.product}>
-											Artikel Nummer: {Object.keys(product)}
-										</p>
-										<p className={styles.Quantity}>
-											Antal: {Object.values(product)}
-										</p>
-									</section>
-								);
-							})}
-							<p className={styles.orderDate}>
-								Datum för beställning: {receipt.createdAt}
-							</p>
+						<div className={styles.receiptContainer}>
+							<div className={styles.receiptHeader}>
+								<p className={styles.receiptId}>
+									Ordernummer: {receipt.receiptId}
+								</p>
+								<p className={styles.date}>
+									Datum:{" "}
+									{new Date(receipt.createdAt).toLocaleDateString(
+										"sv-SE",
+										options
+									)}
+								</p>
+							</div>
+							<div className={styles.receiptBody}>
+								<div className={styles.receiptProducts}>
+									{receipt.products.map((product: any, index) => {
+										return (
+											<section
+												key={index}
+												className={styles.productAndQuantitySection}
+											>
+												<p className={styles.productId}>
+													Art: {Object.keys(product)}
+												</p>
+												<p className={styles.productQuantity}>
+													Antal: {Object.values(product)}
+												</p>
+											</section>
+										);
+									})}
+								</div>
+								<section className={styles.priceSection}>
+									<p className={styles.totalPrice}>
+										Pris: {receipt.totalPrice}
+									</p>
+								</section>
+							</div>
 						</div>
 					</li>
 				))}

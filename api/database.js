@@ -23,6 +23,8 @@ const pool = mysql.createPool({
 
 let db = {}
 
+
+// ---> User queries <---
 db.getAllUsers = () => {
   return new Promise((resolve, reject)=>{
     pool.query("SELECT * FROM Users", (err, result) => {
@@ -52,7 +54,6 @@ db.getUserByEmail = (email) => {
     // email = email.replace(/[^a-zA-Z0-9]/g, '');
     let sql = "SELECT * FROM Users WHERE email=?;";
     let query = mysql.format(sql, [email]);
-    logger.debug(query);
     pool.query(query, (err, result) => {
       if (err) {
         logger.debug("Could not get user: SQL ERROR ", err);
@@ -109,7 +110,6 @@ db.getUserinfoWithRole = (roleId) => {
     });
   });
 } 
-
 
 db.createUser = (email, password) => {
   return new Promise((resolve, reject)=>{
@@ -208,6 +208,8 @@ db.getRoleByName = (roleName) => {
   });
 };
 
+
+// ---> Product queries <---
 db.getAllProducts = () => {
   return new Promise((resolve, reject)=>{
     pool.query("SELECT * FROM Products", (err, result) => {
@@ -242,22 +244,6 @@ db.getProductById = (productId) => {
     pool.query(query, (err, result) => {
       if (err) {
         logger.debug("Could not get product: SQL ERROR ", err);
-        reject(err);
-      } else {
-        resolve(result);
-      }
-    });
-  }
-  );
-};
-
-db.getReceiptFromUser = (userId) => {
-  return new Promise((resolve, reject)=>{
-    let sql = "SELECT * FROM Receipts WHERE userId=?;";
-    let query = mysql.format(sql, [userId]);
-    pool.query(query, (err, result) => {
-      if (err) {
-        logger.debug("Could not get receipt: SQL ERROR ", err);
         reject(err);
       } else {
         resolve(result);
@@ -309,6 +295,41 @@ db.editProduct = (product) => {
       }
     });
   });
+};
+
+
+// ---> receipt queries <---
+db.createReceipt = (receipt) => {
+  return new Promise((resolve, reject)=>{
+    console.log("Creating receipt", receipt);
+    let sql = "INSERT INTO Receipts (receiptId, products, userId, totalPrice, createdAt) VALUES (null, ?, ?, ?, NOW());";
+    let query = mysql.format(sql, [receipt.userId, [receipt.products], receipt.totalPrice]);
+    console.log(query);
+    pool.query(query, (err, result) => {
+      if (err) {
+        reject("Could not create receipt: SQL ERROR ",err);
+      }else {
+        resolve(result.insertId);
+      }
+    });
+  }
+  );
+};
+
+db.getReceiptFromUser = (userId) => {
+  return new Promise((resolve, reject)=>{
+    let sql = "SELECT * FROM Receipts WHERE userId=?;";
+    let query = mysql.format(sql, [userId]);
+    pool.query(query, (err, result) => {
+      if (err) {
+        logger.debug("Could not get receipt: SQL ERROR ", err);
+        reject(err);
+      } else {
+        resolve(result);
+      }
+    });
+  }
+  );
 };
 
 module.exports = db;

@@ -49,8 +49,8 @@ db.connect(async (err, connection) => {
   let superAdminWithAdminRole = `INSERT INTO UsersWithRoles (userId, roleId) VALUES (3, 2000);`;
   let superAdminWithSuperAdminRole = `INSERT INTO UsersWithRoles (userId, roleId) VALUES (3, 3000);`;
 
-  let userReceipt = `INSERT INTO Receipts (receiptId, products, userId, createdAt) VALUES (null, '${JSON.stringify(MockReceipt)}', 1, NOW());`;
-  let userReceipt2 = `INSERT INTO Receipts (receiptId, products, userId, createdAt) VALUES (null, '${JSON.stringify(MockReceipt2)}', 1, NOW());`;
+  let userReceipt = `INSERT INTO Receipts (receiptId, products, userId, totalPrice, createdAt) VALUES (null, '${JSON.stringify(MockReceipt)}', 1, 9001, NOW());`;
+  let userReceipt2 = `INSERT INTO Receipts (receiptId, products, userId, totalPrice, createdAt) VALUES (null, '${JSON.stringify(MockReceipt2)}', 1, 9002, NOW());`;
 
   mockProducts.forEach(async (product, index) => {
     let insertProduct = `INSERT INTO Products (productId, name, price, description, images) VALUES (null, "${product.name}", "${product.price}", "${product.description}", "${product.images}");`;
