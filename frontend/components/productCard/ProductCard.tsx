@@ -3,7 +3,11 @@ import { FC } from "react";
 import styles from "./ProductCard.module.css";
 import Image from "next/image";
 
-import { addToCartState, selectCartState } from "../../store/cartSlice";
+import {
+	addToCartState,
+	removeFromCartState,
+	selectCartState,
+} from "../../store/cartSlice";
 import { useDispatch, useSelector } from "react-redux";
 import { selectAuthState } from "../../store/authSlice";
 import React from "react";
@@ -59,6 +63,8 @@ export const ProductCard: FC<Props> = ({
 
 			const data = await reponse.json();
 			alert(data.message);
+
+			dispatch(removeFromCartState(productId));
 
 			router.reload();
 		}

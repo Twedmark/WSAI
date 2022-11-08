@@ -3,9 +3,10 @@ import { useDispatch, useSelector } from "react-redux";
 import { resetCartState, selectCartState } from "../../store/cartSlice";
 import CartItem from "../../components/cart/CartItem";
 import styles from "./checkout.module.css";
-import React from "react";
+import React, { useEffect, useState } from "react";
 
 const checkout: NextPage = () => {
+	const [orderNumber, setOrderNumber] = useState<number>();
 	const cartState = useSelector(selectCartState);
 	const dispatch = useDispatch();
 	let totalPrice = 0,
@@ -29,8 +30,6 @@ const checkout: NextPage = () => {
 		"$1 "
 	);
 
-	console.log(cartState);
-
 	async function completeOrder() {
 		const response = await fetch("http://localhost:4000/addReceipt", {
 			method: "POST",
@@ -43,22 +42,42 @@ const checkout: NextPage = () => {
 		const data = await response.json();
 		if (data.message === "Receipt added") {
 			dispatch(resetCartState());
+
+			setOrderNumber(data.id);
 		}
 	}
 
 	return (
 		<div>
-			<div className={styles.header}>
-				<h1>Här är din varukorg</h1>
-			</div>
-			<section className={styles.receiptContainer}>
-				<ul>{listItems}</ul>
-				<p>Totalt: {priceString} SEK</p>
-			</section>
+			{cartState.length > 0 ? (
+				<>
+					{orderNumber ? (
+						<div className={styles.checkedOut}>
+							<h1>Thank you for your order!</h1>
+							<p>Your order number is {orderNumber}</p>
+						</div>
+					) : (
+						<div className={styles.checkout}>
+							<div className={styles.header}>
+								<h1>Här är din varukorg</h1>
+							</div>
+							<section className={styles.receiptContainer}>
+								<ul>{listItems}</ul>
+								<p>Totalt: {priceString} SEK</p>
+							</section>
 
-			<button className={styles.checkoutButton} onClick={completeOrder}>
-				KÖP
-			</button>
+							<button className={styles.checkoutButton} onClick={completeOrder}>
+								KÖP
+							</button>
+						</div>
+					)}
+				</>
+			) : (
+				<div className={styles.emptyCart} style={{ textAlign: "center" }}>
+					<h1>Din varukorg är tom</h1>
+					<p>Gå och handla lite!</p>
+				</div>
+			)}
 		</div>
 	);
 };

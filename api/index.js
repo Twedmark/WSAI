@@ -331,7 +331,6 @@ app.get('/getReceiptFromUser', authorization, async (req, res) => {
     res.send("Error getting email while getting receipt");
   });
 
-  console.log(user);
   let result = await db.getReceiptFromUser(user[0].userId)
   .catch((err) => {
     logger.error(err);

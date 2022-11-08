@@ -5,7 +5,11 @@ import type { GetServerSideProps, GetServerSidePropsContext } from "next";
 
 import parse from "html-react-parser";
 import { useDispatch, useSelector } from "react-redux";
-import { addToCartState, selectCartState } from "../../store/cartSlice";
+import {
+	addToCartState,
+	removeFromCartState,
+	selectCartState,
+} from "../../store/cartSlice";
 import React from "react";
 import { selectAuthState } from "../../store/authSlice";
 import ProductList from "../../components/productList/ProductList";
@@ -43,7 +47,7 @@ const Product: FC<ProductProps> = ({
 	async function deleteProduct() {
 		if (confirm("Are you sure you want to delete this product?")) {
 			let url = "http://localhost:4000/deleteProduct/" + productId;
-			const reponse = await fetch(url, {
+			const response = await fetch(url, {
 				method: "DELETE",
 				headers: {
 					"Content-Type": "application/json",
@@ -51,8 +55,10 @@ const Product: FC<ProductProps> = ({
 				credentials: "include",
 			});
 
-			const data = await reponse.json();
+			const data = await response.json();
 			alert(data.message);
+
+			dispatch(removeFromCartState(productId));
 
 			router.push("/");
 		}
