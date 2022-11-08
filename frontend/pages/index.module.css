@@ -25,6 +25,40 @@
     position: relative;
 }
 
+.loadMoreContainer {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+
+    padding: 1em;
+}
+
+.loadMore {
+    padding: 1em 2em;
+    text-align: center;
+    width: 80%;
+    background-color: black;
+    color: white;
+    border-radius: 10px;
+    cursor: pointer;
+    border: none;
+    scale: 1;
+
+    transition: all 0.3s ease-in-out;
+}
+
+.loadMore:hover {
+    background-color: rgb(22, 22, 22);
+    scale: 1.05;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+}
+
+.loadMore:active {
+    background-color: rgb(33, 33, 33);
+    scale: 1;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+}
+
 .downArrow {
     position: absolute;
     bottom: 0;

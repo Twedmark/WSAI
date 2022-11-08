@@ -5,6 +5,22 @@ import ProductList from "../components/productList/ProductList";
 import React from "react";
 
 const Home: NextPage = () => {
+	const [productListCount, setProductListCount] = React.useState(0);
+
+	function increaseProductLists() {
+		setProductListCount(productListCount + 2);
+	}
+
+	//store variable that shows as many product lists as productListCount
+	const productLists = [] as any;
+	for (let i = 0; i < productListCount; i++) {
+		if (i % 2 === 0) {
+			productLists.push(<ProductList key={i} largeVersion />); // make every other one large
+		} else {
+			productLists.push(<ProductList key={i} />);
+		}
+	}
+
 	return (
 		<div>
 			<Head>
@@ -29,6 +45,14 @@ const Home: NextPage = () => {
 				<div className={styles.productListContainer}>
 					<ProductList largeVersion />
 					<ProductList />
+
+					{productLists}
+
+					<div className={styles.loadMoreContainer}>
+						<button className={styles.loadMore} onClick={increaseProductLists}>
+							Load More
+						</button>
+					</div>
 				</div>
 			</main>
 		</div>
