@@ -84,7 +84,7 @@ const Profile: NextPage = () => {
 									</section>
 								);
 							})}
-							<p className={orderDate}>
+							<p className={styles.orderDate}>
 								Datum för beställning: {receipt.createdAt}
 							</p>
 						</div>

@@ -25,7 +25,9 @@ const checkout: NextPage = () => {
 
 	return (
 		<div>
-			<h2>Här är din varukorg</h2>
+			<div className={styles.header}>
+				<h1>Här är din varukorg</h1>
+			</div>
 			<section className={styles.receiptContainer}>
 				<ul>{listItems}</ul>
 				<p>Totalt: {priceString} SEK</p>
