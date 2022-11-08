@@ -1,12 +1,13 @@
 import type { NextPage } from "next";
-import { useSelector } from "react-redux";
-import { selectCartState } from "../../store/cartSlice";
+import { useDispatch, useSelector } from "react-redux";
+import { resetCartState, selectCartState } from "../../store/cartSlice";
 import CartItem from "../../components/cart/CartItem";
 import styles from "./checkout.module.css";
 import React from "react";
 
 const checkout: NextPage = () => {
 	const cartState = useSelector(selectCartState);
+	const dispatch = useDispatch();
 	let totalPrice = 0,
 		thisPrice = "";
 
@@ -14,7 +15,7 @@ const checkout: NextPage = () => {
 
 	const listItems = cartState.map(
 		(item, index) => (
-			products.push({ [item.productId]: item.quantity }),
+			products.push({ [item.productId]: item.quantity } as never),
 			(thisPrice = item.price.replace(/\s/g, "")),
 			(totalPrice = totalPrice + parseInt(thisPrice) * item.quantity),
 			(<CartItem key={item.productId} item={item} />)
@@ -22,7 +23,6 @@ const checkout: NextPage = () => {
 	);
 
 	let receipt = { products: products, totalPrice: totalPrice };
-	console.log(receipt);
 
 	let priceString = String(totalPrice).replace(
 		/(\d)(?=(\d{3})+(?!\d))/g,
@@ -41,7 +41,9 @@ const checkout: NextPage = () => {
 			body: JSON.stringify(receipt),
 		});
 		const data = await response.json();
-		console.log(data);
+		if (data.message === "Receipt added") {
+			dispatch(resetCartState());
+		}
 	}
 
 	return (

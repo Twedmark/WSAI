@@ -352,7 +352,9 @@ app.post('/addReceipt', authorization, async (req, res) => {
     res.status(400).json("Error");
   });
   receipt.userId = userId[0].userId;
-  console.log(receipt)
+
+  //stringify the receipt.products array
+  receipt.products = JSON.stringify(receipt.products);
 
   let result = await db.createReceipt(receipt)
   .catch((err) => {

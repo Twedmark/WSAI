@@ -302,7 +302,7 @@ db.editProduct = (product) => {
 db.createReceipt = (receipt) => {
   return new Promise((resolve, reject)=>{
     console.log("Creating receipt", receipt);
-    let sql = "INSERT INTO Receipts (receiptId, products, userId, totalPrice, createdAt) VALUES (null, ?, ?, ?, NOW());";
+    let sql = "INSERT INTO Receipts (receiptId, userId, products, totalPrice, createdAt) VALUES (null, ?, ?, ?, NOW());";
     let query = mysql.format(sql, [receipt.userId, [receipt.products], receipt.totalPrice]);
     console.log(query);
     pool.query(query, (err, result) => {

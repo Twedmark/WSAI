@@ -23,7 +23,7 @@ const Home: NextPage = () => {
 							muted
 							src="https://a.storyblok.com/f/118230/x/58568c8237/kitchen_studio_header_video_v3.mp4"
 						></video>
-						<p className={styles.downArrow}>🡳</p>
+						<p className={styles.downArrow}>⬇</p>
 					</div>
 				</div>
 				<div className={styles.productListContainer}>
