@@ -62,12 +62,12 @@ const checkout: NextPage = () => {
 								<h1>Här är din varukorg</h1>
 							</div>
 							<section className={styles.receiptContainer}>
-								<ul>{listItems}</ul>
+								<ul className={styles.productList}>{listItems}</ul>
 								<p>Totalt: {priceString} SEK</p>
 							</section>
 
 							<button className={styles.checkoutButton} onClick={completeOrder}>
-								KÖP
+								Bekräfta beställning
 							</button>
 						</div>
 					)}
