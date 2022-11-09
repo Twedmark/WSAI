@@ -36,6 +36,16 @@
   transition: 0.2s all ease;
 }
 
+.adminButtons {
+  display: flex;
+  flex-direction: row;
+  gap: 0.5em;
+}
+
+.editBtn, .deleteBtn {
+  width: calc(50% - 0.25em);
+}
+
 .addToCartBtn:hover {
   background-color: rgb(22, 22, 22);
   box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.75);
@@ -48,7 +58,7 @@
 
 .deleteBtn {
   margin-top: 1em;
-  background-color: red;
+  background-color: rgb(255, 65, 65);
 }
 
 .deleteBtn:hover {
@@ -58,7 +68,7 @@
 .editBtn {
   color: black;
   margin-top: 1em;
-  background-color: rgb(255, 194, 53);
+  background-color: rgb(255, 161, 79);
 }
 
 .editBtn:hover {

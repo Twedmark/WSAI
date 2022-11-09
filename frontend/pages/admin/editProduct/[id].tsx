@@ -6,6 +6,8 @@ import { useSelector } from "react-redux";
 import { selectAuthState } from "../../../store/authSlice";
 import styles from "./editProduct.module.css";
 
+import sanitizeHtml from "sanitize-html";
+
 type Props = {
 	productId: number;
 	name: string;
@@ -67,8 +69,10 @@ const editProduct: NextPage<Props> = ({
 			image => image !== ""
 		);
 
+		const descriptionClean = sanitizeHtml(descriptionInput.current?.value);
+
 		let url = "http://localhost:4000/editProduct/" + id;
-		const reponse = await fetch(url, {
+		const response = await fetch(url, {
 			method: "PUT",
 			headers: {
 				"Content-Type": "application/json",
@@ -78,12 +82,12 @@ const editProduct: NextPage<Props> = ({
 				productId,
 				name: nameInput.current?.value,
 				price: priceFormatted,
-				description: descriptionInput.current?.value,
+				description: descriptionClean,
 				images: imagesArrayTrimmedFiltered?.join(","),
 			}),
 		});
 
-		const data = await reponse.json();
+		const data = await response.json();
 		alert(data.message);
 
 		router.push("/product/" + id);

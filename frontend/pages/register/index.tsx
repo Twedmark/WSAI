@@ -1,5 +1,7 @@
 import type { NextPage } from "next";
 import Link from "next/link";
+import { useRouter } from "next/router";
+import React from "react";
 import { useState } from "react";
 import styles from "../login/Login.module.css";
 
@@ -7,8 +9,10 @@ const Register: NextPage = () => {
 	const [email, setEmail] = useState("");
 	const [password, setPassword] = useState("");
 	const [passwordRepeat, setPasswordRepeat] = useState("");
+	const router = useRouter();
 
-	async function register() {
+	async function register(e) {
+		e.preventDefault();
 		if (password != passwordRepeat) {
 			alert("The two passwords must be the same!");
 			return;
@@ -25,19 +29,32 @@ const Register: NextPage = () => {
 		});
 
 		const data = await response.json();
+		if (data.message === "User already exists") {
+			if (confirm("User already exists. Do you want to go to login instead?")) {
+				router.push("/login");
+			}
+			return;
+		}
+		if (data.message) {
+			alert(data.message);
+			return;
+		}
+		alert("User created successfully!");
+		router.push("/login");
 	}
 
 	return (
 		<div>
 			<main className={styles.main}>
-				<div className={styles.grid}>
+				<form className={styles.grid} onSubmit={register}>
 					<h1 className={styles.title}>Register</h1>
 					<label htmlFor="email">Email</label>
 					<input
 						id="email"
-						type="text"
+						type="email"
 						value={email}
 						onChange={e => setEmail(e.target.value)}
+						required
 					/>
 					<label htmlFor="password">Password</label>
 					<input
@@ -45,6 +62,10 @@ const Register: NextPage = () => {
 						type="password"
 						value={password}
 						onChange={e => setPassword(e.target.value)}
+						required
+						autoComplete="new-password"
+						pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}"
+						title="Must contain at least one number and one uppercase and lowercase letter, and at least 8 or more characters"
 					/>
 					<label htmlFor="passwordRepeat">Repeat Password</label>
 					<input
@@ -52,11 +73,15 @@ const Register: NextPage = () => {
 						type="password"
 						value={passwordRepeat}
 						onChange={e => setPasswordRepeat(e.target.value)}
+						required
+						autoComplete="new-password"
+						pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}"
+						title="Must contain at least one number and one uppercase and lowercase letter, and at least 8 or more characters"
 					/>
 
-					<button onClick={register}>Register</button>
+					<button type="submit">Register</button>
 					<Link href="/login">Already have an account?</Link>
-				</div>
+				</form>
 			</main>
 		</div>
 	);

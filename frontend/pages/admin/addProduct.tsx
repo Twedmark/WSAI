@@ -5,6 +5,8 @@ import { useSelector } from "react-redux";
 import { selectAuthState } from "../../store/authSlice";
 import styles from "./addProduct.module.css";
 
+import sanitizeHtml from "sanitize-html";
+
 const AddProduct = () => {
 	const router = useRouter();
 	const name = useRef<HTMLInputElement>(null);
@@ -45,10 +47,12 @@ const AddProduct = () => {
 
 		priceString = priceString + " SEK";
 
+		const descriptionValueClean = sanitizeHtml(descriptionValue);
+
 		let newProduct = {
 			name: nameValue,
 			price: priceString,
-			description: descriptionValue,
+			description: descriptionValueClean,
 			images: imagesArrayTrimmedFiltered?.join(","),
 		};
 
