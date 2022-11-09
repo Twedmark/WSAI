@@ -5,16 +5,17 @@ import { selectAuthState } from "../../store/authSlice";
 import CartItem from "../../components/cart/CartItem";
 import styles from "./checkout.module.css";
 import React, { useEffect, useState } from "react";
+import { useRouter } from "next/router";
 
 const checkout: NextPage = () => {
 	const [orderNumber, setOrderNumber] = useState<number>();
 	const cartState = useSelector(selectCartState);
 	const userState = useSelector(selectAuthState);
 	const dispatch = useDispatch();
+	const router = useRouter();
 	let totalPrice = 0,
-		thisPrice = "";
-
-	let products = [];
+		thisPrice = "",
+		products = [];
 
 	const listItems = cartState.map(
 		(item, index) => (
@@ -42,6 +43,7 @@ const checkout: NextPage = () => {
 			body: JSON.stringify(receipt),
 		});
 		const data = await response.json();
+		console.log(data);
 		if (data.message === "Receipt added") {
 			dispatch(resetCartState());
 
@@ -71,7 +73,7 @@ const checkout: NextPage = () => {
 								<button
 									className={styles.checkoutButton}
 									onClick={() => {
-										window.location.href = "/login";
+										router.push("/login");
 									}}
 								>
 									Logga in för att slutföra köpet

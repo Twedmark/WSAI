@@ -1,5 +1,5 @@
 import { useRouter } from "next/router";
-import { FC } from "react";
+import React, { FC } from "react";
 import styles from "./ProductCard.module.css";
 import Image from "next/image";
 
@@ -10,7 +10,6 @@ import {
 } from "../../store/cartSlice";
 import { useDispatch, useSelector } from "react-redux";
 import { selectAuthState } from "../../store/authSlice";
-import React from "react";
 
 import sanitizeHtml from "sanitize-html";
 

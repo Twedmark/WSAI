@@ -1,6 +1,7 @@
 import { NextPage } from "next";
 import React, { useEffect, useState } from "react";
 import styles from "./profile.module.css";
+import Receipt from "../../components/receipt/Receipt";
 
 type UserReceipts = {
 	receiptId: number;
@@ -11,15 +12,10 @@ type UserReceipts = {
 };
 
 const Profile: NextPage = () => {
-	const [Receipts, setReceipts] = useState([]);
-	const [loading, setLoading] = useState(false);
-	const [error, setError] = useState(false);
-	let options = {
-		weekday: "long",
-		year: "numeric",
-		month: "long",
-		day: "numeric",
-	};
+	const [Receipts, setReceipts] = useState([]),
+		[loading, setLoading] = useState(false),
+		[error, setError] = useState(false),
+		[isOpened, setIsOpened] = useState(false);
 
 	useEffect(() => {
 		const fetchUsers = async () => {
@@ -41,7 +37,6 @@ const Profile: NextPage = () => {
 						receipt.products = JSON.parse(receipt.products);
 						return receipt;
 					});
-					console.log(data);
 					setReceipts(data);
 				}
 			} catch (err) {
@@ -55,17 +50,6 @@ const Profile: NextPage = () => {
 		fetchUsers();
 	}, []);
 
-	async function fetchProducts(productId) {
-		const response = await fetch(
-			`http://localhost:4000/getProductById/${productId}`
-		);
-		if (response.status === 200) {
-			let data = await response.json();
-			console.log(data);
-			return data;
-		}
-	}
-
 	return (
 		<div>
 			<h1 className={styles.profileTitle}>Profile</h1>
@@ -75,52 +59,8 @@ const Profile: NextPage = () => {
 						Här kommer din kvitton att synas efter du handlat hos oss
 					</p>
 				) : (
-					Receipts.map((receipt: UserReceipts) => (
-						<li key={receipt.receiptId}>
-							<div className={styles.receiptContainer}>
-								<div className={styles.receiptHeader}>
-									<p className={styles.receiptId}>
-										Ordernummer: {receipt.receiptId}
-									</p>
-									<p className={styles.date}>
-										Datum:{" "}
-										{new Date(receipt.createdAt).toLocaleDateString(
-											"sv-SE",
-											options
-										)}
-									</p>
-								</div>
-								<div className={styles.receiptBody}>
-									<div className={styles.receiptProducts}>
-										{receipt.products.map((product: any, index) => {
-											return (
-												<section
-													key={index}
-													className={styles.productAndQuantitySection}
-												>
-													<p className={styles.productId}>
-														Art Nr: {Object.keys(product)}
-													</p>
-													<p className={styles.productQuantity}>
-														{Object.values(product)} st
-													</p>
-												</section>
-											);
-										})}
-									</div>
-									<section className={styles.priceSection}>
-										<p className={styles.totalPrice}>
-											Total Pris:{" "}
-											{String(receipt.totalPrice).replace(
-												/(\d)(?=(\d{3})+(?!\d))/g,
-												"$1 "
-											)}
-											{" SEK"}
-										</p>
-									</section>
-								</div>
-							</div>
-						</li>
+					Receipts.map((receipt: UserReceipts, index) => (
+						<Receipt key={receipt.receiptId} receipt={receipt} />
 					))
 				)}
 			</ul>
