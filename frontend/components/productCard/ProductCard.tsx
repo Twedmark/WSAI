@@ -12,6 +12,8 @@ import { useDispatch, useSelector } from "react-redux";
 import { selectAuthState } from "../../store/authSlice";
 import React from "react";
 
+import sanitizeHtml from "sanitize-html";
+
 type Props = {
 	product: {
 		productId: number;

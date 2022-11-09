@@ -10,6 +10,8 @@ import {
 
 import styles from "./CartItem.module.css";
 
+import sanitizeHtml from "sanitize-html";
+
 type props = {
 	item: {
 		productId: number;

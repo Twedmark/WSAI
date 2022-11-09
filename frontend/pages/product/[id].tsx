@@ -14,6 +14,8 @@ import React from "react";
 import { selectAuthState } from "../../store/authSlice";
 import ProductList from "../../components/productList/ProductList";
 
+import sanitizeHtml from "sanitize-html";
+
 type ProductProps = {
 	productId: number;
 	name: string;
@@ -35,6 +37,8 @@ const Product: FC<ProductProps> = ({
 	const user = useSelector(selectAuthState);
 	// const { productId } = router.query;
 	const imageArray = images.split(",");
+
+	const descriptionClean = sanitizeHtml(description);
 
 	function addToCart() {
 		dispatch(addToCartState({ productId, name, price, image: imageArray[0] }));
@@ -75,7 +79,7 @@ const Product: FC<ProductProps> = ({
 				<div className={styles.infoScrollContainer}>
 					<div className={styles.infoContainer}>
 						<h1 className={styles.title}>{name}</h1>
-						<div className={styles.description}>{parse(description)}</div>
+						<div className={styles.description}>{parse(descriptionClean)}</div>
 						<h2>{price}</h2>
 						<button onClick={addToCart} className={styles.addToCartBtn}>
 							{cart.find(item => item.productId === productId)
