@@ -83,14 +83,14 @@ const Product: FC<ProductProps> = ({
 								: "Add to cart"}
 						</button>
 						{user?.roles?.includes("Admin") && (
-							<>
+							<div className={styles.adminButtons}>
 								<button onClick={editProduct} className={styles.editBtn}>
 									Edit
 								</button>
 								<button onClick={deleteProduct} className={styles.deleteBtn}>
 									Delete
 								</button>
-							</>
+							</div>
 						)}
 					</div>
 				</div>
