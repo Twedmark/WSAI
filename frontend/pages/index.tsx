@@ -11,6 +11,25 @@ const Home: NextPage = () => {
 		setProductListCount(productListCount + 2);
 	}
 
+	const christmasVideo = (
+		<section className={styles.videoBlock} key="christmasVideo">
+			<div className={styles.videoContainer}>
+				<video
+					className={styles.video + " zoom-to-fill"}
+					autoPlay
+					loop
+					muted
+					src="https://a.storyblok.com/f/118230/x/7cc86faac7/artilleriet-christmas-22-start-header-video.mp4"
+				></video>
+			</div>
+			<div className={styles.contentBlock}>
+				<div className={styles.contentContent}>
+					<h2>Artilleriet Christmas 2022</h2>
+				</div>
+			</div>
+		</section>
+	);
+
 	//store variable that shows as many product lists as productListCount
 	const productLists = [] as any;
 	for (let i = 0; i < productListCount; i++) {
@@ -18,6 +37,10 @@ const Home: NextPage = () => {
 			productLists.push(<ProductList key={i} largeVersion />); // make every other one large
 		} else {
 			productLists.push(<ProductList key={i} />);
+		}
+
+		if (i === 1) {
+			productLists.push(christmasVideo);
 		}
 	}
 
