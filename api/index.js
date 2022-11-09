@@ -16,13 +16,18 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser());
 app.use( cors({credentials: true, origin: ['http://localhost:3000'] }) );
+app.set('trust proxy', true)
 
 const port = process.env.PORT;
+
+const logIp = (req, res, next) => {
+    logger.debug(`Request from ${req.ip}`);
+    next();
+}
 
 app.get('/', (req, res) => {
   res.send("Try /getAllProducts :)");
 });
-
 
 // ---------------- User routes ---------------- 
 app.get('/getAllUsers', superAdminAuthorization, async (req, res) => {
@@ -150,7 +155,7 @@ app.post('/removeRole', superAdminAuthorization, async (req, res) => {
 
 const addMinutes = (minutes, date = new Date()) => {   return new Date(date.setMinutes(date.getMinutes() + minutes)); };
 
-app.post('/login', async (req, res) => {
+app.post('/login', logIp, async (req, res) => {
   logger.debug('-----login-----');
   let account = req.body;
 
@@ -167,6 +172,7 @@ app.post('/login', async (req, res) => {
 
   const comparedPassword = await bcrypt.compare(account.password, result[0].password);
   if(!comparedPassword){
+    logger.debug("Wrong password, ip: " + req.ip);
     res.status(500).json({message: "Wrong password"});
     return;
   }

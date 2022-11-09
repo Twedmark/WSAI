@@ -16,7 +16,7 @@ export const Receipt: FC<Props> = ({
 }) => {
 	const [isOpened, setIsOpened] = useState(false);
 	const [productsOnReceipt, setProductsOnReceipt] = useState(products);
-	let options = {
+	let options: Intl.DateTimeFormatOptions = {
 		weekday: "long",
 		year: "numeric",
 		month: "long",
@@ -56,12 +56,11 @@ export const Receipt: FC<Props> = ({
 					<div className={styles.slideshowContainer}>
 						{productsOnReceipt.map((product: any, index: number) => {
 							return (
-								<div key={index} className={styles.productContainer}>
-									<img
-										className={styles.productImage}
-										src={product.images.split(",")[0]}
-									/>
-								</div>
+								<img
+									key={index}
+									className={styles.productImage}
+									src={product.images.split(",")[0]}
+								/>
 							);
 						})}
 					</div>
