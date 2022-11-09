@@ -53,14 +53,14 @@ const checkout: NextPage = () => {
 
 	return (
 		<div>
-			{cartState.length > 0 ? (
+			{orderNumber ? (
+				<div className={styles.checkedOut}>
+					<h1>Thank you for your order!</h1>
+					<p>Your order number is {orderNumber}</p>
+				</div>
+			) : (
 				<>
-					{orderNumber ? (
-						<div className={styles.checkedOut}>
-							<h1>Thank you for your order!</h1>
-							<p>Your order number is {orderNumber}</p>
-						</div>
-					) : (
+					{cartState.length > 0 ? (
 						<div className={styles.checkout}>
 							<div className={styles.header}>
 								<h1>Här är din varukorg</h1>
@@ -69,6 +69,7 @@ const checkout: NextPage = () => {
 								<ul className={styles.productList}>{listItems}</ul>
 								<p>Totalt: {priceString} SEK</p>
 							</section>
+
 							{userState.isLoading == false && userState.email == undefined ? (
 								<button
 									className={styles.checkoutButton}
@@ -79,21 +80,45 @@ const checkout: NextPage = () => {
 									Logga in för att slutföra köpet
 								</button>
 							) : (
-								<button
-									className={styles.checkoutButton}
-									onClick={completeOrder}
-								>
-									Bekräfta beställning
-								</button>
+								<>
+									<section className={styles.shippingInfo}>
+										<h2>Leveransinformation</h2>
+										<div className={styles.divContainer}>
+											<input type="name" placeholder="Namn" />
+											<input type="phonenumber" placeholder="Telefonnummer" />
+										</div>
+										<div className={styles.divContainer}>
+											<input type="text" placeholder="Adress" />
+											<input type="text" placeholder="Postnummer" />
+											<input type="text" placeholder="Stad" />
+										</div>
+									</section>
+
+									<section className={styles.paymentInfo}>
+										<h2>Betalningsinformation</h2>
+										<input type="text" placeholder="Kortnummer" />
+										<div className={styles.divContainer}>
+											<input type="text" placeholder="MM/ÅÅ" />
+											<input type="text" placeholder="CVC" />
+										</div>
+									</section>
+
+									<button
+										className={styles.checkoutButton}
+										onClick={completeOrder}
+									>
+										Bekräfta beställning
+									</button>
+								</>
 							)}
+						</div>
+					) : (
+						<div className={styles.emptyCart} style={{ textAlign: "center" }}>
+							<h1>Din varukorg är tom</h1>
+							<p>Gå och handla lite!</p>
 						</div>
 					)}
 				</>
-			) : (
-				<div className={styles.emptyCart} style={{ textAlign: "center" }}>
-					<h1>Din varukorg är tom</h1>
-					<p>Gå och handla lite!</p>
-				</div>
 			)}
 		</div>
 	);
