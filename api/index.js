@@ -268,6 +268,19 @@ app.get('/getProductById/:id', async (req, res) => {
   res.status(200).json(result);
 });
 
+app.post('/getMultipleProducts', async (req, res) => {
+  logger.debug('-----getMultipleProducts-----');
+
+  let arrayOfProductIds = req.body;
+
+  let result = await db.getMultipleProducts(arrayOfProductIds)
+  .catch((err) => {
+    logger.error(err);
+    res.status(400).json("Error getting receipts");
+  });
+  res.status(200).json(result);
+});
+
 app.post('/addProduct', adminAuthorization, async (req, res) => {
   logger.debug('-----addProduct-----');
 

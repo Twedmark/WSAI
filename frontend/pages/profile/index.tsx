@@ -14,8 +14,7 @@ type UserReceipts = {
 const Profile: NextPage = () => {
 	const [Receipts, setReceipts] = useState([]),
 		[loading, setLoading] = useState(false),
-		[error, setError] = useState(false),
-		[isOpened, setIsOpened] = useState(false);
+		[error, setError] = useState(false);
 
 	useEffect(() => {
 		const fetchUsers = async () => {

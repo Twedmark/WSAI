@@ -223,6 +223,21 @@ db.getAllProducts = () => {
   );
 };
 
+db.getMultipleProducts = (productIds) => {
+  return new Promise((resolve, reject)=>{
+    let sql = "SELECT * FROM Products WHERE productId IN (?);";
+    let query = mysql.format(sql, [productIds]);
+    pool.query(query, (err, result) => {
+      if (err) {
+        reject("Could not get multiple products: SQL ERROR ",err);
+      }else {
+        resolve(result);
+      }
+    });
+  }
+  );
+};
+
 db.getRandomProducts = (amount) => {
   return new Promise((resolve, reject)=>{
     let sql = "SELECT * FROM Products ORDER BY RAND() LIMIT ?;";

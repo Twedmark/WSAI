@@ -1,5 +1,5 @@
 import React, { FC, useState } from "react";
-import styles from "./receipt.module.css";
+import styles from "./Receipt.module.css";
 
 type Props = {
 	receipt: {
@@ -15,6 +15,7 @@ export const Receipt: FC<Props> = ({
 	receipt: { receiptId, userId, products, totalPrice, createdAt },
 }) => {
 	const [isOpened, setIsOpened] = useState(false);
+	const [productsOnReceipt, setProductsOnReceipt] = useState(products);
 	let options = {
 		weekday: "long",
 		year: "numeric",
@@ -24,27 +25,21 @@ export const Receipt: FC<Props> = ({
 	let artNumbers = [];
 
 	async function toggleReceipt() {
-		// console.log(products);
-		artNumbers = products.map((product: object) => {
-			// console.log(Object.keys(product));
-			artNumbers += Object.keys(product);
+		artNumbers = products.map((product: string) => {
+			return Object.keys(product)[0];
 		});
-		console.log(artNumbers);
-		// const response = await fetch("http://localhost:4000/getMultipleReceipt", {
-		// 	method: "POST",
-		// 	credentials: "include",
-		// 	headers: {
-		// 		"Content-Type": "application/json",
-		// 	},
-		// 	body: JSON.stringify({
-		// 		receiptId: receiptId,
-		// 	}),
-		// });
-		// const data = await response.json();
-		// console.log(data);
+		const response = await fetch("http://localhost:4000/getMultipleProducts", {
+			method: "POST",
+			credentials: "include",
+			headers: {
+				"Content-Type": "application/json",
+			},
+			body: JSON.stringify(artNumbers),
+		});
+		const data = await response.json();
+		setProductsOnReceipt(data);
 
 		setIsOpened(!isOpened);
-		console.log(isOpened);
 	}
 
 	return (
@@ -56,7 +51,21 @@ export const Receipt: FC<Props> = ({
 						Datum: {new Date(createdAt).toLocaleDateString("sv-SE", options)}
 					</p>
 				</div>
-				{isOpened ? <p>Hej</p> : null}
+
+				{isOpened ? (
+					<div className={styles.slideshowContainer}>
+						{productsOnReceipt.map((product: any, index: number) => {
+							return (
+								<div key={index} className={styles.productContainer}>
+									<img
+										className={styles.productImage}
+										src={product.images.split(",")[0]}
+									/>
+								</div>
+							);
+						})}
+					</div>
+				) : null}
 
 				<div className={styles.receiptBody}>
 					<div className={styles.receiptProducts}>

@@ -25,6 +25,19 @@
 	margin: 0;
 	padding: 0;
 }
+.slideshowContainer {
+	display: flex;
+	flex-direction: row;
+	width: 300px;
+	overflow-y: hidden;
+	overflow-x: scroll;
+	scroll-snap-type: x mandatory;
+}
+.productImage {
+	height: 100%;
+	width: 100%;
+	scroll-snap-align: start;
+}
 
 .date {
 	margin: 0;
