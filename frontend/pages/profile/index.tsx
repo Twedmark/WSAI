@@ -70,48 +70,59 @@ const Profile: NextPage = () => {
 		<div>
 			<h1 className={styles.profileTitle}>Profile</h1>
 			<ul className={styles.receiptUl}>
-				{Receipts.map((receipt: UserReceipts) => (
-					<li key={receipt.receiptId}>
-						<div className={styles.receiptContainer}>
-							<div className={styles.receiptHeader}>
-								<p className={styles.receiptId}>
-									Ordernummer: {receipt.receiptId}
-								</p>
-								<p className={styles.date}>
-									Datum:{" "}
-									{new Date(receipt.createdAt).toLocaleDateString(
-										"sv-SE",
-										options
-									)}
-								</p>
-							</div>
-							<div className={styles.receiptBody}>
-								<div className={styles.receiptProducts}>
-									{receipt.products.map((product: any, index) => {
-										return (
-											<section
-												key={index}
-												className={styles.productAndQuantitySection}
-											>
-												<p className={styles.productId}>
-													Art: {Object.keys(product)}
-												</p>
-												<p className={styles.productQuantity}>
-													Antal: {Object.values(product)}
-												</p>
-											</section>
-										);
-									})}
-								</div>
-								<section className={styles.priceSection}>
-									<p className={styles.totalPrice}>
-										Pris: {receipt.totalPrice}
+				{Receipts.length === 0 ? (
+					<p className={styles.emptyReceipts}>
+						Här kommer din kvitton att synas efter du handlat hos oss
+					</p>
+				) : (
+					Receipts.map((receipt: UserReceipts) => (
+						<li key={receipt.receiptId}>
+							<div className={styles.receiptContainer}>
+								<div className={styles.receiptHeader}>
+									<p className={styles.receiptId}>
+										Ordernummer: {receipt.receiptId}
 									</p>
-								</section>
+									<p className={styles.date}>
+										Datum:{" "}
+										{new Date(receipt.createdAt).toLocaleDateString(
+											"sv-SE",
+											options
+										)}
+									</p>
+								</div>
+								<div className={styles.receiptBody}>
+									<div className={styles.receiptProducts}>
+										{receipt.products.map((product: any, index) => {
+											return (
+												<section
+													key={index}
+													className={styles.productAndQuantitySection}
+												>
+													<p className={styles.productId}>
+														Art Nr: {Object.keys(product)}
+													</p>
+													<p className={styles.productQuantity}>
+														{Object.values(product)} st
+													</p>
+												</section>
+											);
+										})}
+									</div>
+									<section className={styles.priceSection}>
+										<p className={styles.totalPrice}>
+											Total Pris:{" "}
+											{String(receipt.totalPrice).replace(
+												/(\d)(?=(\d{3})+(?!\d))/g,
+												"$1 "
+											)}
+											{" SEK"}
+										</p>
+									</section>
+								</div>
 							</div>
-						</div>
-					</li>
-				))}
+						</li>
+					))
+				)}
 			</ul>
 		</div>
 	);

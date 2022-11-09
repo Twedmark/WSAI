@@ -1,6 +1,7 @@
 import type { NextPage } from "next";
 import { useDispatch, useSelector } from "react-redux";
 import { resetCartState, selectCartState } from "../../store/cartSlice";
+import { selectAuthState } from "../../store/authSlice";
 import CartItem from "../../components/cart/CartItem";
 import styles from "./checkout.module.css";
 import React, { useEffect, useState } from "react";
@@ -8,6 +9,7 @@ import React, { useEffect, useState } from "react";
 const checkout: NextPage = () => {
 	const [orderNumber, setOrderNumber] = useState<number>();
 	const cartState = useSelector(selectCartState);
+	const userState = useSelector(selectAuthState);
 	const dispatch = useDispatch();
 	let totalPrice = 0,
 		thisPrice = "";
@@ -65,10 +67,23 @@ const checkout: NextPage = () => {
 								<ul>{listItems}</ul>
 								<p>Totalt: {priceString} SEK</p>
 							</section>
-
-							<button className={styles.checkoutButton} onClick={completeOrder}>
-								KÖP
-							</button>
+							{userState.isLoading == false && userState.email == undefined ? (
+								<button
+									className={styles.checkoutButton}
+									onClick={() => {
+										window.location.href = "/login";
+									}}
+								>
+									Logga in för att slutföra köpet
+								</button>
+							) : (
+								<button
+									className={styles.checkoutButton}
+									onClick={completeOrder}
+								>
+									KÖP
+								</button>
+							)}
 						</div>
 					)}
 				</>
