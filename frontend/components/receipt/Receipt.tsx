@@ -36,6 +36,13 @@ export const Receipt: FC<Props> = ({
 			},
 			body: JSON.stringify(artNumbers),
 		});
+		if (response.status === 429) {
+			setError(true);
+			alert(
+				"You have reached the maximum number of requests per minute. Please try again later."
+			);
+			return;
+		}
 		const data = await response.json();
 		setProductsOnReceipt(data);
 

@@ -28,6 +28,13 @@ const Register: NextPage = () => {
 			}),
 		});
 
+		if (response.status === 429) {
+			alert(
+				"You have reached the maximum number of requests per minute. Please try again later."
+			);
+			return;
+		}
+
 		const data = await response.json();
 		if (data.message === "User already exists") {
 			if (confirm("User already exists. Do you want to go to login instead?")) {

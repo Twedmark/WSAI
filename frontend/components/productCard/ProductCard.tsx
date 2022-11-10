@@ -54,7 +54,7 @@ export const ProductCard: FC<Props> = ({
 	async function deleteProduct() {
 		if (confirm("Are you sure you want to delete this product?")) {
 			let url = "http://localhost:4000/deleteProduct/" + productId;
-			const reponse = await fetch(url, {
+			const response = await fetch(url, {
 				method: "DELETE",
 				headers: {
 					"Content-Type": "application/json",
@@ -62,7 +62,7 @@ export const ProductCard: FC<Props> = ({
 				credentials: "include",
 			});
 
-			const data = await reponse.json();
+			const data = await response.json();
 			alert(data.message);
 
 			dispatch(removeFromCartState(productId));

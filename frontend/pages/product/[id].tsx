@@ -115,6 +115,11 @@ export const getServerSideProps: GetServerSideProps = async (
 	const product = await fetch(
 		`http://localhost:4000/getProductById/${productId}`
 	);
+	if (!product.ok) {
+		return {
+			notFound: true,
+		};
+	}
 	const data = await product.json();
 
 	if (data.length === 0) {

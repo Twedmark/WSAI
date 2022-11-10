@@ -1,0 +1,47 @@
+.footerContainer {
+  background-color: #CCCCCC;
+
+  display: flex;
+  flex-direction: row;
+}
+
+.halfWidth, .fullWidth {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  border: 1px solid white;
+
+  padding: 1em;
+}
+
+.halfWidth ul {
+  list-style: none;
+  padding: 0;
+}
+
+.halfWidth li {
+  font-size: 0.8em;
+}
+
+.halfWidth h3 {
+  font-size: 1.2em;
+  margin: 1px;
+}
+
+.halfWidth a {
+  color: #000000;
+  text-decoration: none;
+}
+
+.halfWidth a:hover {
+  text-decoration: underline;
+}
+
+.halfWidth {
+  width: 50%;
+}
+
+.fullWidth {
+  width: 100%;
+  justify-content: center;
+}

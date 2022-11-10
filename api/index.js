@@ -7,6 +7,8 @@ const cookieParser = require('cookie-parser');
 
 const logger = require("./logger");
 
+const rateLimit = require('express-rate-limit')
+
 const { authorization, adminAuthorization, superAdminAuthorization } = require('./middleware/authorization');
 const { getUserByEmail } = require('./database');
 
@@ -19,6 +21,22 @@ app.use( cors({credentials: true, origin: ['http://localhost:3000'] }) );
 app.set('trust proxy', true)
 
 const port = process.env.PORT;
+
+const accountLimiter = rateLimit({
+	windowMs: 60 * 60 * 1000, // 1 hour
+	max: 5, // Limit each IP to 5 create account requests per `window` (here, per hour)
+	message:
+		'Too many accounts created from this IP, please try again after an hour',
+	standardHeaders: true, // Return rate limit info in the `RateLimit-*` headers
+	legacyHeaders: false, // Disable the `X-RateLimit-*` headers
+})
+
+const apiLimiter = rateLimit({
+	windowMs: 15 * 60 * 1000, // 15 minutes
+	max: 100, // Limit each IP to 100 requests per `window` (here, per 15 minutes)
+	standardHeaders: true, // Return rate limit info in the `RateLimit-*` headers
+	legacyHeaders: false, // Disable the `X-RateLimit-*` headers
+})
 
 const logIp = (req, res, next) => {
     logger.debug(`Request from ${req.ip}`);
@@ -54,7 +72,7 @@ app.get('/getAllUsersWithRoles', superAdminAuthorization, async (req, res) => {
   res.status(200).json(result);
 });
 
-app.post('/createUser', async (req, res) => {
+app.post('/createUser', accountLimiter, async (req, res) => {
   logger.debug('-----createUser-----');
 
   let email = req.body.email;
@@ -155,7 +173,7 @@ app.post('/removeRole', superAdminAuthorization, async (req, res) => {
 
 const addMinutes = (minutes, date = new Date()) => {   return new Date(date.setMinutes(date.getMinutes() + minutes)); };
 
-app.post('/login', logIp, async (req, res) => {
+app.post('/login', accountLimiter, logIp, async (req, res) => {
   logger.debug('-----login-----');
   let account = req.body;
 
@@ -191,7 +209,7 @@ app.post('/login', logIp, async (req, res) => {
   return res.
   cookie('token', accessToken, { httpOnly: true, secure: true, sameSite: "strict", expires: addMinutes(1440) }).
   status(200).
-  json({ email: result[0].email, roles: userRoles, accessToken: accessToken });
+  json({ userId: result[0].userId, email: result[0].email, roles: userRoles, accessToken: accessToken });
 });
 
 app.post('/loginWithToken', authorization, async (req, res) => {
@@ -236,7 +254,7 @@ app.get('/logout', async (req, res) => {
 
 
 // ---------------- Product routes ---------------- 
-app.get('/getAllProducts', async (req, res) => {
+/* app.get('/getAllProducts', apiLimiter, async (req, res) => {
   logger.debug('-----getAllProducts-----');
 
   let result = await db.getAllProducts()
@@ -246,9 +264,9 @@ app.get('/getAllProducts', async (req, res) => {
   });
 
   res.status(200).json(result);
-});
+}); */
 
-app.get('/getRandomProducts/:amount', async (req, res) => {
+app.get('/getRandomProducts/:amount', apiLimiter, async (req, res) => {
   logger.debug('-----getRandomProducts-----');
 
   let amount = Number(req.params.amount);
@@ -261,7 +279,7 @@ app.get('/getRandomProducts/:amount', async (req, res) => {
   res.status(200).json(result);
 });
 
-app.get('/getProductById/:id', async (req, res) => {
+app.get('/getProductById/:id', apiLimiter, async (req, res) => {
   logger.debug('-----getProductById-----');
 
   let id = req.params.id;
@@ -274,7 +292,7 @@ app.get('/getProductById/:id', async (req, res) => {
   res.status(200).json(result);
 });
 
-app.post('/getMultipleProducts', async (req, res) => {
+app.post('/getMultipleProducts', apiLimiter, async (req, res) => {
   logger.debug('-----getMultipleProducts-----');
 
   let arrayOfProductIds = req.body;
