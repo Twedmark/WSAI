@@ -23,8 +23,8 @@ app.set('trust proxy', true)
 const port = process.env.PORT;
 
 const accountLimiter = rateLimit({
-	windowMs: 60 * 60 * 1000, // 1 hour
-	max: 5, // Limit each IP to 5 create account requests per `window` (here, per hour)
+	windowMs: 15 * 60 * 1000, // 15 minutes
+	max: 10, // Limit each IP to 10 create/login account requests per `window` (here, per 15 minutes)
 	message:
 		'Too many accounts created from this IP, please try again after an hour',
 	standardHeaders: true, // Return rate limit info in the `RateLimit-*` headers
