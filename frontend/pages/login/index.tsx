@@ -33,6 +33,13 @@ const Login: NextPage = () => {
 			}),
 		});
 
+		if (response.status === 429) {
+			alert(
+				"You have reached the maximum number of requests per minute. Please try again later."
+			);
+			return;
+		}
+
 		const data = await response.json();
 
 		if (response.status === 200) {

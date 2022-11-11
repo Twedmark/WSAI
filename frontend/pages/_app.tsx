@@ -13,6 +13,7 @@ import {
 import { useDispatch, useSelector } from "react-redux";
 import { selectCartState, setCartState } from "../store/cartSlice";
 import React from "react";
+import Footer from "../components/footer/Footer";
 
 function MyApp({ Component, pageProps }: AppProps) {
 	const dispatch = useDispatch();
@@ -58,6 +59,7 @@ function MyApp({ Component, pageProps }: AppProps) {
 		<>
 			<Navbar />
 			<Component {...pageProps} />
+			<Footer />
 		</>
 	);
 }

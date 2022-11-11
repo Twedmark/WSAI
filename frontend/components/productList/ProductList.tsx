@@ -15,6 +15,13 @@ const ProductList = ({ largeVersion = false }) => {
 				const response = await fetch(
 					"http://localhost:4000/getRandomProducts/10"
 				);
+				if (response.status === 429) {
+					setError(true);
+					alert(
+						"You have reached the maximum number of requests per minute. Please try again later."
+					);
+					return;
+				}
 				const data = await response.json();
 				setProducts(data);
 			} catch (err) {
