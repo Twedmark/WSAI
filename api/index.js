@@ -135,7 +135,6 @@ app.post('/removeRole', superAdminAuthorization, async (req, res) => {
   let userId = req.body.userId;
   let roleName = req.body.role;
 
-  // get roleID from role name
   const role = await db.getRoleByName(roleName)
 
   const result = await db.removeRole(userId, role[0].roleId)
@@ -371,7 +370,6 @@ app.post('/addReceipt', authorization, async (req, res) => {
   });
   receipt.userId = userId[0].userId;
 
-  //stringify the receipt.products array
   receipt.products = JSON.stringify(receipt.products);
 
   let result = await db.createReceipt(receipt)

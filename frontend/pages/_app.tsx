@@ -12,6 +12,7 @@ import {
 } from "../store/authSlice";
 import { useDispatch, useSelector } from "react-redux";
 import { selectCartState, setCartState } from "../store/cartSlice";
+import React from "react";
 
 function MyApp({ Component, pageProps }: AppProps) {
 	const dispatch = useDispatch();
