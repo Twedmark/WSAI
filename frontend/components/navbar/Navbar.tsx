@@ -50,6 +50,9 @@ const Navbar = () => {
 			</div>
 
 			<div className={styles.navbarRight}>
+				<Link href="/studio">
+					<a className={determineActive("/studio")}>Studio</a>
+				</Link>
 				{user.email ? (
 					<>
 						<Link href="/profile">
