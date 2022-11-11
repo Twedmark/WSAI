@@ -91,7 +91,7 @@
     font-size: 2em;
     margin: 0;
 
-    animation: fadeAndMove 6s infinite;
+    animation: fadeAndMove 5.5s infinite;
 }
 
 @keyframes fadeAndMove {
@@ -100,15 +100,11 @@
         transform: translateY(-20px) translateX(-50%);
     }
     20% {
-        opacity: 70%;
+        opacity: 80%;
         transform: translateY(-20px) translateX(-50%);
     }
-    40% {
-        opacity: 70%;
-        transform: translateY(0) translateX(-50%);
-    }
-    60% {
-        opacity: 0;
+    50% {
+        opacity: 80%;
         transform: translateY(0) translateX(-50%);
     }
     80% {

@@ -43,6 +43,7 @@ const Cart: FC = () => {
 	}
 
 	function checkout() {
+		toggleCart();
 		router.push("/checkout");
 	}
 
