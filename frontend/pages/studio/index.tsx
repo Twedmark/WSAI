@@ -8,7 +8,7 @@ const studio: NextPage = () => {
 		<>
 			<section className={styles.textAndImgContainer}>
 				<div className={styles.textContainer}>
-					<div className={styles.textArea}>
+					<div className={"styles.textArea"}>
 						<h2 style={{ textAlign: "center" }}>Artilleriet Studio</h2>
 						<p style={{ textAlign: "center" }}>
 							Artilleriet Studio skapar inredningsprojekt som utmanar idén om

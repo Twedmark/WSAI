@@ -50,7 +50,7 @@ const Profile: NextPage = () => {
 	}, []);
 
 	return (
-		<div>
+		<div className={styles.profileContainer}>
 			<h1 className={styles.profileTitle}>Profile</h1>
 			<ul className={styles.receiptUl}>
 				{Receipts.length === 0 ? (

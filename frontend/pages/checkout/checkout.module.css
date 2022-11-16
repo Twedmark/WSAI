@@ -1,3 +1,8 @@
+.checkoutContainer{
+    min-height: calc(100vh - var(--navbarHeight));
+    margin-bottom: 30px;
+}
+
 .receiptContainer {
     display: flex;
     flex-direction: column;

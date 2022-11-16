@@ -130,7 +130,7 @@ const Users = () => {
 	const placeholderRoles = ["User", "Admin", "SuperAdmin"];
 
 	return (
-		<div>
+		<div className={styles.usersContainer}>
 			<h1>Users</h1>
 			{loading && <p>Loading...</p>}
 			{error && <p style={{ color: "red" }}>Error</p>}

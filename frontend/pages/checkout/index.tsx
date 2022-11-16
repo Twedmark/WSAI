@@ -52,7 +52,7 @@ const checkout: NextPage = () => {
 	}
 
 	return (
-		<div>
+		<div className={styles.checkoutContainer}>
 			{orderNumber ? (
 				<div className={styles.checkedOut}>
 					<h1>Thank you for your order!</h1>
