@@ -1,15 +1,15 @@
-const jwt = require('jsonwebtoken');
+const jwt = require("jsonwebtoken");
 const logger = require("../logger");
 
 const authorization = (req, res, next) => {
   if (!req.cookies.token) {
     logger.debug("Unauthorized, no token");
-    return res.status(401).json({message: "Unauthorized, no token"});
+    return res.status(401).json({ message: "Unauthorized, no token" });
   }
-  
+
   const token = req.cookies.token;
 
-  const data = jwt.verify(token, process.env.ACCESS_TOKEN_SECRET)
+  const data = jwt.verify(token, process.env.ACCESS_TOKEN_SECRET);
 
   if (!data) {
     logger.debug("Unauthorized, token not valid");
@@ -21,17 +21,17 @@ const authorization = (req, res, next) => {
   req.roles = data.roles;
 
   next();
-}
+};
 
 const adminAuthorization = (req, res, next) => {
-  if (!req.cookies.token) { 
+  if (!req.cookies.token) {
     logger.debug("Unauthorized, no token");
-    return res.status(401).json({message: "Unauthorized, no token"});
+    return res.status(401).json({ message: "Unauthorized, no token" });
   }
-  
+
   const token = req.cookies.token;
 
-  const data = jwt.verify(token, process.env.ACCESS_TOKEN_SECRET)
+  const data = jwt.verify(token, process.env.ACCESS_TOKEN_SECRET);
 
   if (!data) {
     logger.debug("Unauthorized, token not valid");
@@ -48,17 +48,17 @@ const adminAuthorization = (req, res, next) => {
   req.roles = data.roles;
 
   next();
-}
+};
 
 const superAdminAuthorization = (req, res, next) => {
   if (!req.cookies.token) {
     logger.debug("Unauthorized, no token");
-    return res.status(401).json({message: "Unauthorized, no token"});
+    return res.status(401).json({ message: "Unauthorized, no token" });
   }
-  
+
   const token = req.cookies.token;
 
-  const data = jwt.verify(token, process.env.ACCESS_TOKEN_SECRET)
+  const data = jwt.verify(token, process.env.ACCESS_TOKEN_SECRET);
 
   if (!data) {
     logger.debug("Unauthorized, token not valid");
@@ -67,7 +67,9 @@ const superAdminAuthorization = (req, res, next) => {
 
   if (!data.roles.includes("SuperAdmin")) {
     logger.debug("Unauthorized, not super admin");
-    return res.status(403).json({ message: "Unauthorized not high enough clearence level" });
+    return res
+      .status(403)
+      .json({ message: "Unauthorized not high enough clearence level" });
   }
 
   req.email = data.email;
@@ -75,10 +77,10 @@ const superAdminAuthorization = (req, res, next) => {
   req.roles = data.roles;
 
   next();
-}
+};
 
 module.exports = {
   authorization,
   adminAuthorization,
-  superAdminAuthorization
-}
+  superAdminAuthorization,
+};
