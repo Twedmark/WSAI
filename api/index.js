@@ -105,11 +105,6 @@ app.post("/createUser", loginValidate, accountLimiter, async (req, res) => {
   if (!errors.isEmpty()) {
     return res.status(422).json({ errors: errors.array() });
   } else {
-    if (!email || !password) {
-      res.status(500).json({ message: "Email or password missing in request" });
-      return;
-    }
-
     const userExists = await db.getUserByEmail(email).catch((err) => {
       logger.error(err);
       res
@@ -117,7 +112,7 @@ app.post("/createUser", loginValidate, accountLimiter, async (req, res) => {
         .json({ message: "Error getting user to check if already exists" });
     });
     if (userExists.length > 0) {
-      res.status(500).json({ message: "User already exists" });
+      res.status(500).json({ message: "Error creating user" });
       return;
     }
 
@@ -221,7 +216,7 @@ app.post("/login", loginValidate, accountLimiter, logIp, async (req, res) => {
     });
 
     if (result.length == 0) {
-      res.status(500).json({ message: "User not found" });
+      res.status(500).json({ message: "Wrong Email/Password" });
       return;
     }
 
@@ -231,7 +226,7 @@ app.post("/login", loginValidate, accountLimiter, logIp, async (req, res) => {
     );
     if (!comparedPassword) {
       logger.debug("Wrong password, ip: " + req.ip);
-      res.status(500).json({ message: "Wrong password" });
+      res.status(500).json({ message: "Wrong Email/Password" });
       return;
     }
 

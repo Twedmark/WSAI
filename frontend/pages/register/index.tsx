@@ -36,12 +36,6 @@ const Register: NextPage = () => {
 		}
 
 		const data = await response.json();
-		if (data.message === "User already exists") {
-			if (confirm("User already exists. Do you want to go to login instead?")) {
-				router.push("/login");
-			}
-			return;
-		}
 		if (data.message) {
 			alert(data.message);
 			return;

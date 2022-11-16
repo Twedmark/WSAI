@@ -34,6 +34,7 @@ const Login: NextPage = () => {
 		});
 
 		if (response.status === 429) {
+			// sent by limiter
 			alert(
 				"You have reached the maximum number of requests per minute. Please try again later."
 			);
@@ -43,15 +44,18 @@ const Login: NextPage = () => {
 		const data = await response.json();
 
 		if (response.status === 200) {
+			// okay login
 			dispatch(setAuthState(data));
 			dispatch(setAuthLoading(false));
 			router.push("/");
 		} else if (response.status === 422) {
+			// validation error
 			console.log(data);
 			data.errors.forEach((error: any) => {
 				alert(error.msg);
 			});
 		} else {
+			// server error
 			alert(data.message);
 			dispatch(setAuthLoading(false));
 		}
