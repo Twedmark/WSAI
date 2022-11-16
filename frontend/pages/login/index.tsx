@@ -46,6 +46,11 @@ const Login: NextPage = () => {
 			dispatch(setAuthState(data));
 			dispatch(setAuthLoading(false));
 			router.push("/");
+		} else if (response.status === 422) {
+			console.log(data);
+			data.errors.forEach((error: any) => {
+				alert(error.msg);
+			});
 		} else {
 			alert(data.message);
 			dispatch(setAuthLoading(false));

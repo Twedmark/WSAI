@@ -5,6 +5,8 @@ const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 const cookieParser = require("cookie-parser");
 
+const { check, validationResult } = require("express-validator");
+
 const logger = require("./logger");
 
 const rateLimit = require("express-rate-limit");
@@ -15,6 +17,24 @@ const {
   superAdminAuthorization,
 } = require("./middleware/authorization");
 const { getUserByEmail } = require("./database");
+
+const loginValidate = [
+  check("email", "Email is not valid")
+    .isEmail()
+    .trim()
+    .escape()
+    .normalizeEmail(),
+  check("password", "Password must be at least 8 characters long")
+    .isLength({
+      min: 8,
+    })
+    .matches("[0-9]")
+    .withMessage("Password Must Contain a Number")
+    .matches("[A-Z]")
+    .withMessage("Password Must Contain an Uppercase Letter")
+    .trim()
+    .escape(),
+];
 
 const app = express();
 
@@ -30,7 +50,7 @@ const accountLimiter = rateLimit({
   windowMs: 15 * 60 * 1000, // 15 minutes
   max: 10, // Limit each IP to 10 create/login account requests per `window` (here, per 15 minutes)
   message:
-    "Too many accounts created from this IP, please try again after an hour",
+    "Too many accounts created from this IP, please try again after 15 minutes",
   standardHeaders: true, // Return rate limit info in the `RateLimit-*` headers
   legacyHeaders: false, // Disable the `X-RateLimit-*` headers
 });
@@ -74,37 +94,42 @@ app.get("/getAllUsersWithRoles", superAdminAuthorization, async (req, res) => {
   res.status(200).json(result);
 });
 
-app.post("/createUser", accountLimiter, async (req, res) => {
+app.post("/createUser", loginValidate, accountLimiter, async (req, res) => {
   logger.debug("-----createUser-----");
 
   let email = req.body.email;
   let password = req.body.password;
   let hash = await bcrypt.hash(password, 10);
 
-  if (!email || !password) {
-    res.status(500).json({ message: "Email or password missing in request" });
-    return;
+  const errors = validationResult(req);
+  if (!errors.isEmpty()) {
+    return res.status(422).json({ errors: errors.array() });
+  } else {
+    if (!email || !password) {
+      res.status(500).json({ message: "Email or password missing in request" });
+      return;
+    }
+
+    const userExists = await db.getUserByEmail(email).catch((err) => {
+      logger.error(err);
+      res
+        .status(500)
+        .json({ message: "Error getting user to check if already exists" });
+    });
+    if (userExists.length > 0) {
+      res.status(500).json({ message: "User already exists" });
+      return;
+    }
+
+    const resultId = await db.createUser(email, hash).catch((err) => {
+      logger.error(err);
+      res.status(500).json({ message: "Error creating user" });
+    });
+
+    db.assignRole(resultId, 1000);
+
+    res.status(200).json({ email: email });
   }
-
-  const userExists = await db.getUserByEmail(email).catch((err) => {
-    logger.error(err);
-    res
-      .status(500)
-      .json({ message: "Error getting user to check if already exists" });
-  });
-  if (userExists.length > 0) {
-    res.status(500).json({ message: "User already exists" });
-    return;
-  }
-
-  const resultId = await db.createUser(email, hash).catch((err) => {
-    logger.error(err);
-    res.status(500).json({ message: "Error creating user" });
-  });
-
-  db.assignRole(resultId, 1000);
-
-  res.status(200).json({ email: email });
 });
 
 app.post("/deleteUser", superAdminAuthorization, async (req, res) => {
@@ -182,55 +207,60 @@ const addMinutes = (minutes, date = new Date()) => {
   return new Date(date.setMinutes(date.getMinutes() + minutes));
 };
 
-app.post("/login", accountLimiter, logIp, async (req, res) => {
+app.post("/login", loginValidate, accountLimiter, logIp, async (req, res) => {
   logger.debug("-----login-----");
   let account = req.body;
 
-  let result = await db.getUserByEmail(account.email).catch((err) => {
-    logger.error(err);
-    res.send("Error");
-  });
-
-  if (result.length == 0) {
-    res.status(500).json({ message: "User not found" });
-    return;
-  }
-
-  const comparedPassword = await bcrypt.compare(
-    account.password,
-    result[0].password
-  );
-  if (!comparedPassword) {
-    logger.debug("Wrong password, ip: " + req.ip);
-    res.status(500).json({ message: "Wrong password" });
-    return;
-  }
-
-  const roles = await db.getRolesForUser(result[0].userId);
-  let userRoles = roles.map((role) => {
-    return role.rolename;
-  });
-
-  const accessToken = jwt.sign(
-    { userId: result[0].userId, email: result[0].email, roles: userRoles },
-    process.env.ACCESS_TOKEN_SECRET,
-    { expiresIn: "1d" }
-  );
-
-  return res
-    .cookie("token", accessToken, {
-      httpOnly: true,
-      secure: true,
-      sameSite: "strict",
-      expires: addMinutes(1440),
-    })
-    .status(200)
-    .json({
-      userId: result[0].userId,
-      email: result[0].email,
-      roles: userRoles,
-      accessToken: accessToken,
+  const errors = validationResult(req);
+  if (!errors.isEmpty()) {
+    return res.status(422).json({ errors: errors.array() });
+  } else {
+    let result = await db.getUserByEmail(account.email).catch((err) => {
+      logger.error(err);
+      res.send("Error");
     });
+
+    if (result.length == 0) {
+      res.status(500).json({ message: "User not found" });
+      return;
+    }
+
+    const comparedPassword = await bcrypt.compare(
+      account.password,
+      result[0].password
+    );
+    if (!comparedPassword) {
+      logger.debug("Wrong password, ip: " + req.ip);
+      res.status(500).json({ message: "Wrong password" });
+      return;
+    }
+
+    const roles = await db.getRolesForUser(result[0].userId);
+    let userRoles = roles.map((role) => {
+      return role.rolename;
+    });
+
+    const accessToken = jwt.sign(
+      { userId: result[0].userId, email: result[0].email, roles: userRoles },
+      process.env.ACCESS_TOKEN_SECRET,
+      { expiresIn: "1d" }
+    );
+
+    return res
+      .cookie("token", accessToken, {
+        httpOnly: true,
+        secure: true,
+        sameSite: "strict",
+        expires: addMinutes(1440),
+      })
+      .status(200)
+      .json({
+        userId: result[0].userId,
+        email: result[0].email,
+        roles: userRoles,
+        accessToken: accessToken,
+      });
+  }
 });
 
 app.post("/loginWithToken", authorization, async (req, res) => {
