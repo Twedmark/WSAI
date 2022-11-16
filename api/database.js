@@ -3,7 +3,6 @@ const jwt = require('jsonwebtoken');
 require('dotenv').config();
 
 const logger = require("./logger");
-const { syncBuiltinESMExports } = require("module");
 
 const DB_HOST = process.env.DB_HOST;
 const DB_USER = process.env.DB_USER;
